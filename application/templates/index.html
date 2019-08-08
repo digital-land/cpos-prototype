@@ -1,8 +1,15 @@
 {% extends "dlf-base.html" %}
 
 {% block content %}
-<h1 class="govuk-heading-xl">
-  CPO data
-</h1>
+
+    <h1 class="govuk-heading-xl">
+      CPO data
+    </h1>
+
+    <ul>
+        {% for cpo in cpos %}
+            <li>{{ cpo.compulsory_purchase_order }}</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

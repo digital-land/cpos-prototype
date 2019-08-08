@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
 from flask import Flask, render_template
 from flask.cli import load_dotenv
+
+from application.models import *
 
 load_dotenv()
 
@@ -13,6 +14,7 @@ def create_app(config_filename):
 
     register_errorhandlers(app)
     register_blueprints(app)
+    register_extensions(app)
 
     return app
 
@@ -25,6 +27,14 @@ def register_errorhandlers(app):
     for errcode in [400, 401, 404, 500]:
         app.errorhandler(errcode)(render_error)
     return None
+
+
+def register_extensions(app):
+    from application.extensions import db
+    db.init_app(app)
+
+    from application.extensions import migrate
+    migrate.init_app(app=app)
 
 
 def register_blueprints(app):
