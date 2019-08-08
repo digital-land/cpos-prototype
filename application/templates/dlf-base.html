@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from "govuk-jinja-components/phase-banner/macro.jinja" import govukPhaseBanner %}
+{% from "govuk-jinja-components/breadcrumbs/macro.jinja" import govukBreadcrumbs %}
+
+{% block head %}
+<link href="/static/stylesheets/dl-frontend.css" rel="stylesheet" />
+{% endblock %}
+
+{% block header %}
+	{{ govukHeader({
+		"serviceName": 'CPO prototype'
+	}) }}
+{% endblock %}
+
+
+{% block beforeContent %}
+	{{ govukPhaseBanner({
+		"classes": "govuk-width-container",
+		"tag": {
+			"text": "prototype"
+		},
+		"html": 'This is a prototype - feedback helps us to improve it'
+	}) }}
+{% endblock %}
+
+
+{% block bodyEnd %}
+<script src="/static/javascripts/govuk/govuk-frontend-3.0.0.min.js"></script>
+<script>
+	// initiate all GOVUK components
+	window.GOVUKFrontend.initAll();
+</script>
+{# needs to come after govuk frontend #}
+<script src="/static/javascripts/application.js"></script>
+{% endblock %}
