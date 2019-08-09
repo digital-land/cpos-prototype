@@ -1,18 +1,23 @@
 import csv
 import datetime
 import io
-import os
 import zipfile
 
 from flask import (
     Blueprint,
     render_template,
-    abort)
+    abort
+)
 
 from application.extensions import db
 from application.forms import UploadForm
-from application.models import CompulsoryPurchaseOrder, CompulsoryPurchaseOrderStatus, \
+
+from application.models import (
+    CompulsoryPurchaseOrder,
+    CompulsoryPurchaseOrderStatus,
     CompulsoryPurchaseOrderInvestigation
+)
+
 from application.data.legislation import data as legislation
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -36,13 +41,18 @@ def cpo(id):
     return render_template('cpo.html', cpo=compulsory_purchase_order)
 
 
+# TODO remove this route as soon as we no longer need
+# to keep data out of public repo. it's just a convenience
+# for loading data.
 @frontend.route('/upload', methods=['GET', 'POST'])
 def upload():
 
     form = UploadForm()
 
     if form.validate_on_submit():
-        filenames = ['compulsory-purchase-order.csv', 'compulsory-purchase-order-status.csv', 'compulsory-purchase-order-investigation.csv']
+        filenames = ['compulsory-purchase-order.csv',
+                     'compulsory-purchase-order-status.csv',
+                     'compulsory-purchase-order-investigation.csv']
 
         try:
             with zipfile.ZipFile(form.cpo_zip_file.data) as z:
@@ -55,7 +65,8 @@ def upload():
                                 cpo = CompulsoryPurchaseOrder.query.get(row['compulsory-purchase-order'])
                                 if cpo is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%d/%m/%Y").date()
-                                    end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() if row['end-date'] else None
+                                    end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() \
+                                        if row['end-date'] else None
                                     l = row['legislation']
                                     l_name = legislation.get(l, {}).get('name')
                                     l_url =  legislation.get(l, {}).get('url')
@@ -84,7 +95,8 @@ def upload():
                                 status = CompulsoryPurchaseOrderStatus.query.get(row['compulsory-purchase-order-status'])
                                 if status is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%d/%m/%Y").date()
-                                    end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() if row[ 'end-date'] else None
+                                    end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() \
+                                        if row[ 'end-date'] else None
                                     status = CompulsoryPurchaseOrderStatus(
                                         compulsory_purchase_order_status = row['compulsory-purchase-order-status'],
                                         status = row['status'],
@@ -105,7 +117,8 @@ def upload():
                                 investigation = CompulsoryPurchaseOrderInvestigation.query.get(row['compulsory-purchase-order-investigation'])
                                 if investigation is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
-                                    end_date = datetime.datetime.strptime(row['end-date'], "%Y-%m-%d").date() if row['end-date'] else None
+                                    end_date = datetime.datetime.strptime(row['end-date'], "%Y-%m-%d").date() \
+                                        if row['end-date'] else None
                                     investigation = CompulsoryPurchaseOrderInvestigation(
                                         compulsory_purchase_order_investigation=row['compulsory-purchase-order-investigation'],
                                         status=row['status'],
