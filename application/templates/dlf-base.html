@@ -21,6 +21,13 @@
 		},
 		"html": 'This is a prototype - feedback helps us to improve it'
 	}) }}
+
+    <div class="govuk-width-container">
+        {% if session.get('profile') %}
+            <p style="float: right;"><a href="/auth/logout">Logout</a></p>
+        {% endif %}
+    </div>
+
 {% endblock %}
 
 
