@@ -2,6 +2,12 @@
 import os
 
 
+def _to_boolean(val):
+    if val is not None and val.lower() in ['true', 't', 'on', 'y', 'yes']:
+        return True
+    return False
+
+
 class Config(object):
 
     APP_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -10,6 +16,13 @@ class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    AUTH0_CLIENT_ID = os.getenv('AUTH0_CLIENT_ID')
+    AUTH0_CLIENT_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
+    AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
+    AUTH0_CALLBACK_URL = os.getenv('AUTH0_CALLBACK_URL')
+    AUTH0_BASE_URL = f"https://{AUTH0_DOMAIN}"
+    AUTH0_AUDIENCE = f"{AUTH0_BASE_URL}/userinfo"
+    AUTHENTICATION_ON = _to_boolean(os.environ.get('AUTHENTICATION_ON'))
 
 
 class DevelopmentConfig(Config):
