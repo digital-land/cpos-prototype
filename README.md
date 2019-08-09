@@ -23,3 +23,22 @@ Install front end build tool (gulp)
 Run the app
 
     flask run
+    
+
+Create db and run initial migration
+
+    createdb cpo
+    flask db upgrade
+
+
+To upload data, there is a form at /upload which you can use
+to upload the four three required csv files
+
+ - compulsory-purchase-order.csv
+ - compulsory-purchase-order-status.csv
+ - compulsory-purchase-order-investigation.csv
+ 
+ They'll need to be downloaded from google docs first as a zip file and
+ the zipfile can be uploaded directly to the app.
+ 
+  
