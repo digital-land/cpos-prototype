@@ -1,0 +1,30 @@
+{% extends "dlf-base.html" %}
+
+{% block content %}
+
+    <h1 class="govuk-heading-xl">
+      CPO data
+    </h1>
+
+    <p>{{ cpo.compulsory_purchase_order }}</p>
+    <p>{{ cpo.name }}</p>
+    <p>{{ cpo.start_date }}</p>
+
+
+    {% if cpo.statuses %}
+        <ul>
+            {% for status in cpo.statuses %}
+                <li>{{ status.status }} - {{ status.start_date }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if cpo.investigations %}
+        <ul>
+            {% for investigation in cpo.investigations %}
+                <li>{{ investigation.status }} - {{ investigation.start_date }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

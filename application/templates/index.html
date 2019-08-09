@@ -6,10 +6,8 @@
       CPO data
     </h1>
 
-    <ul>
-        {% for cpo in cpos %}
-            <li>{{ cpo.compulsory_purchase_order }}</li>
-        {% endfor %}
-    </ul>
+    <p>
+        <a href="{{ url_for('frontend.cpo_list')}}">View all compulsory purchase orders</a>
+    </p>
 
 {% endblock %}

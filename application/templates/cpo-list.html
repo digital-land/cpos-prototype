@@ -1,0 +1,15 @@
+{% extends "dlf-base.html" %}
+
+{% block content %}
+
+    <h1 class="govuk-heading-xl">
+      CPO data
+    </h1>
+
+    <ul>
+        {% for cpo in cpos %}
+            <li><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

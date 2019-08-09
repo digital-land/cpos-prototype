@@ -6,8 +6,8 @@ import zipfile
 
 from flask import (
     Blueprint,
-    render_template
-)
+    render_template,
+    abort)
 
 from application.extensions import db
 from application.forms import UploadForm
@@ -20,9 +20,20 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 
 @frontend.route('/')
 def index():
-    return render_template('index.html', cpos=CompulsoryPurchaseOrder.query.all())
+    return render_template('index.html')
 
 
+@frontend.route('/compulsory-purchase-order')
+def cpo_list():
+    return render_template('cpo-list.html', cpos=CompulsoryPurchaseOrder.query.all())
+
+
+@frontend.route('/compulsory-purchase-order/<path:id>')
+def cpo(id):
+    compulsory_purchase_order = CompulsoryPurchaseOrder.query.get(id)
+    if compulsory_purchase_order is None:
+        abort(404)
+    return render_template('cpo.html', cpo=compulsory_purchase_order)
 
 
 @frontend.route('/upload', methods=['GET', 'POST'])
