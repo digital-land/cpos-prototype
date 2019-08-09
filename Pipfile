@@ -13,6 +13,7 @@ flask-migrate = "*"
 authlib = "*"
 flask-wtf = "*"
 psycopg2 = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
