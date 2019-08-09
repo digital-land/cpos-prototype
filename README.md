@@ -41,4 +41,15 @@ to upload the four three required csv files
  They'll need to be downloaded from google docs first as a zip file and
  the zipfile can be uploaded directly to the app.
  
-  
+ 
+ #### Setup for Auth0
+ 
+ Add the following environment variables to .env (which is git ignored)
+ 
+    AUTH0_CLIENT_ID=[get from settings]
+    AUTH0_CLIENT_SECRET=[get from settings]
+    AUTH0_DOMAIN=[get from settings]
+    AUTH0_CALLBACK_URL=http://localhost:5000/auth/callback
+    AUTHENTICATION_ON=True
+    
+The last setting allows toggle authentication on/off

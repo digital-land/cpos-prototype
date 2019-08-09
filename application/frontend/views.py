@@ -9,6 +9,7 @@ from flask import (
     abort
 )
 
+from application.auth.utils import requires_auth
 from application.extensions import db
 from application.forms import UploadForm
 
@@ -45,6 +46,7 @@ def cpo(id):
 # to keep data out of public repo. it's just a convenience
 # for loading data.
 @frontend.route('/upload', methods=['GET', 'POST'])
+@requires_auth
 def upload():
 
     form = UploadForm()
