@@ -21,7 +21,12 @@ from application.models import (
 
 from application.data.legislation import data as legislation
 
-from application.utils import getStatuses, getYearCounts, counter_to_tuples
+from application.utils import (
+    getStatuses,
+    getYearCounts,
+    get_LA_counts,
+    counter_to_tuples
+)
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -58,6 +63,10 @@ def cpo(id):
     return render_template('cpo.html', cpo=compulsory_purchase_order)
 
 
+# ==============================
+# Analysis of the data
+# ==============================
+
 @frontend.route('/data/statuses')
 @requires_auth
 def statuses():
@@ -70,6 +79,13 @@ def statuses():
 def years():
     cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/counts.html', count_type_title="By year", counts=getYearCounts(cpos))
+
+
+@frontend.route('/data/local_authorities')
+@requires_auth
+def by_organisation():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('data/counts.html', count_type_title="By organisation", counts=get_LA_counts(cpos))
 
 
 # TODO remove this route as soon as we no longer need

@@ -24,3 +24,11 @@ def getYearCounts(cpos):
         years.append(cpo.start_date.year)
 
     return Counter(years)
+
+
+def get_LA_counts(cpos):
+    las = []
+    for cpo in cpos:
+        las.append(cpo.organisation)
+
+    return Counter(las)

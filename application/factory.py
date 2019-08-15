@@ -15,6 +15,7 @@ def create_app(config_filename):
     register_errorhandlers(app)
     register_blueprints(app)
     register_extensions(app)
+    register_filters(app)
 
     return app
 
@@ -52,6 +53,11 @@ def register_extensions(app):
     )
 
     app.config['auth0'] = auth0
+
+
+def register_filters(app):
+    from application.filters import map_la_code_to_name
+    app.add_template_filter(map_la_code_to_name)
 
 
 def register_blueprints(app):

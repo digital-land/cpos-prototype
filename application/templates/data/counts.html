@@ -8,8 +8,8 @@
     </h1>
 
     <ul class="govuk-list govuk-list--bullet">
-    	{% for count in counts.keys() %}
-    	<li>{{ count }}: {{ counts[count] }}</li>
+    	{% for key in counts.keys() %}
+    	<li>{% if count_type_title == "By organisation" %}{{ key }} ({{ key |  map_la_code_to_name }}){% else %}{{ key }}{% endif %}: {{ counts[key] }}</li>
     	{% endfor %}
     </ul>
 
