@@ -8,3 +8,10 @@ def getStatuses(cpos):
             statuses.append(s.status)
 
     return Counter(statuses)
+
+def getYearCounts(cpos):
+    years = []
+    for cpo in cpos:
+        years.append(cpo.start_date.year)
+
+    return Counter(years)

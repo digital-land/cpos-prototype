@@ -21,7 +21,7 @@ from application.models import (
 
 from application.data.legislation import data as legislation
 
-from application.utils import getStatuses
+from application.utils import getStatuses, getYearCounts
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -51,6 +51,13 @@ def cpo(id):
 def statuses():
     cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/statuses.html', statuses=getStatuses(cpos))
+
+
+@frontend.route('/data/years')
+@requires_auth
+def years():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('data/counts.html', count_type_title="By year", counts=getYearCounts(cpos))
 
 
 # TODO remove this route as soon as we no longer need

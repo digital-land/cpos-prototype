@@ -1,0 +1,16 @@
+{% extends "dlf-base.html" %}
+
+{% block content %}
+
+	<span class="govuk-caption-xl">CPO data</span>
+    <h1 class="govuk-heading-xl">
+      {{ count_type_title | default('Count') }}
+    </h1>
+
+    <ul class="govuk-list govuk-list--bullet">
+    	{% for count in counts.keys() %}
+    	<li>{{ count }}: {{ counts[count] }}</li>
+    	{% endfor %}
+    </ul>
+
+{% endblock %}
