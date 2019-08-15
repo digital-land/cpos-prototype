@@ -1,18 +1,36 @@
 {% extends "dlf-base.html" %}
 
+{% from "./govuk-jinja-components/back-link/macro.jinja" import govukBackLink %}
+
+{% block beforeContent %}
+{{ super() }}
+
+{{ govukBackLink({
+  "text": "See list of all compulsory purchase orders",
+  "href": url_for('frontend.cpo_list')
+}) }}
+{% endblock %}
+
+
 {% block content %}
 
+    <span class="govuk-caption-xl">Compulsory purchase order</span>
     <h1 class="govuk-heading-xl">
-      CPO data
+      {{ cpo.compulsory_purchase_order }}
     </h1>
 
-    <p>{{ cpo.compulsory_purchase_order }}</p>
-    <p>{{ cpo.name }}</p>
-    <p>{{ cpo.start_date }}</p>
+    <p class="govuk-body">Type: {{ cpo.compulsory_purchase_order_type }}</p>
+    <p class="govuk-body">Address: {{ cpo.name }}</p>
+    <p class="govuk-body">{{ cpo.start_date }}</p>
+    <p class="govuk-body">{% if cpo.decription %}{{cpo.description}}{% else %}No description available{% endif %}</p>
+
+    <p class="govuk-body">Legislation: <a href="{{ cpo.legislation_url }}">{{ cpo.legislation_name }}</a></p>
+
 
 
     {% if cpo.statuses %}
-        <ul>
+    <h3 class="govuk-heading-s">Status timeline</h3>
+        <ul class="govuk-list govuk-list--bullet">
             {% for status in cpo.statuses %}
                 <li>{{ status.status }} - {{ status.start_date }}</li>
             {% endfor %}
@@ -20,7 +38,8 @@
     {% endif %}
 
     {% if cpo.investigations %}
-        <ul>
+    <h3 class="govuk-heading-s">Investigation</h3>
+        <ul class="govuk-list govuk-list--bullet">
             {% for investigation in cpo.investigations %}
                 <li>{{ investigation.status }} - {{ investigation.start_date }}</li>
             {% endfor %}
