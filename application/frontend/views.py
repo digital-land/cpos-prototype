@@ -31,6 +31,15 @@ def index():
     return render_template('index.html')
 
 
+@frontend.route('/dashboard')
+@requires_auth
+def dashboard():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('cpo-dashboard.html',
+        cpos=cpos,
+        cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all())
+
+
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
