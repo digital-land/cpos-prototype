@@ -1,0 +1,16 @@
+{% extends "dlf-base.html" %}
+
+{% block content %}
+
+	<span class="govuk-caption-xl">CPO data</span>
+    <h1 class="govuk-heading-xl">
+      Statuses
+    </h1>
+
+    <ul class="govuk-list govuk-list--bullet">
+    	{% for status in statuses.keys() %}
+    	<li>{{ statuses[status] }} "{{ status }}"</li>
+    	{% endfor %}
+    </ul>
+
+{% endblock %}

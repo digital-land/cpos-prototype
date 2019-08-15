@@ -21,6 +21,8 @@ from application.models import (
 
 from application.data.legislation import data as legislation
 
+from application.utils import getStatuses
+
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
 
@@ -42,6 +44,13 @@ def cpo(id):
     if compulsory_purchase_order is None:
         abort(404)
     return render_template('cpo.html', cpo=compulsory_purchase_order)
+
+
+@frontend.route('/data/statuses')
+@requires_auth
+def statuses():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('data/statuses.html', statuses=getStatuses(cpos))
 
 
 # TODO remove this route as soon as we no longer need
