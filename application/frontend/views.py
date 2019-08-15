@@ -34,7 +34,7 @@ def index():
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
-    return render_template('cpo-list.html', cpos=CompulsoryPurchaseOrder.query.all())
+    return render_template('cpo-list.html', cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all())
 
 
 @frontend.route('/compulsory-purchase-order/<path:id>')

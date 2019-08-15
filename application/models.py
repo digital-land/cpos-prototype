@@ -37,6 +37,9 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
                                order_by='CompulsoryPurchaseOrderStatus.start_date')
 
 
+    def latest_status(self):
+        return self.statuses[-1]
+
 
 @total_ordering
 class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
