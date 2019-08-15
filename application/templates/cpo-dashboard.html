@@ -10,8 +10,8 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
-				<span class="data-item__number govuk-!-font-size-80">{{ cpos_2019 | count }}</span>
-				<p class="govuk-body govuk-!-font-size-36">Total (in 2019)</p>
+				<span class="data-item__number govuk-!-font-size-80">{{ by_year[-1][1] }}</span>
+				<p class="govuk-body govuk-!-font-size-36">Total (this year)</p>
 			</div>
 		</div>
 		<div class="govuk-grid-column-one-half">
@@ -21,8 +21,25 @@
 			</div>
 		</div>
 	</div>
-	
 
+	<h2 class="govuk-heading-m">Number of CPOs per year (last 5)</h2>
+	
+	<ul class="govuk-list">
+		{% for year in by_year %}
+		<li>{{ year[0]}}: {{ year[1] }}</li>
+		{% endfor %}
+	</ul>
+
+	<h3 class="govuk-heading-m">Lastest CPOs</h3>
+	<ul class="govuk-list">
+		{% for cpo in recent_cpos %}
+		<li>
+			<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
+			<a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>, 
+			<span>{{ cpo.name }}</span>
+        </li>
+		{% endfor %}
+	</ul>
     
 
 {% endblock %}

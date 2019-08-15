@@ -21,7 +21,7 @@ from application.models import (
 
 from application.data.legislation import data as legislation
 
-from application.utils import getStatuses, getYearCounts
+from application.utils import getStatuses, getYearCounts, counter_to_tuples
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
 
@@ -35,8 +35,11 @@ def index():
 @requires_auth
 def dashboard():
     cpos = CompulsoryPurchaseOrder.query.all()
+    per_year_counts = counter_to_tuples(getYearCounts(cpos))
     return render_template('cpo-dashboard.html',
         cpos=cpos,
+        by_year=per_year_counts[-5:],
+        recent_cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
         cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all())
 
 
