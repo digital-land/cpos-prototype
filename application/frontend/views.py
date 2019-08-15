@@ -67,6 +67,13 @@ def cpo(id):
 # Analysis of the data
 # ==============================
 
+@frontend.route('/data')
+@requires_auth
+def data_index():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('data/index.html')
+
+
 @frontend.route('/data/statuses')
 @requires_auth
 def statuses():

@@ -1,0 +1,18 @@
+{% extends "dlf-base.html" %}
+
+{% block content %}
+
+	<span class="govuk-caption-xl">Analysis</span>
+    <h1 class="govuk-heading-xl">
+      CPO Data
+    </h1>
+
+	<p class="govuk-body">Analysing the raw data.</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+    	<li><a href="{{ url_for('frontend.statuses') }}">Count by statuses</a></li>
+    	<li><a href="{{ url_for('frontend.years') }}">Count by years</a></li>
+    	<li><a href="{{ url_for('frontend.by_organisation') }}">Count by organisation</a></li>
+    </ul>
+
+{% endblock %}
