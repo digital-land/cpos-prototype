@@ -3,11 +3,19 @@
 {% block content %}
 
     <h1 class="govuk-heading-xl">
-      CPO data
+      Compulsory purchase orders
     </h1>
 
+	<p class="govuk-body">We are experimenting with the Compulsory purchase order data. Below are some of the early prototypes aiming to analyse and explore the data.</p>
+
+
+	<ul class="govuk-list govuk-list--bullet">
+		<li><a href="{{ url_for('frontend.data_index')}}">Explore the raw data</a></li>
+		<li><a href="{{ url_for('frontend.dashboard')}}">View summary of the data</a></li>
+		<li><a href="{{ url_for('frontend.cpo_list')}}">View list of all compulsory purchase orders</a></li>
+	</ul>
     <p>
-        <a href="{{ url_for('frontend.cpo_list')}}">View all compulsory purchase orders</a>
+        
     </p>
 
 {% endblock %}
