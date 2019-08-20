@@ -23,6 +23,7 @@
     <p class="govuk-body">Address: {{ cpo.name }}</p>
     <p class="govuk-body">{{ cpo.start_date }}</p>
     <p class="govuk-body">{% if cpo.decription %}{{cpo.description}}{% else %}No description available{% endif %}</p>
+    <p class="govuk-body">Organisation: {{ cpo.organisation | map_la_code_to_name }}</p>
 
     <p class="govuk-body">Legislation: <a href="{{ cpo.legislation_url }}">{{ cpo.legislation_name }}</a></p>
 
