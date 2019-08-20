@@ -6,7 +6,8 @@ import zipfile
 from flask import (
     Blueprint,
     render_template,
-    abort
+    abort,
+    request
 )
 
 from application.auth.utils import requires_auth
@@ -62,7 +63,11 @@ def dashboard():
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
-    return render_template('cpo-list.html', cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all())
+    if request.args and request.args['year'] is not None:
+        cpos = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
+    else:
+        cpos = CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
+    return render_template('cpo-list.html', cpos=cpos)
 
 
 @frontend.route('/compulsory-purchase-order/<path:id>')
