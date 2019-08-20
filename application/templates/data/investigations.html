@@ -1,0 +1,29 @@
+{% extends "dlf-base.html" %}
+
+{% from "./govuk-jinja-components/back-link/macro.jinja" import govukBackLink %}
+
+{% block beforeContent %}
+{{ super() }}
+
+{{ govukBackLink({
+  "text": "Back to data analysis index",
+  "href": url_for('frontend.data_index')
+}) }}
+{% endblock %}
+
+{% block content %}
+
+	<span class="govuk-caption-xl">CPO data</span>
+    <h1 class="govuk-heading-xl">
+      Has investigations
+    </h1>
+
+    <ul class="govuk-list govuk-list--bullet">
+
+    	{% for key in counts.keys() %}
+    	<li>{{ key }}</a>: {{ counts[key] }}</li>
+    	{% endfor %}
+
+    </ul>
+
+{% endblock %}

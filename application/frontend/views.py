@@ -27,7 +27,8 @@ from application.utils import (
     getYearCounts,
     get_LA_counts,
     counter_to_tuples,
-    get_cpo_type_counts
+    get_cpo_type_counts,
+    has_investigation_counts
 )
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -148,6 +149,14 @@ def by_organisation():
 def types():
     cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/types.html', count_type_title="By year", counts=get_cpo_type_counts(cpos))
+
+
+@frontend.route('/data/investigations')
+@requires_auth
+def has_investigations():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    print(has_investigation_counts(cpos))
+    return render_template('data/investigations.html', count_type_title="By year", counts=has_investigation_counts(cpos))
 
 
 # TODO remove this route as soon as we no longer need

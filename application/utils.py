@@ -42,3 +42,14 @@ def get_cpo_type_counts(cpos):
 
     counts = Counter(typs)
     return counts.most_common()
+
+
+def has_investigation_counts(cpos):
+    inv = []
+    for cpo in cpos:
+        if len(cpo.investigations) > 0:
+            inv.append(True)
+        else:
+            inv.append(False)
+
+    return Counter(inv)
