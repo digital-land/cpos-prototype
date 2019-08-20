@@ -1,5 +1,15 @@
 {% extends "dlf-base.html" %}
 
+{% from "./govuk-jinja-components/back-link/macro.jinja" import govukBackLink %}
+{% block beforeContent %}
+{{ super() }}
+
+{{ govukBackLink({
+  "text": "See summary of CPO data",
+  "href": url_for('frontend.dashboard')
+}) }}
+{% endblock %}
+
 {% block content %}
 
     <h1 class="govuk-heading-xl">
