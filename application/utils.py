@@ -33,3 +33,12 @@ def get_LA_counts(cpos):
 
     counts = Counter(las)
     return counts.most_common()
+
+
+def get_cpo_type_counts(cpos):
+    typs = []
+    for cpo in cpos:
+        typs.append(cpo.compulsory_purchase_order_type)
+
+    counts = Counter(typs)
+    return counts.most_common()

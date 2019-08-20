@@ -26,7 +26,8 @@ from application.utils import (
     getStatuses,
     getYearCounts,
     get_LA_counts,
-    counter_to_tuples
+    counter_to_tuples,
+    get_cpo_type_counts
 )
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -82,13 +83,20 @@ def filter_by_year(year, cpo_query):
 @requires_auth
 def cpo_list():
     cpo_query = CompulsoryPurchaseOrder.query
+
+    # apply a year filter if exists
     if request.args and request.args.get('year') is not None:
         filtered_query = filter_by_year(request.args['year'], cpo_query)
     else:
         filtered_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
 
+    # then apply org fitler if there is one
     if request.args and request.args.get('org') is not None:
         filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.organisation == request.args['org'])
+
+    # then apply type filter if there is one
+    if request.args and request.args.get('type') is not None:
+        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type == request.args['type'])
 
     cpos = filtered_query.all()
     return render_template('cpo-list.html', cpos=cpos)
@@ -133,6 +141,13 @@ def years():
 def by_organisation():
     cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/counts.html', count_type_title="By organisation", counts=get_LA_counts(cpos))
+
+
+@frontend.route('/data/types')
+@requires_auth
+def types():
+    cpos = CompulsoryPurchaseOrder.query.all()
+    return render_template('data/types.html', count_type_title="By year", counts=get_cpo_type_counts(cpos))
 
 
 # TODO remove this route as soon as we no longer need
