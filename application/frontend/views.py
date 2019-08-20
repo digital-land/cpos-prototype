@@ -60,11 +60,26 @@ def dashboard():
         cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all())
 
 
+def year_date_string(year):
+    return "{}-01-01".format(year)
+
+def filter_by_year(year):
+    # if matches this year
+    if int(year) == datetime.datetime.now().year:
+        cpos = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= year_date_string(year)).order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
+    # else do between
+    else:
+        next_year = str(int(year) + 1)
+        cpos = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date.between(year_date_string(year), year_date_string(next_year))).all()
+
+    return cpos
+
+
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
     if request.args and request.args['year'] is not None:
-        cpos = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
+        cpos = filter_by_year(request.args['year'])
     else:
         cpos = CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
     return render_template('cpo-list.html', cpos=cpos)

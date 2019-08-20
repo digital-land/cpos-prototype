@@ -6,7 +6,7 @@
       CPO data
     </h1>
 
-	<p class="govuk-body">Showing {{ cpos|length }} results</p>
+	<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
     <ul class="govuk-list govuk-list--bullet">
     {% for cpo in cpos %}
         <li><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>

@@ -34,7 +34,7 @@
 		<li>
 		<div class="govuk-grid-row contribution-category-row">
 		  <div class="govuk-grid-column-one-quarter">
-		    <h4 class="govuk-heading-s contribution-category-heading">{{ year[0] }}</h4>
+		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year[0]) }}">{{ year[0] }}</a></h4>
 		  </div>
 		  <div class="govuk-grid-column-three-quarters contribution-bar-container">
 			{% set bar_percentage = ((relative_value/difference)*65)|int %}
