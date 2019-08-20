@@ -50,6 +50,7 @@ def per_year_counts_to_data(per_year_counts):
 @requires_auth
 def dashboard():
     cpos = CompulsoryPurchaseOrder.query.all()
+    cpos_2019 = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
     per_year_counts = counter_to_tuples(getYearCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
     # print(by_year_data)
@@ -57,8 +58,9 @@ def dashboard():
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
         recent_cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
-        cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all(),
-        top_orgs=get_LA_counts(cpos)[:5])
+        cpos_2019=cpos_2019,
+        top_orgs=get_LA_counts(cpos)[:5],
+        top_orgs_2019=get_LA_counts(cpos_2019)[:5])
 
 
 def year_date_string(year):
