@@ -36,14 +36,25 @@ def index():
     return render_template('index.html')
 
 
+def per_year_counts_to_data(per_year_counts):
+    values = [v for k,v in per_year_counts]
+    return {
+            "counts":per_year_counts,
+            "max": max(values),
+            "min": min(values)
+        }
+
+
 @frontend.route('/dashboard')
 @requires_auth
 def dashboard():
     cpos = CompulsoryPurchaseOrder.query.all()
     per_year_counts = counter_to_tuples(getYearCounts(cpos))
+    # by_year_data = per_year_counts_to_data(per_year_counts)
+    # print(by_year_data)
     return render_template('cpo-dashboard.html',
         cpos=cpos,
-        by_year=per_year_counts[-5:],
+        by_year=per_year_counts_to_data(per_year_counts[-5:]),
         recent_cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
         cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all())
 

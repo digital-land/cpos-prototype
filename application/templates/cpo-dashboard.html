@@ -10,7 +10,7 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
-				<span class="data-item__number govuk-!-font-size-80">{{ by_year[-1][1] }}</span>
+				<span class="data-item__number govuk-!-font-size-80">{{ by_year.counts[-1][1] }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Total (this year)</p>
 			</div>
 		</div>
@@ -23,10 +23,27 @@
 	</div>
 
 	<h2 class="govuk-heading-m">Number of CPOs per year (last 5)</h2>
-	
+
+	{% set max_count = (((by_year.max/100)|round(1, 'ceil'))*100)|int %}
+	{% set min_count = (((by_year.min/100)|round(1, 'floor'))*100)|int %}
+	{% set difference = max_count - min_count %}
 	<ul class="govuk-list">
-		{% for year in by_year %}
-		<li>{{ year[0]}}: {{ year[1] }}</li>
+		{% for year in by_year.counts %}
+		{% set relative_value = year[1] - min_count %}
+		<li>
+		<div class="govuk-grid-row contribution-category-row">
+		  <div class="govuk-grid-column-one-quarter">
+		    <h4 class="govuk-heading-s contribution-category-heading">{{ year[0] }}</h4>
+		  </div>
+		  <div class="govuk-grid-column-three-quarters contribution-bar-container">
+			{% set bar_percentage = ((relative_value/difference)*65)|int %}
+		    <div class="contribution-bar" style="width: {{ bar_percentage + 35 }}%;">
+		      <span class="govuk-!-font-size-24 govuk-!-font-weight-bold data-item">{{ year[1] }}</span>
+		    </div>
+		    <div class="govuk-!-font-size-24 data-item cb-floating-figure">{{ year[1] }}</div>
+		  </div>
+		</div>
+		</li>
 		{% endfor %}
 	</ul>
 
