@@ -19,9 +19,15 @@
     </h1>
 
     <ul class="govuk-list govuk-list--bullet">
+    {% if counts is mapping %}
     	{% for key in counts.keys() %}
     	<li>{% if count_type_title == "By organisation" %}{{ key }} ({{ key |  map_la_code_to_name }}){% else %}{{ key }}{% endif %}: {{ counts[key] }}</li>
     	{% endfor %}
+    {% else %}
+    	{% for pair in counts %}
+    	<li>{{ pair[0] |  map_la_code_to_name }} ({{ pair[0] }}): {{ pair[1] }}</li>
+    	{% endfor %}
+    {% endif %}
     </ul>
 
 {% endblock %}

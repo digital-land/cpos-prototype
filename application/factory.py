@@ -58,6 +58,8 @@ def register_extensions(app):
 def register_filters(app):
     from application.filters import map_la_code_to_name
     app.add_template_filter(map_la_code_to_name)
+    from application.filters import flatten_tuples
+    app.add_template_filter(flatten_tuples)
 
 
 def register_blueprints(app):

@@ -57,7 +57,8 @@ def dashboard():
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
         recent_cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
-        cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all())
+        cpos_2019=CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all(),
+        top_orgs=get_LA_counts(cpos)[:5])
 
 
 def year_date_string(year):

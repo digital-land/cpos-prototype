@@ -31,4 +31,5 @@ def get_LA_counts(cpos):
     for cpo in cpos:
         las.append(cpo.organisation)
 
-    return Counter(las)
+    counts = Counter(las)
+    return counts.most_common()
