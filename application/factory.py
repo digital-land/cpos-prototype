@@ -60,6 +60,8 @@ def register_filters(app):
     app.add_template_filter(map_la_code_to_name)
     from application.filters import flatten_tuples
     app.add_template_filter(flatten_tuples)
+    from application.filters import map_cpo_status_to_tag_class
+    app.add_template_filter(map_cpo_status_to_tag_class)
 
 
 def register_blueprints(app):

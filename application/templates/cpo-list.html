@@ -63,11 +63,14 @@
 
 		<div class="govuk-grid-column-two-thirds">
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
-		    <ul class="govuk-list govuk-list--bullet">
+		    <ul class="govuk-list cpo-list">
 		    {% for cpo in cpos %}
-		        <li><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>
-		        	<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
-		        	<span>- {{ cpo.start_date }}</span>
+		        <li class="cpo-item">
+		        	{% set cpo_status = cpo.latest_status().status %}
+					<span class="govuk-tag {{ cpo_status | map_cpo_status_to_tag_class }}">{{ cpo_status }}</span>
+		        	<h4 class="govuk-heading-m cpo-item__title"><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></h4>
+		        	<div class="cpo-item__org">{{ cpo.organisation | map_la_code_to_name }}</div>
+		        	<span>Issue date: {{ cpo.start_date }}</span>
 		        </li>
 		    {% endfor %}
 		    </ul>

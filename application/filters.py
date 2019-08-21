@@ -14,3 +14,16 @@ def flatten_tuples(tuplist, ind=0):
 	else:
 		flattened = [a for (a, b) in tuplist]
 	return flattened
+
+
+def map_cpo_status_to_tag_class(status):
+	class_ = ""
+	if 'confirmed' in status:
+		class_ = "govuk-tag--confirmed"
+	if status in ['not confirmed', 'invalid']:
+		class_ = "govuk-tag--error"
+	if 'withdrawn' in status:
+		class_ = "govuk-tag--disabled"
+	if 'inquiry' in status:
+		class_ = "govuk-tag--warning"
+	return class_
