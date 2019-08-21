@@ -71,3 +71,43 @@ $using-helvetica: false;
   @include govuk-text-colour;
   @include govuk-font($size: 19, $weight: bold);
 }
+
+
+.filter-group {
+  padding: 5px;
+  background: govuk-colour("light-grey");
+
+  summary {
+    list-style-image: none;
+
+    &::-webkit-details-marker {
+      color: transparent;
+      background: none;
+    }
+  }
+}
+
+.filter-group__summary {
+  padding: 5px 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.filter-group[open] {
+  .filter-group__summary {
+    padding-bottom: 10px;
+  }
+}
+
+.filter-group__fieldset {
+  padding: 10px 10px 5px;
+  background: $govuk-body-background-colour;
+}
+
+.filter-group__heading {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: -10px;
+}

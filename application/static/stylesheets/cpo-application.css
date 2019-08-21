@@ -7460,3 +7460,40 @@
     line-height: 1.15;
   }
 }
+
+.filter-group {
+  padding: 5px;
+  background: #f3f2f1;
+}
+
+.filter-group summary {
+  list-style-image: none;
+}
+
+.filter-group summary::-webkit-details-marker {
+  color: transparent;
+  background: none;
+}
+
+.filter-group__summary {
+  padding: 5px 0;
+}
+
+.filter-group__summary:hover {
+  cursor: pointer;
+}
+
+.filter-group[open] .filter-group__summary {
+  padding-bottom: 10px;
+}
+
+.filter-group__fieldset {
+  padding: 10px 10px 5px;
+  background: #ffffff;
+}
+
+.filter-group__heading {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-left: -10px;
+}

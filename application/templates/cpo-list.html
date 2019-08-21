@@ -12,9 +12,9 @@
 
 {% block content %}
 
-    <h1 class="govuk-heading-xl">
-      Compulsory purchase orders
-    </h1>
+	<h1 class="govuk-heading-xl">
+	  Compulsory purchase orders
+	</h1>
 
 	<div class="govuk-grid-row">
 
@@ -25,70 +25,76 @@
 
 				<div class="govuk-form-group">
 				  <label class="govuk-label" for="year">
-				    Year
+					Year
 				  </label>
 				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
 				</div>
 
 				<div class="govuk-form-group">
-				  <fieldset class="govuk-fieldset">
-				    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-				      <h1 class="govuk-fieldset__heading">
-				        Has investigation
-				      </h1>
-				    </legend>
-				    <div class="govuk-radios">
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="investigation-yes">
-				          Has
-				        </label>
-				      </div>
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="investigation-no">
-				          Doesn't have
-				        </label>
-				      </div>
-				    </div>
-				  </fieldset>
+					<details class="filter-group" {% if request.args['investigation'] %}open{% endif %}>
+						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">Investigation</h3></summary>
+						<fieldset class="govuk-fieldset filter-group__fieldset">
+						<legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-visually-hidden">
+						  <h1 class="govuk-fieldset__heading">
+							Has investigation
+						  </h1>
+						</legend>
+						<div class="govuk-radios">
+						  <div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-radios__label" for="investigation-yes">
+							  Has
+							</label>
+						  </div>
+						  <div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-radios__label" for="investigation-no">
+							  Doesn't have
+							</label>
+						  </div>
+						</div>
+					  </fieldset>
+					</details>
 				</div>
 
 
 				<div class="govuk-form-group">
-				  <fieldset class="govuk-fieldset">
-				    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-				      <h1 class="govuk-fieldset__heading">
-				        CPO type
-				      </h1>
-				    </legend>
-				    <div class="govuk-radios">
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="cpo-type-1" name="type" type="radio" value="housing" {% if request.args['type'] == 'housing' %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="cpo-type-1">
-				          Housing
-				        </label>
-				      </div>
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="cpo-type-2" name="type" type="radio" value="planning" {% if request.args['type'] == 'planning' %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="cpo-type-2">
-				          Planning
-				        </label>
-				      </div>
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="cpo-type-3" name="type" type="radio" value="development corporation" {% if request.args['type'] == 'development corporation' %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="cpo-type-3">
-				          Development corporation
-				        </label>
-				      </div>
-				      <div class="govuk-radios__item">
-				        <input class="govuk-radios__input" id="cpo-type-4" name="type" type="radio" value="GLA" {% if request.args['type'] == 'GLA' %}checked=checked{% endif %}>
-				        <label class="govuk-label govuk-radios__label" for="cpo-type-4">
-				          GLA
-				        </label>
-				      </div>
-				    </div>
-				  </fieldset>
+					<details class="filter-group" {% if request.args['type'] %}open{% endif %}>
+						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">CPO type</h3></summary>
+						<fieldset class="govuk-fieldset filter-group__fieldset">
+							<legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-visually-hidden">
+							  <h1 class="govuk-fieldset__heading">
+								CPO type
+							  </h1>
+							</legend>
+							<div class="govuk-radios">
+							  <div class="govuk-radios__item">
+								<input class="govuk-radios__input" id="cpo-type-1" name="type" type="radio" value="housing" {% if request.args['type'] == 'housing' %}checked=checked{% endif %}>
+								<label class="govuk-label govuk-radios__label" for="cpo-type-1">
+								  Housing
+								</label>
+							  </div>
+							  <div class="govuk-radios__item">
+								<input class="govuk-radios__input" id="cpo-type-2" name="type" type="radio" value="planning" {% if request.args['type'] == 'planning' %}checked=checked{% endif %}>
+								<label class="govuk-label govuk-radios__label" for="cpo-type-2">
+								  Planning
+								</label>
+							  </div>
+							  <div class="govuk-radios__item">
+								<input class="govuk-radios__input" id="cpo-type-3" name="type" type="radio" value="development corporation" {% if request.args['type'] == 'development corporation' %}checked=checked{% endif %}>
+								<label class="govuk-label govuk-radios__label" for="cpo-type-3">
+								  Development corporation
+								</label>
+							  </div>
+							  <div class="govuk-radios__item">
+								<input class="govuk-radios__input" id="cpo-type-4" name="type" type="radio" value="GLA" {% if request.args['type'] == 'GLA' %}checked=checked{% endif %}>
+								<label class="govuk-label govuk-radios__label" for="cpo-type-4">
+								  GLA
+								</label>
+							  </div>
+							</div>
+						</fieldset>
+					</details>
 				</div>
 
 
@@ -101,19 +107,19 @@
 
 		<div class="govuk-grid-column-two-thirds">
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
-		    <ul class="govuk-list cpo-list">
-		    {% for cpo in cpos %}
-		        <li class="cpo-item">
-		        	{% set cpo_status = cpo.latest_status().status %}
+			<ul class="govuk-list cpo-list">
+			{% for cpo in cpos %}
+				<li class="cpo-item">
+					{% set cpo_status = cpo.latest_status().status %}
 					<span class="govuk-tag {{ cpo_status | map_cpo_status_to_tag_class }}">{{ cpo_status }}</span>
-		        	<h4 class="govuk-heading-m cpo-item__title"><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></h4>
-		        	<div class="cpo-item__org">{{ cpo.organisation | map_la_code_to_name }}</div>
-		        	<div>Issue date: {{ cpo.start_date }}</div>
-		        	<div>Type: {{ cpo.compulsory_purchase_order_type }}</div>
-    				<div>Address: {{ cpo.name }}</div>
-		        </li>
-		    {% endfor %}
-		    </ul>
+					<h4 class="govuk-heading-m cpo-item__title"><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></h4>
+					<div class="cpo-item__org">{{ cpo.organisation | map_la_code_to_name }}</div>
+					<div>Issue date: {{ cpo.start_date }}</div>
+					<div>Type: {{ cpo.compulsory_purchase_order_type }}</div>
+					<div>Address: {{ cpo.name }}</div>
+				</li>
+			{% endfor %}
+			</ul>
 		</div>
 
 	</div>
