@@ -16,14 +16,39 @@
       CPO data
     </h1>
 
-	<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
-    <ul class="govuk-list govuk-list--bullet">
-    {% for cpo in cpos %}
-        <li><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>
-        	<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
-        	<span>- {{ cpo.start_date }}</span>
-        </li>
-    {% endfor %}
-    </ul>
+	<div class="govuk-grid-row">
+
+		<div class="govuk-grid-column-one-third">
+			<h3 class="govuk-heading-m">Filter</h3>
+
+			<form action="" class="govuk-form">
+				<div class="govuk-form-group">
+				  <label class="govuk-label" for="year">
+				    Year
+				  </label>
+				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
+				</div>
+
+				<button type="submit" class="govuk-button" data-module="govuk-button">
+				  Apply filter
+				</button>
+			</form>
+		</div>
+
+		<div class="govuk-grid-column-two-thirds">
+			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
+		    <ul class="govuk-list govuk-list--bullet">
+		    {% for cpo in cpos %}
+		        <li><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>
+		        	<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
+		        	<span>- {{ cpo.start_date }}</span>
+		        </li>
+		    {% endfor %}
+		    </ul>
+		</div>
+
+	</div>
+
+	
 
 {% endblock %}
