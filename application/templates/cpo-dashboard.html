@@ -2,7 +2,7 @@
 
 {% block content %}
 
-	<span class="govuk-caption-xl">Summary data</span>
+	<span class="govuk-caption-xl">Overview</span>
     <h1 class="govuk-heading-xl">
       Compulsory purchase orders
     </h1>
@@ -11,14 +11,15 @@
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ by_year.counts[-1][1] }}</span>
-				<p class="govuk-body govuk-!-font-size-36">Total (this year)</p>
+				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(this year)</span></p>
 				<span><a href="{{ url_for('frontend.cpo_list', year=2019) }}" class="govuk-link">See CPOs for 2019</a></span>
 			</div>
 		</div>
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ cpos | count }}</span>
-				<p class="govuk-body govuk-!-font-size-36">Total (since 2012)</p>
+				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(since 2012)</span></p>
+				<span class="data-item__link"><a href="{{ url_for('frontend.cpo_list') }}" class="govuk-link">See all CPOs</a></span>
 			</div>
 		</div>
 	</div>

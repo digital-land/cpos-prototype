@@ -7389,3 +7389,11 @@
     font-family: sans-serif;
   }
 }
+
+.data-item .govuk-body {
+  margin-bottom: 5px;
+}
+
+.data-item__link {
+  padding-left: 3px;
+}

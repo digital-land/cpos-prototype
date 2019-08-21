@@ -30,4 +30,12 @@ $using-helvetica: false;
 
 .data-item {
   @include govuk-typography-common;
+
+  .govuk-body {
+    margin-bottom: 5px;
+  }
+}
+
+.data-item__link {
+  padding-left: 3px;
 }
