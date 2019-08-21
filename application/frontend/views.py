@@ -80,6 +80,12 @@ def filter_by_year(year, cpo_query):
     return filtered_query
 
 
+def filter_if_investigation(cpos):
+    with_investigation = [cpo for cpo in cpos if len(cpo.investigations)]
+    no_investigation = [cpo for cpo in cpos if not len(cpo.investigations)]
+    return with_investigation, no_investigation
+
+
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
@@ -100,6 +106,16 @@ def cpo_list():
         filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type == request.args['type'])
 
     cpos = filtered_query.all()
+
+    if request.args and request.args.get('investigations') is not None:
+        cpos_w, cpos_wo = filter_if_investigation(cpos)
+        if request.args['investigations'] in ['True', 'true', 't']:
+            filtered_cpos = cpos_w
+        elif request.args['investigations'] in ['False', 'false', 'f']:
+            filtered_cpos = cpos_wo
+        else:
+            filtered_cpos = cpos
+        return render_template('cpo-list.html', cpos=filtered_cpos)
     return render_template('cpo-list.html', cpos=cpos)
 
 
