@@ -13,7 +13,7 @@
 {% block content %}
 
     <h1 class="govuk-heading-xl">
-      CPO data
+      Compulsory purchase orders
     </h1>
 
 	<div class="govuk-grid-row">
@@ -53,6 +53,44 @@
 				    </div>
 				  </fieldset>
 				</div>
+
+
+				<div class="govuk-form-group">
+				  <fieldset class="govuk-fieldset">
+				    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+				      <h1 class="govuk-fieldset__heading">
+				        CPO type
+				      </h1>
+				    </legend>
+				    <div class="govuk-radios">
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="cpo-type-1" name="type" type="radio" value="housing" {% if request.args['type'] == 'housing' %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="cpo-type-1">
+				          Housing
+				        </label>
+				      </div>
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="cpo-type-2" name="type" type="radio" value="planning" {% if request.args['type'] == 'planning' %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="cpo-type-2">
+				          Planning
+				        </label>
+				      </div>
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="cpo-type-3" name="type" type="radio" value="development corporation" {% if request.args['type'] == 'development corporation' %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="cpo-type-3">
+				          Development corporation
+				        </label>
+				      </div>
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="cpo-type-4" name="type" type="radio" value="GLA" {% if request.args['type'] == 'GLA' %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="cpo-type-4">
+				          GLA
+				        </label>
+				      </div>
+				    </div>
+				  </fieldset>
+				</div>
+
 
 				<button type="submit" class="govuk-button" data-module="govuk-button">
 				  Apply filter
