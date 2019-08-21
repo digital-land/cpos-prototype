@@ -19,9 +19,10 @@
 	<div class="govuk-grid-row">
 
 		<div class="govuk-grid-column-one-third">
-			<h3 class="govuk-heading-m">Filter</h3>
+			<h3 class="govuk-heading-m">Filter CPOs</h3>
 
 			<form action="" class="govuk-form">
+
 				<div class="govuk-form-group">
 				  <label class="govuk-label" for="year">
 				    Year
@@ -29,9 +30,34 @@
 				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
 				</div>
 
+				<div class="govuk-form-group">
+				  <fieldset class="govuk-fieldset">
+				    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+				      <h1 class="govuk-fieldset__heading">
+				        Has investigation
+				      </h1>
+				    </legend>
+				    <div class="govuk-radios">
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="investigation-yes">
+				          Has
+				        </label>
+				      </div>
+				      <div class="govuk-radios__item">
+				        <input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
+				        <label class="govuk-label govuk-radios__label" for="investigation-no">
+				          Doesn't have
+				        </label>
+				      </div>
+				    </div>
+				  </fieldset>
+				</div>
+
 				<button type="submit" class="govuk-button" data-module="govuk-button">
 				  Apply filter
 				</button>
+
 			</form>
 		</div>
 

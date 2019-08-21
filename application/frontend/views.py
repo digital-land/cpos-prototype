@@ -107,11 +107,11 @@ def cpo_list():
 
     cpos = filtered_query.all()
 
-    if request.args and request.args.get('investigations') is not None:
+    if request.args and request.args.get('investigation') is not None:
         cpos_w, cpos_wo = filter_if_investigation(cpos)
-        if request.args['investigations'] in ['True', 'true', 't']:
+        if request.args['investigation'] in ['True', 'true', 't']:
             filtered_cpos = cpos_w
-        elif request.args['investigations'] in ['False', 'false', 'f']:
+        elif request.args['investigation'] in ['False', 'false', 'f']:
             filtered_cpos = cpos_wo
         else:
             filtered_cpos = cpos

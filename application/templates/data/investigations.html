@@ -21,7 +21,7 @@
     <ul class="govuk-list govuk-list--bullet">
 
     	{% for key in counts.keys() %}
-    	<li><a href="{{ url_for('frontend.cpo_list', investigations=key) }}">{{ key }}</a></a>: {{ counts[key] }}</li>
+    	<li><a href="{{ url_for('frontend.cpo_list', investigation=key) }}">{{ key }}</a></a>: {{ counts[key] }}</li>
     	{% endfor %}
 
     </ul>
