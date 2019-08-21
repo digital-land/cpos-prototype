@@ -70,7 +70,9 @@
 					<span class="govuk-tag {{ cpo_status | map_cpo_status_to_tag_class }}">{{ cpo_status }}</span>
 		        	<h4 class="govuk-heading-m cpo-item__title"><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></h4>
 		        	<div class="cpo-item__org">{{ cpo.organisation | map_la_code_to_name }}</div>
-		        	<span>Issue date: {{ cpo.start_date }}</span>
+		        	<div>Issue date: {{ cpo.start_date }}</div>
+		        	<div>Type: {{ cpo.compulsory_purchase_order_type }}</div>
+    				<div>Address: {{ cpo.name }}</div>
 		        </li>
 		    {% endfor %}
 		    </ul>
