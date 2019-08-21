@@ -92,7 +92,7 @@ def cpo_list():
     cpo_query = CompulsoryPurchaseOrder.query
 
     # apply a year filter if exists
-    if request.args and request.args.get('year') is not None:
+    if request.args and request.args.get('year') is not None and request.args.get('year') is not "":
         filtered_query = filter_by_year(request.args['year'], cpo_query)
     else:
         filtered_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
