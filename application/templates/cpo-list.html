@@ -30,77 +30,78 @@
 				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
 				</div>
 
-				<div class="govuk-form-group">
-					<details class="filter-group" {% if request.args['investigation'] %}open{% endif %}>
-						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">Investigation</h3>
-							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--up"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
-							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--down"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
-						</summary>
-						<fieldset class="govuk-fieldset filter-group__fieldset">
-						<legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-visually-hidden">
-						  <h1 class="govuk-fieldset__heading">
-							Has investigation
-						  </h1>
-						</legend>
-						<div class="govuk-radios">
-						  <div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
-							<label class="govuk-label govuk-radios__label" for="investigation-yes">
-							  Has
-							</label>
-						  </div>
-						  <div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
-							<label class="govuk-label govuk-radios__label" for="investigation-no">
-							  Doesn't have
-							</label>
-						  </div>
-						</div>
-					  </fieldset>
-					</details>
-				</div>
-
-
-				<div class="govuk-form-group">
-					<details class="filter-group" {% if request.args['type'] %}open{% endif %}>
-						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">CPO type</h3>
+				{% macro dlfFilterGroup(params) %}
+					<details class="filter-group" {% if params.is_open %}open{% endif %}>
+						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">{{ params.title }}</h3>
 							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--up"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
 							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--down"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
 						</summary>
 						<fieldset class="govuk-fieldset filter-group__fieldset">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-visually-hidden">
 							  <h1 class="govuk-fieldset__heading">
-								CPO type
+								{{ params.title }}
 							  </h1>
 							</legend>
-							<div class="govuk-radios">
-							  <div class="govuk-radios__item">
-								<input class="govuk-radios__input" id="cpo-type-1" name="type" type="radio" value="housing" {% if request.args['type'] == 'housing' %}checked=checked{% endif %}>
-								<label class="govuk-label govuk-radios__label" for="cpo-type-1">
-								  Housing
-								</label>
-							  </div>
-							  <div class="govuk-radios__item">
-								<input class="govuk-radios__input" id="cpo-type-2" name="type" type="radio" value="planning" {% if request.args['type'] == 'planning' %}checked=checked{% endif %}>
-								<label class="govuk-label govuk-radios__label" for="cpo-type-2">
-								  Planning
-								</label>
-							  </div>
-							  <div class="govuk-radios__item">
-								<input class="govuk-radios__input" id="cpo-type-3" name="type" type="radio" value="development corporation" {% if request.args['type'] == 'development corporation' %}checked=checked{% endif %}>
-								<label class="govuk-label govuk-radios__label" for="cpo-type-3">
-								  Development corporation
-								</label>
-							  </div>
-							  <div class="govuk-radios__item">
-								<input class="govuk-radios__input" id="cpo-type-4" name="type" type="radio" value="GLA" {% if request.args['type'] == 'GLA' %}checked=checked{% endif %}>
-								<label class="govuk-label govuk-radios__label" for="cpo-type-4">
-								  GLA
-								</label>
-							  </div>
-							</div>
+							{{ caller() }}
 						</fieldset>
 					</details>
+				{% endmacro %}
+
+				<div class="govuk-form-group">
+					{% call dlfFilterGroup({
+						"title": "Investigation",
+						"is_open": True if request.args['investigation'] else False
+					}) %}
+					<div class="govuk-radios">
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="investigation-yes">
+						  Has
+						</label>
+					  </div>
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="investigation-no">
+						  Doesn't have
+						</label>
+					  </div>
+					</div>
+					{% endcall %}
+				</div>
+
+
+				<div class="govuk-form-group">
+					{% call dlfFilterGroup({
+						"title": "CPO type",
+						"is_open": True if request.args['type'] else False
+					}) %}
+					<div class="govuk-radios">
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="cpo-type-1" name="type" type="radio" value="housing" {% if request.args['type'] == 'housing' %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="cpo-type-1">
+						  Housing
+						</label>
+					  </div>
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="cpo-type-2" name="type" type="radio" value="planning" {% if request.args['type'] == 'planning' %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="cpo-type-2">
+						  Planning
+						</label>
+					  </div>
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="cpo-type-3" name="type" type="radio" value="development corporation" {% if request.args['type'] == 'development corporation' %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="cpo-type-3">
+						  Development corporation
+						</label>
+					  </div>
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="cpo-type-4" name="type" type="radio" value="GLA" {% if request.args['type'] == 'GLA' %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="cpo-type-4">
+						  GLA
+						</label>
+					  </div>
+					</div>
+					{% endcall %}
 				</div>
 
 
