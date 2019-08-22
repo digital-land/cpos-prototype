@@ -1,15 +1,15 @@
 data = [
+	"received",
+	"sent for inquiry",
 	"referred to acquiring authority for confirmation",
 	"confirmed without modifications",
-	"confirmed with modifications",
-	"not confirmed",
-	"received",
-	"other",
-	"sent for inquiry",
-	"withdrawn",
-	"confirmed with modification",
 	"confirmed without modification",
-	"invalid",
+	"confirmed with modifications",
+	"confirmed with modification",
 	"not confirmed following withdrawal",
-	"S14a Revoked"
+	"not confirmed",
+	"withdrawn",
+	"invalid",
+	"S14a Revoked",
+	"other"
 ]
