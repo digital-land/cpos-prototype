@@ -21,7 +21,7 @@
 	<h2 class="govuk-heading-m">Counts of latest status for each CPO</h2>
 	<ul class="govuk-list govuk-list--bullet">
     	{% for status in latest_statuses %}
-    	<li>{{ status[0] }} "{{ status[1] }}"</li>
+    	<li><a href="{{ url_for('frontend.cpo_list', current_status=status[0]) }}">{{ status[0] }}</a> ({{ status[1] }})</li>
     	{% endfor %}
     </ul>
 
