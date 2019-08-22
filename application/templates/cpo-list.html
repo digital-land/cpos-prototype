@@ -105,6 +105,25 @@
 				</div>
 
 
+				<div class="govuk-form-group">
+					{% call dlfFilterGroup({
+						"title": "CPO status",
+						"is_open": True if request.args['current_status'] else False
+					}) %}
+					<div class="govuk-radios">
+					{% for status in cpo_statuses %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="cpo-status-{{ loop.counter }}" name="current_status" type="radio" value="{{ status }}" {% if request.args['current_status'] == status %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-radios__label" for="cpo-status-{{ loop.counter }}">
+							  {{ status }}
+							</label>
+					  </div>
+					{% endfor %}
+					</div>
+					{% endcall %}
+				</div>
+
+
 				<button type="submit" class="govuk-button" data-module="govuk-button">
 				  Apply filter
 				</button>

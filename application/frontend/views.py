@@ -21,6 +21,7 @@ from application.models import (
 )
 
 from application.data.legislation import data as legislation
+from application.data.cpo_statuses import data as cpo_statuses
 
 from application.utils import (
     getStatuses,
@@ -87,6 +88,10 @@ def filter_if_investigation(cpos):
     return with_investigation, no_investigation
 
 
+def filter_by_status(status, cpos):
+    return [cpo for cpo in cpos if cpo.latest_status().status == status]
+
+
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
@@ -108,6 +113,9 @@ def cpo_list():
 
     cpos = filtered_query.all()
 
+    if request.args and request.args.get('current_status') is not None:
+        cpos = filter_by_status(request.args['current_status'], cpos)
+
     if request.args and request.args.get('investigation') is not None:
         cpos_w, cpos_wo = filter_if_investigation(cpos)
         if request.args['investigation'] in ['True', 'true', 't']:
@@ -116,8 +124,8 @@ def cpo_list():
             filtered_cpos = cpos_wo
         else:
             filtered_cpos = cpos
-        return render_template('cpo-list.html', cpos=filtered_cpos)
-    return render_template('cpo-list.html', cpos=cpos)
+        return render_template('cpo-list.html', cpos=filtered_cpos, cpo_statuses=cpo_statuses)
+    return render_template('cpo-list.html', cpos=cpos, cpo_statuses=cpo_statuses)
 
 
 @frontend.route('/compulsory-purchase-order/<path:id>')
