@@ -18,6 +18,14 @@
       Statuses
     </h1>
 
+	<h2 class="govuk-heading-m">Counts of latest status for each CPO</h2>
+	<ul class="govuk-list govuk-list--bullet">
+    	{% for status in latest_statuses %}
+    	<li>{{ status[0] }} "{{ status[1] }}"</li>
+    	{% endfor %}
+    </ul>
+
+	<h2 class="govuk-heading-m">Counts of all statuses</h2>
     <ul class="govuk-list govuk-list--bullet">
     	{% for status in statuses.keys() %}
     	<li>{{ statuses[status] }} "{{ status }}"</li>

@@ -24,6 +24,7 @@ from application.data.legislation import data as legislation
 
 from application.utils import (
     getStatuses,
+    get_latest_statuses,
     getYearCounts,
     get_LA_counts,
     counter_to_tuples,
@@ -143,7 +144,10 @@ def data_index():
 @requires_auth
 def statuses():
     cpos = CompulsoryPurchaseOrder.query.all()
-    return render_template('data/statuses.html', statuses=getStatuses(cpos))
+    return render_template('data/statuses.html',
+        statuses=getStatuses(cpos),
+        latest_statuses=get_latest_statuses(cpos)
+    )
 
 
 @frontend.route('/data/years')

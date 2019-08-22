@@ -18,6 +18,14 @@ def getStatuses(cpos):
     return Counter(statuses)
 
 
+def get_latest_statuses(cpos):
+    statuses = []
+    for cpo in cpos:
+        statuses.append(cpo.latest_status().status)
+
+    return Counter(statuses).most_common()
+
+
 def getYearCounts(cpos):
     years = []
     for cpo in cpos:
