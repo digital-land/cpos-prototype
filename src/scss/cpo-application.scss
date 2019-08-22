@@ -124,7 +124,10 @@ $using-helvetica: false;
 }
 
 .filter-group__fieldset {
+  max-height: 200px;
   padding: 10px 10px 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: $govuk-body-background-colour;
 }
 
@@ -132,4 +135,11 @@ $using-helvetica: false;
   display: inline-block;
   margin-bottom: 0;
   margin-left: -10px;
+}
+
+.filter-group__selected-text {
+  display: block;
+  @include govuk-text-colour;
+  @include govuk-font($size: 14);
+  padding-left: 8px;
 }
