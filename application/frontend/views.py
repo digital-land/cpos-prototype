@@ -109,7 +109,7 @@ def cpo_list():
 
     # then apply type filter if there is one
     if request.args and request.args.get('type') is not None:
-        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type == request.args['type'])
+        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type.in_(request.args.getlist('type')))
 
     cpos = filtered_query.all()
 
