@@ -158,6 +158,36 @@
 
 		<div class="govuk-grid-column-two-thirds">
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
+
+			<div class="applied-filters">
+				{% if request.args and request.args['investigation'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Investigation:</span>
+					<span class="applied-filter__item">{{ request.args['investigation'] }}</span>
+				</div>
+				{% endif %}
+				{% if request.args and request.args['type'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Type:</span>
+					{% for type_ in request.args.getlist('type') %}
+					<span class="applied-filter__item">{{ type_ }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
+				{% if request.args and request.args['current_status'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Current status:</span>
+					<span class="applied-filter__item">{{ request.args['current_status'] }}</span>
+				</div>
+				{% endif %}
+				{% if request.args and request.args['org'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Organisation:</span>
+					<span class="applied-filter__item">{{ request.args['org']|map_la_code_to_name }}</span>
+				</div>
+				{% endif %}
+			</div>
+
 			<ul class="govuk-list cpo-list">
 			{% for cpo in cpos %}
 				<li class="cpo-item">
