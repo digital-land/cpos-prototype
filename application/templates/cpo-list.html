@@ -133,13 +133,13 @@
 					{% call dlfFilterGroup({
 						"title": "Organisation",
 						"is_open": True if request.args['org'] else False,
-						"selected": 1 if request.args['org'] else 0
+						"selected": request.args.getlist('org')|length if request.args['org'] else 0
 					}) %}
-					<div class="govuk-radios">
+					<div class="govuk-checkboxes">
 					{% for la in las %}
-						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="local-authority-{{ loop.index}}" name="org" type="radio" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
-							<label class="govuk-label govuk-radios__label" for="local-authority-{{ loop.index }}">
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="local-authority-{{ loop.index}}" name="org" type="checkbox" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-checkboxes__label" for="local-authority-{{ loop.index }}">
 							  {{ la[1] }}
 							</label>
 					  	</div>
@@ -183,7 +183,9 @@
 				{% if request.args and request.args['org'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Organisation:</span>
-					<span class="applied-filter__item">{{ request.args['org']|map_la_code_to_name }}</span>
+					{% for org in request.args.getlist('org') %}
+					<span class="applied-filter__item">{{ org|map_la_code_to_name }}</span>
+					{% endfor %}
 				</div>
 				{% endif %}
 			</div>

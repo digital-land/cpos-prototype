@@ -107,7 +107,7 @@ def cpo_list():
 
     # then apply org fitler if there is one
     if request.args and request.args.get('org') is not None:
-        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.organisation == request.args['org'])
+        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.organisation.in_(request.args.getlist('org')))
 
     # then apply type filter if there is one
     if request.args and request.args.get('type') is not None:
