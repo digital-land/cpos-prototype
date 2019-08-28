@@ -117,9 +117,9 @@
 					<div class="govuk-radios">
 					{% for status in cpo_statuses %}
 						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="cpo-status-{{ loop.counter }}" name="current_status" type="radio" value="{{ status }}" {% if request.args['current_status']|trim == status %}checked=checked{% endif %}>
+							<input class="govuk-radios__input" id="cpo-status-{{ loop.index }}" name="current_status" type="radio" value="{{ status }}" {% if request.args['current_status']|trim == status %}checked=checked{% endif %}>
 							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
-							<label class="govuk-label govuk-radios__label" for="cpo-status-{{ loop.counter }}">
+							<label class="govuk-label govuk-radios__label" for="cpo-status-{{ loop.index }}">
 							  {{ status }}
 							</label>
 					  </div>
@@ -138,8 +138,8 @@
 					<div class="govuk-radios">
 					{% for la in las %}
 						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="local-authority-{{ loop.counter }}" name="org" type="radio" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
-							<label class="govuk-label govuk-radios__label" for="local-authority-{{ loop.counter }}">
+							<input class="govuk-radios__input" id="local-authority-{{ loop.index}}" name="org" type="radio" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-radios__label" for="local-authority-{{ loop.index }}">
 							  {{ la[1] }}
 							</label>
 					  	</div>
