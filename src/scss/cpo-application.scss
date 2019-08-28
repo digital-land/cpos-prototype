@@ -103,3 +103,71 @@ $using-helvetica: false;
   border-radius: 4px;
   background: govuk-colour("light-grey");
 }
+
+// ===================
+
+.timeline {
+  padding-left: 0;
+}
+
+.timeline__item {
+  margin-bottom: 0 !important;
+  list-style: none;
+}
+
+.timeline__item__title,
+.timeline__item__date {
+  display: block;
+  padding-left: 20px;
+}
+
+.timeline__item__title {
+  position: relative;
+  border-left: 2px solid $govuk-border-colour;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 15px;
+    height: 2px;
+    background: $govuk-border-colour;
+  }
+
+}
+
+.timeline__item:first-child .timeline__item__title {
+  border-left: 0;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, govuk-colour("white") 50%,  $govuk-border-colour 50%);
+  }
+}
+
+.timeline__item__date {
+  position: relative;
+  @include govuk-typography-common;
+  @include govuk-font($size: 16);
+  padding-bottom: 5px;
+  border-left: 2px solid $govuk-border-colour;
+  color: $govuk-secondary-text-colour;
+}
+
+.timeline__item:last-child .timeline__item__date {
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -6px;
+    width: 10px;
+    height: 2px;
+    background: $govuk-border-colour;
+  }
+}
