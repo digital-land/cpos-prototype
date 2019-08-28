@@ -129,6 +129,25 @@
 				</div>
 
 
+				<div class="govuk-form-group">
+					{% call dlfFilterGroup({
+						"title": "Organisation",
+						"is_open": True if request.args['org'] else False,
+						"selected": 1 if request.args['org'] else 0
+					}) %}
+					<div class="govuk-radios">
+					{% for la in las %}
+						<div class="govuk-radios__item">
+							<input class="govuk-radios__input" id="local-authority-{{ loop.counter }}" name="org" type="radio" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
+							<label class="govuk-label govuk-radios__label" for="local-authority-{{ loop.counter }}">
+							  {{ la[1] }}
+							</label>
+					  	</div>
+					{% endfor %}
+					</div>
+					{% endcall %}
+				</div>
+
 				<button type="submit" class="govuk-button" data-module="govuk-button">
 				  Apply filter
 				</button>

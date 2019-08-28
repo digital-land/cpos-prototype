@@ -22,6 +22,7 @@ from application.models import (
 
 from application.data.legislation import data as legislation
 from application.data.cpo_statuses import data as cpo_statuses
+from application.data import LocalAuthorityMapping
 
 from application.utils import (
     getStatuses,
@@ -95,6 +96,7 @@ def filter_by_status(status, cpos):
 @frontend.route('/compulsory-purchase-order')
 @requires_auth
 def cpo_list():
+    la_mapping = LocalAuthorityMapping().order_by_name()
     cpo_query = CompulsoryPurchaseOrder.query
 
     # apply a year filter if exists
@@ -124,8 +126,8 @@ def cpo_list():
             filtered_cpos = cpos_wo
         else:
             filtered_cpos = cpos
-        return render_template('cpo-list.html', cpos=filtered_cpos, cpo_statuses=cpo_statuses)
-    return render_template('cpo-list.html', cpos=cpos, cpo_statuses=cpo_statuses)
+        return render_template('cpo-list.html', cpos=filtered_cpos, cpo_statuses=cpo_statuses, las=la_mapping)
+    return render_template('cpo-list.html', cpos=cpos, cpo_statuses=cpo_statuses, las=la_mapping)
 
 
 @frontend.route('/compulsory-purchase-order/<path:id>')

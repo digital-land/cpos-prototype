@@ -30,3 +30,7 @@ class LocalAuthorityMapping:
 
     def get_local_authority_name(self, local_authority_id):
         return self.local_authority_mapping.get(local_authority_id)
+
+    def order_by_name(self):
+        sorted_mapping = sorted(self.local_authority_mapping.items(), key=lambda kv: kv[1])
+        return sorted_mapping
