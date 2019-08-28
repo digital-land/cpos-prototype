@@ -138,7 +138,7 @@
 					<div class="govuk-checkboxes">
 					{% for la in las %}
 						<div class="govuk-checkboxes__item">
-							<input class="govuk-checkboxes__input" id="local-authority-{{ loop.index}}" name="org" type="checkbox" value="{{ la[0] }}" {% if request.args['org'] == la[0] %}checked=checked{% endif %}>
+							<input class="govuk-checkboxes__input" id="local-authority-{{ loop.index}}" name="org" type="checkbox" value="{{ la[0] }}" {% if la[0] in request.args.getlist('org') %}checked=checked{% endif %}>
 							<label class="govuk-label govuk-checkboxes__label" for="local-authority-{{ loop.index }}">
 							  {{ la[1] }}
 							</label>
@@ -160,6 +160,12 @@
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
 
 			<div class="applied-filters">
+				{% if request.args and request.args['year'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Year:</span>
+					<span class="applied-filter__item">{{ request.args['year'] }}</span>
+				</div>
+				{% endif %}
 				{% if request.args and request.args['investigation'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Investigation:</span>
