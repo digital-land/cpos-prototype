@@ -62,6 +62,8 @@ def register_filters(app):
     app.add_template_filter(flatten_tuples)
     from application.filters import map_cpo_status_to_tag_class
     app.add_template_filter(map_cpo_status_to_tag_class)
+    from application.filters import remove_item
+    app.add_template_filter(remove_item)
 
 
 def register_blueprints(app):

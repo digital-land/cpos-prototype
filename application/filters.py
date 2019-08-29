@@ -27,3 +27,9 @@ def map_cpo_status_to_tag_class(status):
 	if 'inquiry' in status:
 		class_ = "govuk-tag--warning"
 	return class_
+
+
+def remove_item(list_, item):
+	if item in list_:
+		list_.remove(item)
+	return list_

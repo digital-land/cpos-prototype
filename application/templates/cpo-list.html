@@ -158,6 +158,31 @@
 			</form>
 		</div>
 
+	{% macro removeFilterLink(filter_name, item) %}
+		{# need to reset these each time #}
+		{% set year_filters = request.args.getlist('year') %}
+		{% set investigation_filters = request.args.getlist('investigation') %}
+		{% set type_filters = request.args.getlist('type') %}
+		{% set status_filters = request.args.getlist('current_status') %}
+		{% set org_filters = request.args.getlist('org') %}
+
+		{% if filter_name == "year" %}
+			{% set year_filters = year_filters|remove_item(item) %}
+		{% elif filter_name == "investigation" %}
+			{% set investigation_filters = investigation_filters|remove_item(item) %}
+		{% elif filter_name == "type" %}
+			{% set type_filters = type_filters|remove_item(item) %}
+		{% elif filter_name == "current_status" %}
+			{% set status_filters = status_filters|remove_item(item) %}
+		{% elif filter_name == "organisation" %}
+			{% set org_filters = org_filters|remove_item(item) %}
+		{% endif %}
+		<a href="{{ url_for('frontend.cpo_list', year=year_filters, investigation=investigation_filters, type=type_filters, current_status=status_filters, org=org_filters) }}" class="govuk-link">x<span class="govuk-visually-hidden">remove filtering by {{item}}</span></a>
+	{% endmacro %}
+
+	
+
+
 		<div class="govuk-grid-column-two-thirds">
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
 
@@ -165,34 +190,34 @@
 				{% if request.args and request.args['year'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Year:</span>
-					<span class="applied-filter__item">{{ request.args['year'] }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("year", request.args['year']) }}{{ request.args['year'] }}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['investigation'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Investigation:</span>
-					<span class="applied-filter__item">{{ request.args['investigation'] }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("investigation", request.args['investigation']) }}{{ request.args['investigation'] }}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['type'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Type:</span>
 					{% for type_ in request.args.getlist('type') %}
-					<span class="applied-filter__item">{{ type_ }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("type", type_) }}{{ type_ }}</span>
 					{% endfor %}
 				</div>
 				{% endif %}
 				{% if request.args and request.args['current_status'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Current status:</span>
-					<span class="applied-filter__item">{{ request.args['current_status'] }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("current_status", request.args['current_status']) }}{{ request.args['current_status'] }}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['org'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Organisation:</span>
 					{% for org in request.args.getlist('org') %}
-					<span class="applied-filter__item">{{ org|map_la_code_to_name }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("organisation", org) }}{{ org|map_la_code_to_name }}</span>
 					{% endfor %}
 				</div>
 				{% endif %}
