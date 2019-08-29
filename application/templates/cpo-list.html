@@ -31,9 +31,9 @@
 				</div>
 
 				{% macro dlfFilterGroup(params) %}
-					<details class="filter-group" {% if params.is_open %}open{% endif %}>
+					<details class="filter-group" {% if params.is_open %}open{% endif %} {% if not params.no_count %}data-module="selected-counter"{% endif %}>
 						<summary class="filter-group__summary"><h3 class="govuk-heading-s filter-group__heading">{{ params.title }}</h3>
-							{%- if params.selected %}<span class="filter-group__selected-text">{{ params.selected }} selected</span>{% endif -%}
+							{%- if params.selected %}<span class="filter-group__selected-text"><span class="filter-group__selected-text__count">{{ params.selected }}</span> selected</span>{% endif -%}
 							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--up"><path d="m798.16 609.84l-256-256c-16.683-16.683-43.691-16.683-60.331 0l-256 256c-16.683 16.683-16.683 43.691 0 60.331s43.691 16.683 60.331 0l225.84-225.84 225.84 225.84c16.683 16.683 43.691 16.683 60.331 0s16.683-43.691 0-60.331z"></path></svg>
 							<svg version="1.1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="filter-group__icon filter-group__icon--down"><path d="m225.84 414.16l256 256c16.683 16.683 43.691 16.683 60.331 0l256-256c16.683-16.683 16.683-43.691 0-60.331s-43.691-16.683-60.331 0l-225.84 225.84-225.84-225.84c-16.683-16.683-43.691-16.683-60.331 0s-16.683 43.691 0 60.331z"></path></svg>
 						</summary>
@@ -112,7 +112,8 @@
 					{% call dlfFilterGroup({
 						"title": "CPO status",
 						"is_open": True if request.args['current_status'] else False,
-						"selected": 1 if request.args['current_status'] else 0
+						"selected": 1 if request.args['current_status'] else 0,
+						"no_count": True
 					}) %}
 					<div class="govuk-radios">
 					{% for status in cpo_statuses %}
@@ -133,7 +134,8 @@
 					{% call dlfFilterGroup({
 						"title": "Organisation",
 						"is_open": True if request.args['org'] else False,
-						"selected": request.args.getlist('org')|length if request.args['org'] else 0
+						"selected": request.args.getlist('org')|length if request.args['org'] else 0,
+						"no_count": True
 					}) %}
 					<div class="govuk-checkboxes">
 					{% for la in las %}
@@ -215,4 +217,15 @@
 
 	
 
+{% endblock %}
+
+{% block bodyEnd %}
+{{ super() }}
+<script>
+// Initialise back to top
+var $filters = document.querySelectorAll('[data-module="selected-counter"]')
+$filters.forEach(filter => {
+	new SelectedCounter(filter).init()
+})
+</script>
 {% endblock %}
