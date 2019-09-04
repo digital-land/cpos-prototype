@@ -112,15 +112,14 @@
 					{% call dlfFilterGroup({
 						"title": "CPO status",
 						"is_open": True if request.args['current_status'] else False,
-						"selected": 1 if request.args['current_status'] else 0,
-						"no_count": True
+						"selected": request.args.getlist('current_status')|length if request.args['current_status'] else 0
 					}) %}
-					<div class="govuk-radios">
+					<div class="govuk-checkboxes">
 					{% for status in cpo_statuses %}
-						<div class="govuk-radios__item">
-							<input class="govuk-radios__input" id="cpo-status-{{ loop.index }}" name="current_status" type="radio" value="{{ status }}" {% if request.args['current_status']|trim == status %}checked=checked{% endif %}>
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="cpo-status-{{ loop.index }}" name="current_status" type="checkbox" value="{{ status }}" {% if status in request.args.getlist('current_status') %}checked=checked{% endif %}>
 							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
-							<label class="govuk-label govuk-radios__label" for="cpo-status-{{ loop.index }}">
+							<label class="govuk-label govuk-checkboxes__label" for="cpo-status-{{ loop.index }}">
 							  {{ status }}
 							</label>
 					  </div>
@@ -210,7 +209,9 @@
 				{% if request.args and request.args['current_status'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Current status:</span>
-					<span class="applied-filter__item">{{ removeFilterLink("current_status", request.args['current_status']) }}{{ request.args['current_status'] }}</span>
+					{% for status in request.args.getlist('current_status') %}
+					<span class="applied-filter__item">{{ removeFilterLink("current_status", status) }}{{ status }}</span>
+					{% endfor %}
 				</div>
 				{% endif %}
 				{% if request.args and request.args['org'] %}

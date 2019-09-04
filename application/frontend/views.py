@@ -89,8 +89,12 @@ def filter_if_investigation(cpos):
     return with_investigation, no_investigation
 
 
-def filter_by_status(status, cpos):
-    return [cpo for cpo in cpos if cpo.latest_status().status == status]
+def filter_by_status(status, cpos, filtered_list = []):
+    if isinstance(status, list) and len(status) > 0:
+        filter_str = status.pop()
+        filter_applied_list = [cpo for cpo in cpos if cpo.latest_status().status == filter_str]
+        return filter_by_status(status, cpos, filtered_list + filter_applied_list)
+    return filtered_list
 
 
 @frontend.route('/compulsory-purchase-order')
@@ -116,7 +120,7 @@ def cpo_list():
     cpos = filtered_query.all()
 
     if request.args and request.args.get('current_status') is not None:
-        cpos = filter_by_status(request.args['current_status'], cpos)
+        cpos = filter_by_status(request.args.getlist('current_status'), cpos)
 
     if request.args and request.args.get('investigation') is not None:
         cpos_w, cpos_wo = filter_if_investigation(cpos)
