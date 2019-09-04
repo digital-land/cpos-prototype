@@ -51,7 +51,7 @@
             {% endif %}
         </div>
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body-l"><span class="govuk-!-font-weight-bold">Address:</span> {{ cpo.name }}</p>
+            <p class="govuk-body-l"><span class="govuk-!-font-weight-bold">Location:</span> {{ cpo.name }}</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Organisation:</span> {{ cpo.organisation | map_la_code_to_name }}</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Type:</span> {{ cpo.compulsory_purchase_order_type }}</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Raised:</span> {{ cpo.start_date }}</p>
