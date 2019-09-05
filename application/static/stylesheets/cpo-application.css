@@ -6636,6 +6636,10 @@
   }
 }
 
+.filter-group__auto-filter {
+  padding-bottom: 15px;
+}
+
 .with-hero #global-header-bar {
   display: none;
 }

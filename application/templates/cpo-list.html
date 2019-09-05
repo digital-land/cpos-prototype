@@ -117,10 +117,13 @@
 					{% call dlfFilterGroup({
 						"title": "Organisation",
 						"is_open": True if request.args['org'] else False,
-						"selected": request.args.getlist('org')|length if request.args['org'] else 0,
-						"no_count": True
+						"selected": request.args.getlist('org')|length if request.args['org'] else 0
 					}) %}
-					<div class="govuk-checkboxes">
+					
+					<div class="govuk-checkboxes" data-module="filter-checkboxes">
+						<div class="filter-group__auto-filter">
+							<input name="option-select-filter" id="input-f3852fb8" class="govuk-input filter-group__auto-filter__input" type="text" aria-describedby="checkboxes-8390ddfc-count" aria-controls="checkboxes-8390ddfc">
+						</div>
 					{% for la in las %}
 						<div class="govuk-checkboxes__item">
 							<input class="govuk-checkboxes__input" id="local-authority-{{ loop.index}}" name="org" type="checkbox" value="{{ la[0] }}" {% if la[0] in request.args.getlist('org') %}checked=checked{% endif %}>
@@ -237,5 +240,67 @@ var $filters = document.querySelectorAll('[data-module="selected-counter"]')
 $filters.forEach(filter => {
 	new SelectedCounter(filter).init()
 })
+
+// ====================================
+// Filter checkboxes module
+// ====================================
+
+function FilterCheckboxes($module) {
+  this.$module = $module
+  this.$textbox = $module.querySelector('.filter-group__auto-filter__input')
+  this.checkboxArr = [...$module.querySelectorAll(".govuk-checkboxes__item")]
+}
+
+FilterCheckboxes.prototype.init = function() {
+  var $module = this.$module
+  var $checkboxes = this.checkboxArr
+
+  // if no checkboxes then return
+  if (!$checkboxes) {
+    return
+  }
+
+  // Bind event changes to the textarea
+  var boundInputEvents = this.bindInputEvents.bind(this)
+  boundInputEvents()
+}
+
+FilterCheckboxes.prototype.bindInputEvents = function() {
+	var $textbox = this.$textbox;
+
+	$textbox.addEventListener('input', this.filterCheckboxes.bind(this))
+}
+
+FilterCheckboxes.prototype.filterCheckboxes = function() {
+	var $textbox = this.$textbox
+	var boundFilterCheckboxesArr = this.filterCheckboxesArr.bind(this)
+	// filter the array of checkboxes
+	var reducedArr = boundFilterCheckboxesArr($textbox.value)
+
+	// show only those checkboxes remaining
+	var boundDisplayMatchingCheckboxes = this.displayMatchingCheckboxes.bind(this)
+	boundDisplayMatchingCheckboxes(reducedArr)
+}
+
+FilterCheckboxes.prototype.filterCheckboxesArr = function(query) {
+	var checkboxArr = this.checkboxArr
+	return checkboxArr.filter(function(el) {
+		const checkbox = el.querySelector('label');
+		return checkbox.textContent.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+	})
+}
+
+FilterCheckboxes.prototype.displayMatchingCheckboxes = function(ckbxArr) {
+	// hide all
+	this.checkboxArr.forEach((ckbx) => ckbx.style.display = 'none');
+	// re show those in filtered array
+	ckbxArr.forEach((ckbx) => ckbx.style.display = 'block');
+}
+
+var $filterCheckboxes = document.querySelectorAll('[data-module="filter-checkboxes"]')
+$filterCheckboxes.forEach(el => {
+	new FilterCheckboxes(el).init()
+})
+
 </script>
 {% endblock %}
