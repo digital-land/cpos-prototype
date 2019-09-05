@@ -122,7 +122,10 @@
 					
 					<div class="govuk-checkboxes" data-module="filter-checkboxes">
 						<div class="filter-group__auto-filter">
-							<input name="option-select-filter" id="input-f3852fb8" class="govuk-input filter-group__auto-filter__input" type="text" aria-describedby="checkboxes-8390ddfc-count" aria-controls="checkboxes-8390ddfc">
+							<label for="input-f3852fb8" class="govuk-label govuk-visually-hidden">
+							Filter Show only
+							</label>
+							<input name="option-select-filter" id="input-f3852fb8" class="govuk-input filter-group__auto-filter__input" type="text">
 						</div>
 					{% for la in las %}
 						<div class="govuk-checkboxes__item">
@@ -244,6 +247,11 @@ $filters.forEach(filter => {
 // ====================================
 // Filter checkboxes module
 // ====================================
+
+// to do
+// - aria-describedby, hidden span that counts how many options are showing and how many of them are selected
+// - aria-controls, indicate that it controls the list of checkboxes
+// - hide textbox when no js
 
 function FilterCheckboxes($module) {
   this.$module = $module
