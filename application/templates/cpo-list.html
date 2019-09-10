@@ -121,19 +121,20 @@
 						"selected": request.args.getlist('org')|length if request.args['org'] else 0
 					}) %}
 					
-					{% set randomID = random_int(5) %}
+					{% set randomID_filter = random_int(5) %}
+					{% set randomID_list = random_int(5) %}
 					<div class="govuk-checkboxes" data-module="filter-checkboxes">
 						<div class="filter-group__auto-filter">
 							<label for="input-f3852fb8" class="govuk-label govuk-visually-hidden">
 							Filter Show only
 							</label>
-							<input name="option-select-filter" id="input-f3852fb8" class="govuk-input filter-group__auto-filter__input" type="text" aria-describedby="checkbox-filter-{{ randomID }}">
+							<input name="option-select-filter" id="input-f3852fb8" class="govuk-input filter-group__auto-filter__input" type="text" aria-describedby="checkbox-filter-{{ randomID_filter }}" aria-controls="checkboxes-{{ randomID_list }}">
 						</div>
 
 						<div role="group">
-							<span id="checkbox-filter-{{ randomID }}" class="filter-group__auto-filter__desc govuk-visually-hidden" aria-live="polite" data-single="option found" data-multiple="options found" data-selected="selected">How many showing</span>
+							<span id="checkbox-filter-{{ randomID_filter }}" class="filter-group__auto-filter__desc govuk-visually-hidden" aria-live="polite" data-single="option found" data-multiple="options found" data-selected="selected">How many showing</span>
 						
-							<div class="checkbox-list">
+							<div id="checkboxes-{{ randomID_list }}" class="checkbox-list">
 								{% for la in las %}
 								<div class="govuk-checkboxes__item">
 									<input class="govuk-checkboxes__input" id="local-authority-{{ loop.index}}" name="org" type="checkbox" value="{{ la[0] }}" {% if la[0] in request.args.getlist('org') %}checked=checked{% endif %}>
