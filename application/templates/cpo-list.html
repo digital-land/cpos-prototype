@@ -2,6 +2,7 @@
 
 {% from "./govuk-jinja-components/back-link/macro.jinja" import govukBackLink %}
 {% from "./dl-macros/filter-group.html" import dlfFilterGroup %}
+{% from "./dl-macros/helpers.html" import random_int %}
 
 {% block beforeContent %}
 {{ super() }}
@@ -111,9 +112,6 @@
 					</div>
 					{% endcall %}
 				</div>
-
-
-{% macro random_int(len) -%}{% for n in range(len) %}{{- [0,1,2,3,4,5,6,7,8,9]|random -}}{% endfor %}{%- endmacro %}
 
 
 				<div class="govuk-form-group">
