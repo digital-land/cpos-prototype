@@ -334,15 +334,41 @@
       return
     }
 
+    // returns true is the item has been hidden with display:none
+    this.isDisplayNone = function(el) {
+      var style = window.getComputedStyle(el);
+      return ((style.display === 'none') || (style.visibility === 'hidden'))
+    };
+
+    // returns true if the item's checkbox is checked
+    this.isItemChecked = function(el) {
+      var chbx = el.querySelector("input");
+      return chbx.checked
+    };
+
+    this.ariaDescription = $module.querySelector('.filter-group__auto-filter__desc');
+    // To do: check it exists
+    // set initial aria message
+    var boundUpdateAriaDescribedBy = this.updateAriaDescribedBy.bind(this);
+    boundUpdateAriaDescribedBy();
+
     // Bind event changes to the textarea
     var boundInputEvents = this.bindInputEvents.bind(this);
     boundInputEvents();
   };
 
+  FilterCheckboxes.prototype.getCheckboxInput = function(el) {
+    return el.querySelector("input")
+  };
+
   FilterCheckboxes.prototype.bindInputEvents = function() {
     var $textbox = this.$textbox;
+    var checkboxArr = this.checkboxArr.map(this.getCheckboxInput);
 
     $textbox.addEventListener('input', this.filterCheckboxes.bind(this));
+
+    var boundUpdateAriaDescribedBy = this.updateAriaDescribedBy.bind(this);
+    checkboxArr.forEach(chbxEl => chbxEl.addEventListener('change', boundUpdateAriaDescribedBy));
   };
 
   FilterCheckboxes.prototype.filterCheckboxes = function() {
@@ -351,9 +377,12 @@
     // filter the array of checkboxes
     var reducedArr = boundFilterCheckboxesArr($textbox.value);
 
+    var boundUpdateAriaDescribedBy = this.updateAriaDescribedBy.bind(this);
+
     // show only those checkboxes remaining
     var boundDisplayMatchingCheckboxes = this.displayMatchingCheckboxes.bind(this);
-    boundDisplayMatchingCheckboxes(reducedArr);
+    boundDisplayMatchingCheckboxes(reducedArr, boundUpdateAriaDescribedBy);
+
   };
 
   FilterCheckboxes.prototype.filterCheckboxesArr = function(query) {
@@ -364,11 +393,34 @@
     })
   };
 
-  FilterCheckboxes.prototype.displayMatchingCheckboxes = function(ckbxArr) {
+  FilterCheckboxes.prototype.displayMatchingCheckboxes = function(ckbxArr, cb) {
     // hide all
     this.checkboxArr.forEach((ckbx) => ckbx.style.display = 'none');
     // re show those in filtered array
     ckbxArr.forEach((ckbx) => ckbx.style.display = 'block');
+
+    if(cb) {
+      cb();
+    }
+  };
+
+  FilterCheckboxes.prototype.updateAriaDescribedBy = function() {
+    var checkboxArr = this.checkboxArr;
+    var displayedCheckboxes = checkboxArr.filter(chbx => !this.isDisplayNone(chbx));
+    var checkedAndDisplayed = displayedCheckboxes.filter(chbx => this.isItemChecked(chbx));
+
+    var boundGenerateAriaMessage = this.generateAriaMessage.bind(this);
+    boundGenerateAriaMessage(displayedCheckboxes.length, checkedAndDisplayed.length);
+  };
+
+  FilterCheckboxes.prototype.generateAriaMessage = function(optionCount, selectedCount) {
+    var ariaEl = this.ariaDescription;
+    var optionStr = ariaEl.dataset.single;
+    if(optionCount > 1) {
+      optionStr = ariaEl.dataset.multiple;
+    }
+
+    ariaEl.textContent = optionCount + " " + optionStr + ", " + selectedCount + " " + ariaEl.dataset.selected;
   };
 
   // ================================
