@@ -6637,7 +6637,12 @@
 }
 
 .filter-group__auto-filter {
+  display: none;
   padding-bottom: 15px;
+}
+
+.js-enabled .filter-group__auto-filter {
+  display: block;
 }
 
 .filter-group__auto-filter__input {
