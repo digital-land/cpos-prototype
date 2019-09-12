@@ -21,6 +21,7 @@
 				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All - CPO types</option>
 				<option value="housing" {% if request.args.get('type') == "housing" %}selected{% endif %}>Housing</option>
 				<option value="planning" {% if request.args.get('type') == "planning" %}selected{% endif %}>Planning</option>
+
 			</select>
 			<button type="submit" class="link-align-btn">Update dashboard</button>
 		</div>
@@ -31,11 +32,7 @@
 			"text": "Development corporation",
 			"selected": true if request.args.get('type') == "development corporation" else false
 		},
-		{
-			"value": "GLA",
-			"text": "GLA",
-			"selected": true if request.args.get('type') == "GLA" else false
-		}
+		<option value="GLA" {% if request.args.get('type') == "GLA" %}selected{% endif %}>GLA</option>
 	#}
 	</form>
 
@@ -85,7 +82,7 @@
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h3 class="govuk-heading-m">Lastest CPOs</h3>
+	<h3 class="govuk-heading-m">Lastest {{ cpo_type_str }}</h3>
 	<ul class="govuk-list">
 		{% for cpo in recent_cpos %}
 		<li>

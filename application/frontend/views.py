@@ -54,12 +54,15 @@ def per_year_counts_to_data(per_year_counts):
 @frontend.route('/dashboard')
 @requires_auth
 def dashboard():
-    if request.args and request.args.get('type') is not None and request.args.get('type') != "all":
-        cpos = CompulsoryPurchaseOrder.query.filter_by(compulsory_purchase_order_type=request.args.get('type')).all()
-        cpos_2019 = CompulsoryPurchaseOrder.query.filter_by(compulsory_purchase_order_type=request.args.get('type')).filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
-    else:
-        cpos = CompulsoryPurchaseOrder.query.all()
-        cpos_2019 = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
+    cpo_query = CompulsoryPurchaseOrder.query
+    cpo_2019_query = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01')
+    # need to add 'GLA', 'development corporation'
+    if request.args and request.args.get('type') in ['housing', 'planning']:
+        cpo_query = cpo_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
+        cpo_2019_query = cpo_2019_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
+
+    cpos = cpo_query.all()
+    cpos_2019 = cpo_2019_query.all()
 
     per_year_counts = counter_to_tuples(getYearCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
@@ -67,7 +70,7 @@ def dashboard():
     return render_template('cpo-dashboard.html',
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
-        recent_cpos=CompulsoryPurchaseOrder.query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
+        recent_cpos=cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
         cpos_2019=cpos_2019,
         top_orgs=get_LA_counts(cpos)[:5],
         top_orgs_2019=get_LA_counts(cpos_2019)[:5])
