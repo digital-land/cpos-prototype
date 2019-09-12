@@ -54,7 +54,7 @@
 
   @include govuk-font($size: 16, $line-height: 16px);
   // Need to replade now that it is depricated in v3.0
-  // @include govuk-focusable;
+  @include govuk-link-common;
 
   width: 100%;
   padding: 14px 10px 11px;
@@ -78,7 +78,8 @@
     text-decoration: underline;
   }
 
-  .js-enabled & {
+  .js-enabled &,
+  &.non-js-button {
     display: inline-block;
   }
 }
