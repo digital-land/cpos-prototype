@@ -54,8 +54,13 @@ def per_year_counts_to_data(per_year_counts):
 @frontend.route('/dashboard')
 @requires_auth
 def dashboard():
-    cpos = CompulsoryPurchaseOrder.query.all()
-    cpos_2019 = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
+    if request.args and request.args.get('type') is not None and request.args.get('type') != "all":
+        cpos = CompulsoryPurchaseOrder.query.filter_by(compulsory_purchase_order_type=request.args.get('type')).all()
+        cpos_2019 = CompulsoryPurchaseOrder.query.filter_by(compulsory_purchase_order_type=request.args.get('type')).filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
+    else:
+        cpos = CompulsoryPurchaseOrder.query.all()
+        cpos_2019 = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01').all()
+
     per_year_counts = counter_to_tuples(getYearCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
     # print(by_year_data)

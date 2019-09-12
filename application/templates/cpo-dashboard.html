@@ -1,5 +1,7 @@
 {% extends "dlf-base.html" %}
 
+{% from "govuk-jinja-components/select/macro.jinja" import govukSelect %}
+
 {% block content %}
 
 	<span class="govuk-caption-xl">Overview</span>
@@ -7,26 +9,56 @@
       Compulsory purchase orders
     </h1>
 
+	{% set cpo_type_str = request.args.get('type') + " CPOS" if request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] else "CPOs" %}
+
+	<form action="" class="govuk-form">
+
+		<div class="govuk-form-group">
+  			<label class="govuk-label" for="cpo-type">
+    		Sort by
+  			</label>
+			<select class="govuk-select" id="cpo-type" name="type">
+				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All - CPO types</option>
+				<option value="housing" {% if request.args.get('type') == "housing" %}selected{% endif %}>Housing</option>
+				<option value="planning" {% if request.args.get('type') == "planning" %}selected{% endif %}>Planning</option>
+			</select>
+			<button type="submit" class="link-align-btn">Update dashboard</button>
+		</div>
+
+	{# To add to select when working 
+		{
+			"value": "development corporation",
+			"text": "Development corporation",
+			"selected": true if request.args.get('type') == "development corporation" else false
+		},
+		{
+			"value": "GLA",
+			"text": "GLA",
+			"selected": true if request.args.get('type') == "GLA" else false
+		}
+	#}
+	</form>
+
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ by_year.counts[-1][1] }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(this year)</span></p>
-				<span><a href="{{ url_for('frontend.cpo_list', year=2019) }}" class="govuk-link">See CPOs for 2019</a></span>
+				<span><a href="{{ url_for('frontend.cpo_list', year=2019) }}" class="govuk-link">See {{ cpo_type_str }} for 2019</a></span>
 			</div>
 		</div>
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ cpos | count }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(since 2012)</span></p>
-				<span class="data-item__link"><a href="{{ url_for('frontend.cpo_list') }}" class="govuk-link">See all CPOs</a></span>
+				<span class="data-item__link"><a href="{{ url_for('frontend.cpo_list') }}" class="govuk-link">See all {{ cpo_type_str }}</a></span>
 			</div>
 		</div>
 	</div>
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h2 class="govuk-heading-m">Number of CPOs per year (last 5)</h2>
+	<h2 class="govuk-heading-m">Number of {{ cpo_type_str }} per year (last 5)</h2>
 
 	{% set max_count = (((by_year.max/100)|round(1, 'ceil'))*100)|int %}
 	{% set min_count = (((by_year.min/100)|round(1, 'floor'))*100)|int %}
@@ -66,7 +98,7 @@
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h2 class="govuk-heading-l">Local authorities with most CPOs</h2>
+	<h2 class="govuk-heading-l">Local authorities with most {{ cpo_type_str }}</h2>
 
 	<h3 class="govuk-heading-m">2019</h3>
 	<ul class="govuk-list">
