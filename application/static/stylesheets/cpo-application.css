@@ -7542,6 +7542,10 @@
   padding-left: 3px;
 }
 
+.not-available-text {
+  color: #6f777b;
+}
+
 .govuk-tag--confirmed {
   background: #00703c;
 }

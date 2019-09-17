@@ -57,7 +57,7 @@ def dashboard():
     cpo_query = CompulsoryPurchaseOrder.query
     cpo_2019_query = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01')
     # need to add 'GLA', 'development corporation'
-    if request.args and request.args.get('type') in ['housing', 'planning']:
+    if request.args and request.args.get('type') in ['housing', 'planning', 'GLA']:
         cpo_query = cpo_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
         cpo_2019_query = cpo_2019_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
 
@@ -66,7 +66,7 @@ def dashboard():
 
     per_year_counts = counter_to_tuples(getYearCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
-    # print(by_year_data)
+
     return render_template('cpo-dashboard.html',
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
@@ -306,3 +306,10 @@ def upload():
 @frontend.context_processor
 def asset_path_context_processor():
     return {'assetPath': '/static/govuk/assets'}
+
+
+@frontend.context_processor
+def now_context_processor():
+    def current_year():
+        return datetime.datetime.now().year
+    return {'current_year': current_year }

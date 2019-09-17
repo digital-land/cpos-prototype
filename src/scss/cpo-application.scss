@@ -41,6 +41,10 @@ $using-helvetica: false;
   padding-left: 3px;
 }
 
+.not-available-text {
+  color: $govuk-secondary-text-colour;
+}
+
 .govuk-tag--confirmed {
   background: govuk-colour("green");
 }

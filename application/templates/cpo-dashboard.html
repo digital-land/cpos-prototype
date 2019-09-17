@@ -21,7 +21,7 @@
 				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All - CPO types</option>
 				<option value="housing" {% if request.args.get('type') == "housing" %}selected{% endif %}>Housing</option>
 				<option value="planning" {% if request.args.get('type') == "planning" %}selected{% endif %}>Planning</option>
-
+				<option value="GLA" {% if request.args.get('type') == "GLA" %}selected{% endif %}>GLA</option>
 			</select>
 			<button type="submit" class="link-align-btn non-js-button">Update dashboard</button>
 		</div>
@@ -39,7 +39,8 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
-				<span class="data-item__number govuk-!-font-size-80">{{ by_year.counts[-1][1] }}</span>
+				{% set by_year_counts_dict = by_year.counts|tuple_list_to_dict %}
+				<span class="data-item__number govuk-!-font-size-80">{{ by_year_counts_dict[current_year()]|default(0) }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(this year)</span></p>
 				<span><a href="{{ url_for('frontend.cpo_list', year=2019) }}" class="govuk-link">See {{ cpo_type_str }} for 2019</a></span>
 			</div>
@@ -99,6 +100,7 @@
 
 	<h3 class="govuk-heading-m">2019</h3>
 	<ul class="govuk-list">
+		{% if top_orgs_2019 %}
 		{% set max_val = (((top_orgs_2019|flatten_tuples(1)|max)/100)|round(1, 'ceil'))*100 %}
 		{% set min_val = (((top_orgs_2019|flatten_tuples(1)|min)/100)|round(1, 'floor'))*100 %}
 		{% set difference = max_val - min_val %}
@@ -120,6 +122,9 @@
 			</div>
         </li>
 		{% endfor %}
+		{% else %}
+		<span class="not-available-text">No data available</span>
+		{% endif %}
 	</ul>
 
 	<h3 class="govuk-heading-m">All time</h3>

@@ -16,6 +16,12 @@ def flatten_tuples(tuplist, ind=0):
 	return flattened
 
 
+def tuple_list_to_dict(tuplist):
+	if len(tuplist) > 0 and isinstance(tuplist[0], tuple):
+		return dict(tuplist)
+	return tuplist
+
+
 def map_cpo_status_to_tag_class(status):
 	class_ = ""
 	if 'confirmed' in status:

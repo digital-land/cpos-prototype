@@ -64,6 +64,8 @@ def register_filters(app):
     app.add_template_filter(map_cpo_status_to_tag_class)
     from application.filters import remove_item
     app.add_template_filter(remove_item)
+    from application.filters import tuple_list_to_dict
+    app.add_template_filter(tuple_list_to_dict)
 
 
 def register_blueprints(app):
