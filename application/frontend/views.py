@@ -56,8 +56,8 @@ def per_year_counts_to_data(per_year_counts):
 def dashboard():
     cpo_query = CompulsoryPurchaseOrder.query
     cpo_2019_query = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.start_date >= '2019-01-01')
-    # need to add 'GLA', 'development corporation'
-    if request.args and request.args.get('type') in ['housing', 'planning', 'GLA']:
+
+    if request.args and request.args.get('type') in ['housing', 'planning', 'GLA', 'development corporation']:
         cpo_query = cpo_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
         cpo_2019_query = cpo_2019_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
 

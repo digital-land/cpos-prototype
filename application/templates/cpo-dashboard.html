@@ -15,25 +15,18 @@
 
 		<div class="govuk-form-group">
   			<label class="govuk-label" for="cpo-type">
-    		Sort by
+    		Filter by CPO type
   			</label>
 			<select class="govuk-select" id="cpo-type" name="type">
 				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All - CPO types</option>
 				<option value="housing" {% if request.args.get('type') == "housing" %}selected{% endif %}>Housing</option>
 				<option value="planning" {% if request.args.get('type') == "planning" %}selected{% endif %}>Planning</option>
 				<option value="GLA" {% if request.args.get('type') == "GLA" %}selected{% endif %}>GLA</option>
+				<option value="development corporation" {% if request.args.get('type') == "development corporation" %}selected{% endif %}>Development corporation</option>
 			</select>
 			<button type="submit" class="link-align-btn non-js-button">Update dashboard</button>
 		</div>
 
-	{# To add to select when working 
-		{
-			"value": "development corporation",
-			"text": "Development corporation",
-			"selected": true if request.args.get('type') == "development corporation" else false
-		},
-		<option value="GLA" {% if request.args.get('type') == "GLA" %}selected{% endif %}>GLA</option>
-	#}
 	</form>
 
 	<div class="govuk-grid-row">
