@@ -28,6 +28,7 @@ from application.utils import (
     getStatuses,
     get_latest_statuses,
     getYearCounts,
+    getYearTypeCounts,
     get_LA_counts,
     counter_to_tuples,
     get_cpo_type_counts,
@@ -43,7 +44,8 @@ def index():
 
 
 def per_year_counts_to_data(per_year_counts):
-    values = [v for k,v in per_year_counts]
+    # access as list of tuples 
+    values = [y[1]['total'] for y in per_year_counts]
     return {
             "counts":per_year_counts,
             "max": max(values),
@@ -64,7 +66,7 @@ def dashboard():
     cpos = cpo_query.all()
     cpos_2019 = cpo_2019_query.all()
 
-    per_year_counts = counter_to_tuples(getYearCounts(cpos))
+    per_year_counts = counter_to_tuples(getYearTypeCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
 
     return render_template('cpo-dashboard.html',

@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, OrderedDict
 
 def counter_to_tuples(counter):
     tuple_list = []
@@ -32,6 +32,27 @@ def getYearCounts(cpos):
         years.append(cpo.start_date.year)
 
     return Counter(years)
+
+
+def getYearTypeCounts(cpos):
+    years = {}
+    for cpo in cpos:
+        if cpo.start_date.year in years.keys():
+            years[cpo.start_date.year].append(cpo)
+        else:
+            # if new year add to obj
+            years[cpo.start_date.year] = []
+            years[cpo.start_date.year].append(cpo)
+
+    # want dict in year order
+    years_sorted = OrderedDict()
+    for year in sorted(years.keys()):
+        years_sorted[year] = {
+            "total": len(years[year]),
+            "types": get_cpo_type_counts(years[year])
+        }
+
+    return years_sorted
 
 
 def get_LA_counts(cpos):

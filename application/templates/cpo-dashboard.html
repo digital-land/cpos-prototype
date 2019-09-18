@@ -33,7 +33,7 @@
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				{% set by_year_counts_dict = by_year.counts|tuple_list_to_dict %}
-				<span class="data-item__number govuk-!-font-size-80">{{ by_year_counts_dict[current_year()]|default(0) }}</span>
+				<span class="data-item__number govuk-!-font-size-80">{% if by_year_counts_dict[current_year()] %}{{ by_year_counts_dict[current_year()]['total']|default(0) }}{% else %}0{% endif %}</span>
 				<p class="govuk-body govuk-!-font-size-36">Total <span class="govuk-!-font-size-19">(this year)</span></p>
 				<span><a href="{{ url_for('frontend.cpo_list', year=2019) }}" class="govuk-link">See {{ cpo_type_str }} for 2019</a></span>
 			</div>
@@ -52,27 +52,27 @@
 	<h2 class="govuk-heading-m">Number of {{ cpo_type_str }} per year (last 5)</h2>
 
 	{% set max_count = (((by_year.max/100)|round(1, 'ceil'))*100)|int %}
-	{% set min_count = (((by_year.min/100)|round(1, 'floor'))*100)|int %}
-	{% set difference = max_count - min_count %}
 	<ul class="govuk-list">
-		{% for year in by_year.counts %}
-		{% set relative_value = year[1] - min_count %}
+		{% for year in by_year_counts_dict.keys() %}
+		
 		<li>
+			{% set type_breakdown = by_year_counts_dict[year]['types']|tuple_list_to_dict %}
 		<div class="govuk-grid-row contribution-category-row">
 		  <div class="govuk-grid-column-one-quarter">
-		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year[0]) }}">{{ year[0] }}</a></h4>
+		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year[0]) }}">{{ year }}</a></h4>
 		  </div>
-		  <div class="govuk-grid-column-three-quarters contribution-bar-container">
-			{% set bar_percentage = ((relative_value/difference)*65)|int %}
-		    <div class="contribution-bar" style="width: {{ bar_percentage + 35 }}%;">
-		      <span class="govuk-!-font-size-24 govuk-!-font-weight-bold data-item">{{ year[1] }}</span>
-		    </div>
-		    <div class="govuk-!-font-size-24 data-item cb-floating-figure">{{ year[1] }}</div>
+		  <div class="govuk-grid-column-three-quarters chart-bar">
+		  	{% for type, count in type_breakdown.items() %}
+		  		{% set bar_percentage = ((count/max_count)*100)|round(0, 'ceil')|int %}
+		  		<div class="chart-bar__part chart-bar__part--{{type|lower|replace(' ', '-')}}" style="width: {{ bar_percentage }}%;"></div>
+		  	{% endfor %}
+			<span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ by_year_counts_dict[year]['total'] }}</span>
 		  </div>
 		</div>
 		</li>
 		{% endfor %}
 	</ul>
+
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
