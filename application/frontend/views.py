@@ -181,11 +181,11 @@ def years():
     return render_template('data/counts.html', count_type_title="By year", counts=getYearCounts(cpos))
 
 
-@frontend.route('/data/local_authorities')
+@frontend.route('/data/acquiring_authorities')
 @requires_auth
 def by_organisation():
     cpos = CompulsoryPurchaseOrder.query.all()
-    return render_template('data/counts.html', count_type_title="By organisation", counts=get_LA_counts(cpos))
+    return render_template('data/counts.html', count_type_title="By acquiring authority", counts=get_LA_counts(cpos))
 
 
 @frontend.route('/data/types')

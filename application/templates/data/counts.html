@@ -21,7 +21,7 @@
     <ul class="govuk-list govuk-list--bullet">
     {% if counts is mapping %}
     	{% for key in counts.keys() %}
-    	<li>{% if count_type_title == "By organisation" %}{{ key }} ({{ key |  map_la_code_to_name }}){% else -%}
+    	<li>{% if count_type_title == "By acquiring authority" %}{{ key }} ({{ key |  map_la_code_to_name }}){% else -%}
     		<a href="{{ url_for('frontend.cpo_list', year=key) }}">{{ key }}</a>{% endif %}: {{ counts[key] }}</li>
     	{% endfor %}
     {% else %}
