@@ -35,7 +35,7 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
-						"title": "Investigation",
+						"title": "Inquiry",
 						"is_open": True if request.args['investigation'] else False,
 						"selected": 1 if request.args['investigation'] else 0
 					}) %}
@@ -43,13 +43,13 @@
 					  <div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
 						<label class="govuk-label govuk-radios__label" for="investigation-yes">
-						  Has
+						  Yes
 						</label>
 					  </div>
 					  <div class="govuk-radios__item">
 						<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
 						<label class="govuk-label govuk-radios__label" for="investigation-no">
-						  Doesn't have
+						  No
 						</label>
 					  </div>
 					</div>
