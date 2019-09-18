@@ -27,12 +27,12 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
     legislation_url = db.Column(db.String())
 
     investigations = db.relationship('CompulsoryPurchaseOrderInvestigation',
-                                     lazy=True,
+                                     lazy=False,
                                      back_populates='compulsory_purchase_order',
                                      order_by='CompulsoryPurchaseOrderInvestigation.start_date')
 
     statuses = db.relationship('CompulsoryPurchaseOrderStatus',
-                               lazy=True,
+                               lazy=False,
                                back_populates='compulsory_purchase_order',
                                order_by='CompulsoryPurchaseOrderStatus.start_date')
 
