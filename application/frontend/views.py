@@ -63,8 +63,8 @@ def dashboard():
         cpo_query = cpo_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
         cpo_2019_query = cpo_2019_query.filter_by(compulsory_purchase_order_type=request.args.get('type'))
 
-    cpos = cpo_query.all()
-    cpos_2019 = cpo_2019_query.all()
+    cpos = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
+    cpos_2019 = cpo_2019_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
 
     per_year_counts = counter_to_tuples(getYearTypeCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
@@ -72,7 +72,7 @@ def dashboard():
     return render_template('cpo-dashboard.html',
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
-        recent_cpos=cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).limit(5).all(),
+        recent_cpos=get_recent_cpos(cpos),
         cpos_2019=cpos_2019,
         top_orgs=get_LA_counts(cpos)[:5],
         top_orgs_2019=get_LA_counts(cpos_2019)[:5])
@@ -105,6 +105,17 @@ def filter_by_status(status, cpos, filtered_list = []):
         filter_applied_list = [cpo for cpo in cpos if cpo.latest_status().status == filter_str]
         return filter_by_status(status, cpos, filtered_list + filter_applied_list)
     return filtered_list
+
+
+def filter_by_not_status(not_status, cpos):
+    return [cpo for cpo in cpos if cpo.latest_status().status != not_status]
+
+
+def get_recent_cpos(cpos):
+    return {
+        "received": filter_by_status(['received'], cpos)[:5],
+        "not_received": filter_by_not_status('received', cpos)[:5]
+    }
 
 
 @frontend.route('/compulsory-purchase-order')

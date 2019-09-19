@@ -76,9 +76,12 @@
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h3 class="govuk-heading-m">Latest {{ cpo_type_str }}</h3>
+	<h3 class="govuk-heading-l">Latest {{ cpo_type_str }}</h3>
+
+	{% if recent_cpos['received'] %}
+	<h4 class="govuk-heading-m">Received</h4>
 	<ul class="govuk-list">
-		{% for cpo in recent_cpos %}
+		{% for cpo in recent_cpos['received'] %}
 		<li>
 			<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
 			<a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>, 
@@ -86,6 +89,20 @@
         </li>
 		{% endfor %}
 	</ul>
+	{% endif %}
+
+	{% if recent_cpos['not_received'] %}
+	<h4 class="govuk-heading-m">Decided</h4>
+	<ul class="govuk-list">
+		{% for cpo in recent_cpos['not_received'] %}
+		<li>
+			<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
+			<a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>, 
+			<span>{{ cpo.name }}</span>
+        </li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
