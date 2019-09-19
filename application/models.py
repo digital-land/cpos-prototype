@@ -41,6 +41,11 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
         return self.statuses[-1]
 
 
+    def latest_investigation_status(self):
+        if len(self.investigations):
+            return self.investigations[-1]
+
+
 @total_ordering
 class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
 

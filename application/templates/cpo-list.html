@@ -227,13 +227,26 @@
 			<ul class="govuk-list cpo-list">
 			{% for cpo in cpos %}
 				<li class="cpo-item">
-					{% set cpo_status = cpo.latest_status().status %}
+					{%- if cpo.investigations %}
+					{%- set cpo_status = cpo.latest_investigation_status().status %}
+					{%- else %}
+					{%- set cpo_status = cpo.latest_status().status %}
+					{%- endif %}
 					<span class="govuk-tag {{ cpo_status | map_cpo_status_to_tag_class }}">{{ cpo_status }}</span>
 					<h4 class="govuk-heading-m cpo-item__title"><a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a></h4>
 					<div class="cpo-item__org">{{ cpo.organisation | map_la_code_to_name }}</div>
 					<div>Date received: {{ cpo.start_date }}</div>
 					<div>Type: {{ cpo.compulsory_purchase_order_type | capitalize }}</div>
 					<div>Location: {{ cpo.name }}</div>
+					{% if cpo.investigations %}
+					<div class="dl-info-text dl-info-text--closer">
+  						<span class="dl-info-text__icon" aria-hidden="true">i</span>
+						<p class="dl-info-text__text">
+							<span class="dl-info-text__assistive">Please note</span>
+						    CPO decision by PINS inquiry
+						</p>
+					</div>
+					{% endif %}
 				</li>
 			{% endfor %}
 			</ul>

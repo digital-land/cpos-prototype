@@ -7239,7 +7239,7 @@
   color: #ffffff;
   background: #1d70b8;
   font-size: 1.6em;
-  line-height: 29px;
+  line-height: 28px;
   text-align: center;
   user-select: none;
 }
@@ -7254,6 +7254,11 @@
   display: block;
   margin-left: -15px;
   padding-left: 65px;
+}
+
+.dl-info-text--closer .dl-info-text__text {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .app-related-items {
@@ -7565,6 +7570,10 @@
 .cpo-item {
   padding-bottom: 15px;
   border-bottom: 1px solid #b1b4b6;
+}
+
+.cpo-item .dl-info-text {
+  margin-bottom: 0;
 }
 
 .cpo-item__title {

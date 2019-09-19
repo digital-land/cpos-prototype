@@ -66,6 +66,10 @@ $using-helvetica: false;
 .cpo-item {
   padding-bottom: $govuk-gutter-half;
   border-bottom: 1px solid $govuk-border-colour;
+
+  .dl-info-text {
+    margin-bottom: 0;
+  }
 }
 
 .cpo-item__title {
