@@ -257,6 +257,7 @@
 				{% endif %}
 			</div>
 
+			{% if cpos|length > 0 %}
 			<ul class="govuk-list cpo-list">
 			{% for cpo in cpos %}
 				<li class="cpo-item">
@@ -283,6 +284,16 @@
 				</li>
 			{% endfor %}
 			</ul>
+			{% else %}
+			<div class="no-results govuk-!-font-size-19">
+			    <p class="govuk-body govuk-!-font-weight-bold">There are no matching results.</p>
+			    <p class="govuk-body">Improve your search results by:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>removing filters</li>
+					<li>searching for something less specific</li>
+				</ul>
+			</div>
+  			{% endif %}
 		</div>
 
 	</div>
