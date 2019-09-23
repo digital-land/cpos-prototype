@@ -222,3 +222,31 @@ $using-helvetica: false;
     line-height: (44 / 24);
   }
 }
+
+.key {
+  @include govuk-font($size: 19);
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.key__item {
+  display: inline-block;
+  margin-right: $govuk-gutter-half;
+}
+
+.key__colour {
+  display: inline-block;
+  width: $govuk-gutter;
+  height: 14px;
+  margin-right: 5px;
+  background: govuk-colour("mid-grey");
+}
+
+.key__colour--pink {
+  background: govuk-colour("light-pink");
+}
+
+.key__colour--light-blue {
+  background: govuk-colour("light-blue");
+}
