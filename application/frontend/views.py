@@ -84,7 +84,7 @@ def year_date_string(year):
 def filter_by_year(year, cpo_query):
     # if matches this year
     if int(year) == datetime.datetime.now().year:
-        filtered_query = cpo_query.filter(CompulsoryPurchaseOrder.start_date >= year_date_string(year)).order_by(CompulsoryPurchaseOrder.start_date.desc())
+        filtered_query = cpo_query.filter(CompulsoryPurchaseOrder.start_date >= year_date_string(year))
     # else do between
     else:
         next_year = str(int(year) + 1)
@@ -124,11 +124,20 @@ def cpo_list():
     la_mapping = LocalAuthorityMapping().order_by_name()
     cpo_query = CompulsoryPurchaseOrder.query
 
+    # check if sorted by option
+    if request.args and request.args.get('sort-by') is not None:
+        if request.args.get('sort-by') == "date-oldest":
+            cpo_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.asc())
+        else:
+            cpo_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
+    else:
+        cpo_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
+
     # apply a year filter if exists
     if request.args and request.args.get('year') is not None and request.args.get('year') is not "":
         filtered_query = filter_by_year(request.args['year'], cpo_query)
     else:
-        filtered_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
+        filtered_query = cpo_query
 
     # then apply org fitler if there is one
     if request.args and request.args.get('org') is not None:

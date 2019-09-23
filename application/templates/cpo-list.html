@@ -25,6 +25,9 @@
 			<h3 class="govuk-heading-m">Filters</h3>
 
 			<form action="" class="govuk-form">
+				{% if request.args.get('sort-by') %}
+				<input type="hidden" name="sort-by" value="{{request.args.get('sort-by')}}" />
+				{% endif %}
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
@@ -256,6 +259,24 @@
 				</div>
 				{% endif %}
 			</div>
+
+			<form action="{{ request.url }}" method="GET">
+				{% for arg in request.args %}
+					{% for val in request.args.getlist(arg) %}
+					<input type="hidden" name="{{arg}}" value="{{val}}" />
+					{% endfor %}
+				{% endfor %}
+				<div class="govuk-form-group">
+					<label class="govuk-label sort-by-label" for="cpo-sort-by">
+					Sort by
+					</label>
+					<select class="govuk-select" id="cpo-sort-by" name="sort-by">
+						<option value="date-newest" {% if request.args.get('sort-by') == "date-newest" %}selected{% endif %}>Received date (newest)</option>
+						<option value="date-oldest" {% if request.args.get('sort-by') == "date-oldest" %}selected{% endif %}>Received date (oldest)</option>
+					</select>
+					<button type="submit" class="link-align-btn non-js-button">Sort list</button>
+				</div>
+			</form>
 
 			{% if cpos|length > 0 %}
 			<ul class="govuk-list cpo-list">

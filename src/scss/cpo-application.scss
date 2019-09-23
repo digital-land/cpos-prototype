@@ -82,13 +82,19 @@ $using-helvetica: false;
 }
 
 // =====================
+.sort-by-label {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+// =====================
 .applied-filters {
   @include govuk-typography-common;
   @include govuk-text-colour;
   @include govuk-font($size: 16);
   margin-bottom: $govuk-gutter-half;
   padding-bottom: 5px;
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid $govuk-text-colour;
 }
 
 .applied-filter__group {

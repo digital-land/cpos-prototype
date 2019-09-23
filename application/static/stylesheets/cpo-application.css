@@ -7618,6 +7618,11 @@
   }
 }
 
+.sort-by-label {
+  display: inline-block;
+  margin-right: 5px;
+}
+
 .applied-filters {
   font-family: "GDS Transport", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -7632,7 +7637,7 @@
   line-height: 1.14286;
   margin-bottom: 15px;
   padding-bottom: 5px;
-  border-bottom: 1px solid #b1b4b6;
+  border-bottom: 1px solid #0b0c0c;
 }
 
 @media print {
