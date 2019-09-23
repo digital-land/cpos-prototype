@@ -27,11 +27,26 @@
 			<form action="" class="govuk-form">
 
 				<div class="govuk-form-group">
-				  <label class="govuk-label" for="year">
-					Year
-				  </label>
-				  <span class="govuk-hint">For example, 2015</span>
-				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
+					{% call dlfFilterGroup({
+						"title": "Active",
+						"is_open": True if request.args['live'] else False,
+						"selected": 1 if request.args['live'] else 0
+					}) %}
+					<div class="govuk-radios">
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="live-true" name="live" type="radio" value="true" {% if request.args['live'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="live-true">
+						  Open
+						</label>
+					  </div>
+					  <div class="govuk-radios__item">
+						<input class="govuk-radios__input" id="live-false" name="live" type="radio" value="false" {% if request.args['live'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
+						<label class="govuk-label govuk-radios__label" for="live-false">
+						  Closed
+						</label>
+					  </div>
+					</div>
+					{% endcall %}
 				</div>
 
 				<div class="govuk-form-group">
@@ -150,6 +165,14 @@
 					{% endcall %}
 				</div>
 
+				<div class="govuk-form-group">
+				  <label class="govuk-label" for="year">
+					Year
+				  </label>
+				  <span class="govuk-hint">For example, 2015</span>
+				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>
+				</div>
+
 				<button type="submit" class="govuk-button" data-module="govuk-button">
 				  Apply filter
 				</button>
@@ -165,6 +188,7 @@
 		{% set type_filters = request.args.getlist('type') %}
 		{% set status_filters = request.args.getlist('current_status') %}
 		{% set org_filters = request.args.getlist('org') %}
+		{% set live_filters = request.args.getlist('live') %}
 
 		{% if filter_name == "year" %}
 			{% set year_filters = year_filters|remove_item(item) %}
@@ -176,6 +200,8 @@
 			{% set status_filters = status_filters|remove_item(item) %}
 		{% elif filter_name == "organisation" %}
 			{% set org_filters = org_filters|remove_item(item) %}
+		{% elif filter_name == "live" %}
+			{% set live_filters = live_filters|remove_item(item) %}
 		{% endif %}
 		<a href="{{ url_for('frontend.cpo_list', year=year_filters, investigation=investigation_filters, type=type_filters, current_status=status_filters, org=org_filters) }}" class="govuk-link">x<span class="govuk-visually-hidden">remove filtering by {{item}}</span></a>
 	{% endmacro %}
@@ -187,10 +213,10 @@
 			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
 
 			<div class="applied-filters">
-				{% if request.args and request.args['year'] %}
+				{% if request.args and request.args['live'] %}
 				<div class="applied-filter__group">
-					<span class="applied-filter__name govuk-!-font-weight-bold">Year:</span>
-					<span class="applied-filter__item">{{ removeFilterLink("year", request.args['year']) }}{{ request.args['year'] }}</span>
+					<span class="applied-filter__name govuk-!-font-weight-bold">Active:</span>
+					<span class="applied-filter__item">{{ removeFilterLink("live", request.args['live']) }}{{ request.args['live'] }}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['investigation'] %}
@@ -221,6 +247,12 @@
 					{% for org in request.args.getlist('org') %}
 					<span class="applied-filter__item">{{ removeFilterLink("organisation", org) }}{{ org|map_la_code_to_name }}</span>
 					{% endfor %}
+				</div>
+				{% endif %}
+				{% if request.args and request.args['year'] %}
+				<div class="applied-filter__group">
+					<span class="applied-filter__name govuk-!-font-weight-bold">Year:</span>
+					<span class="applied-filter__item">{{ removeFilterLink("year", request.args['year']) }}{{ request.args['year'] }}</span>
 				</div>
 				{% endif %}
 			</div>

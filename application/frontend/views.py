@@ -140,9 +140,19 @@ def cpo_list():
 
     cpos = filtered_query.all()
 
+    # filter by any selected statuses
     if request.args and request.args.get('current_status') is not None:
         cpos = filter_by_status(request.args.getlist('current_status'), cpos)
 
+    # filter CPOs based on whether still active or not
+    if request.args and request.args.get('live') is not None:
+        if request.args.get('live') in ['True', 'true', 't']:
+            cpos = filter_by_status(['received', 'other'], cpos)
+        elif request.args.get('live') in ['False', 'false', 'f']:
+            closed_statuses = [status for status in cpo_statuses if status not in ['received', 'other']]
+            cpos = filter_by_status(closed_statuses, cpos)
+
+    # filter based on if CPO has associated inquiry
     if request.args and request.args.get('investigation') is not None:
         cpos_w, cpos_wo = filter_if_investigation(cpos)
         if request.args['investigation'] in ['True', 'true', 't']:
