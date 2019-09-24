@@ -139,12 +139,10 @@
 			  <div class="govuk-grid-column-one-third">
 			    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=2019, org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
 			  </div>
-			  <div class="govuk-grid-column-two-thirds contribution-bar-container">
+			  <div class="govuk-grid-column-two-thirds chart-bar">
 				{% set bar_percentage = ((relative_value/difference)*99)|int %}
-			    <div class="contribution-bar" style="width: {{ bar_percentage + 1 }}%;">
-			      <span class="govuk-!-font-size-24 govuk-!-font-weight-bold data-item">{{ org[1] }}</span>
-			    </div>
-			    <div class="govuk-!-font-size-24 data-item cb-floating-figure">{{ org[1] }}</div>
+			    <div class="chart-bar__part chart-bar__part--default" style="width: {{ bar_percentage + 1 }}%;"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ org[1] }}</span>
 			  </div>
 			</div>
         </li>
@@ -167,12 +165,10 @@
 			  <div class="govuk-grid-column-one-third">
 			    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
 			  </div>
-			  <div class="govuk-grid-column-two-thirds contribution-bar-container">
+			  <div class="govuk-grid-column-two-thirds chart-bar">
 				{% set bar_percentage = ((relative_value/difference)*70)|int %}
-			    <div class="contribution-bar" style="width: {{ bar_percentage + 30 }}%;">
-			      <span class="govuk-!-font-size-24 govuk-!-font-weight-bold data-item">{{ org[1] }}</span>
-			    </div>
-			    <div class="govuk-!-font-size-24 data-item cb-floating-figure">{{ org[1] }}</div>
+			    <div class="chart-bar__part chart-bar__part--default" style="width: {{ bar_percentage + 30 }}%;"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ org[1] }}</span>
 			  </div>
 			</div>
         </li>
