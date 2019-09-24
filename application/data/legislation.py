@@ -1,4 +1,4 @@
-data = {
+legislation = {
 'ukpga/1985/68/section/17': {'name': 'Housing Act 1985 Section 17', 'url':'https://www.legislation.gov.uk/ukpga/1985/68/section/17'},
 'ukpga/1990/8':{'name':'Town and Country Planning Act 1990', 'url':'http://www.legislation.gov.uk/ukpga/1990/8'},
 'ukpga/1980/65':{'name':'Local Government, Planning and Land Act 1980', 'url': 'http://www.legislation.gov.uk/ukpga/1980/65'},

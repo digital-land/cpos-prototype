@@ -20,8 +20,8 @@ from application.models import (
     CompulsoryPurchaseOrderInvestigation
 )
 
-from application.data.legislation import data as legislation
-from application.data.cpo_statuses import data as cpo_statuses
+from application.data import legislation
+from application.data import cpo_statuses
 from application.data import LocalAuthorityMapping
 
 from application.utils import (
@@ -41,7 +41,6 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 @frontend.route('/')
 def index():
     return render_template('index.html')
-
 
 def per_year_counts_to_data(per_year_counts):
     # access as list of tuples 
