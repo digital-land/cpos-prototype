@@ -69,6 +69,8 @@ def register_filters(app):
     app.add_template_filter(remove_item)
     from application.filters import tuple_list_to_dict
     app.add_template_filter(tuple_list_to_dict)
+    from application.filters import count_with_investigation
+    app.add_template_filter(count_with_investigation)
 
 
 def register_blueprints(app):

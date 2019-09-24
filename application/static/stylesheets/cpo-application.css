@@ -7811,8 +7811,13 @@
   background: #5694ca;
 }
 
+.chart-bar__part--default,
 .chart-bar__part--development-corporation {
   background: #b1b4b6;
+}
+
+.chart-bar__part--inquiry {
+  background: #f47738;
 }
 
 .chart-bar__value {

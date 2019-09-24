@@ -178,6 +178,58 @@
         </li>
 		{% endfor %}
 	</ul>
+
+	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+	<h2 class="govuk-heading-l">Inquiries</h2>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-half">
+			<h3 class="govuk-heading-m">2019</h3>
+			{% set total = cpos_2019|length %}
+			<div class="govuk-grid-row contribution-category-row">
+			  <div class="govuk-grid-column-one-quarter">
+			    <h4 class="govuk-heading-s contribution-category-heading"><a href="">Inquiry</a></h4>
+			  </div>
+			  <div class="govuk-grid-column-three-quarters chart-bar">
+			    <div class="chart-bar__part chart-bar__part--inquiry" style="width: {{ (((cpos_2019|count_with_investigation)/total)*100)|round(0, 'ceil')|int }}%"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ cpos_2019|count_with_investigation }}</span>
+			  </div>
+			</div>
+			<div class="govuk-grid-row contribution-category-row">
+			  <div class="govuk-grid-column-one-quarter">
+			    <h4 class="govuk-heading-s contribution-category-heading"><a href="">No inquiry</a></h4>
+			  </div>
+			  <div class="govuk-grid-column-three-quarters chart-bar ">
+			    <div class="chart-bar__part chart-bar__part--default" style="width: {{ (((cpos_2019|count_with_investigation(False))/total)*100)|round(0, 'ceil')|int }}%"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ cpos_2019|count_with_investigation(False) }}</span>
+			  </div>
+			</div>
+		</div>
+		<div class="govuk-grid-column-one-half">
+			<h3 class="govuk-heading-m">All time</h3>
+			{% set total = cpos|length %}
+			<div class="govuk-grid-row contribution-category-row">
+			  <div class="govuk-grid-column-one-quarter">
+			    <h4 class="govuk-heading-s contribution-category-heading"><a href="">Inquiry</a></h4>
+			  </div>
+			  <div class="govuk-grid-column-three-quarters chart-bar">
+			    <div class="chart-bar__part chart-bar__part--inquiry" style="width: {{ (((cpos|count_with_investigation)/total)*100)|round(0, 'ceil')|int }}%"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ cpos|count_with_investigation }}</span>
+			  </div>
+			</div>
+			<div class="govuk-grid-row contribution-category-row">
+			  <div class="govuk-grid-column-one-quarter">
+			    <h4 class="govuk-heading-s contribution-category-heading"><a href="">No inquiry</a></h4>
+			  </div>
+			  <div class="govuk-grid-column-three-quarters chart-bar">
+			    <div class="chart-bar__part chart-bar__part--default" style="width: {{ (((cpos|count_with_investigation(False))/total)*100)|round(0, 'ceil')|int }}%"></div>
+			    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ cpos|count_with_investigation(False) }}</span>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
     
 
 {% endblock %}

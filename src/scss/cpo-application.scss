@@ -207,8 +207,13 @@ $using-helvetica: false;
   background: govuk-colour("light-blue");
 }
 
+.chart-bar__part--default,
 .chart-bar__part--development-corporation {
   background: govuk-colour("mid-grey");
+}
+
+.chart-bar__part--inquiry {
+  background: govuk-colour("orange");
 }
 
 .chart-bar__value {

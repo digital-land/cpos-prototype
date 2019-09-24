@@ -1,6 +1,8 @@
 from application.data import LocalAuthorityMapping
 la_mapping = LocalAuthorityMapping()
 
+from application.utils import has_investigation_counts
+
 
 def map_la_code_to_name(id):
 	if la_mapping.get_local_authority_name(id) is not None:
@@ -39,3 +41,10 @@ def remove_item(list_, item):
 	if item in list_:
 		list_.remove(item)
 	return list_
+
+
+def count_with_investigation(cpos, has=True):
+	if isinstance(cpos, list):
+		counts = has_investigation_counts(cpos)
+		return counts[has]
+	return cpos
