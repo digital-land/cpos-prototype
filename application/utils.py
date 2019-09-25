@@ -1,5 +1,6 @@
 from collections import Counter, OrderedDict
 
+
 def counter_to_tuples(counter):
     tuple_list = []
     for key in counter.keys():
@@ -82,3 +83,22 @@ def has_investigation_counts(cpos):
             inv.append(False)
 
     return Counter(inv)
+
+
+def get_average_durations(cpos):
+    from statistics import mean
+    days_to_completion = []
+    days_for_inquiry = []
+    for cpo in cpos:
+        if cpo.days_to_completion() is not None:
+            days_to_completion.append(cpo.days_to_completion())
+        if cpo.days_for_inquiry() is not None:
+            days_for_inquiry.append(cpo.days_for_inquiry())
+
+    averages = {}
+    if days_to_completion:
+        averages['average_days_to_process'] = round(mean(days_to_completion))
+    if days_for_inquiry:
+        averages['average_days_pins_inquiry'] = round(mean(days_for_inquiry))
+
+    return averages

@@ -65,12 +65,16 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
         return abs((start_date - end_date).days)
 
     def days_for_inquiry(self):
-        if not self.has_final_status() and not self.has_inquiry():
-            return None
-        start_date = self.investigations[0].start_date
-        end_date = self.latest_investigation_status().start_date
+        try:
+            if not self.has_final_status() or not self.has_inquiry():
+                return None
+            start_date = self.investigations[0].start_date
+            end_date = self.latest_investigation_status().start_date
 
-        return abs((start_date - end_date).days)
+            return abs((start_date - end_date).days)
+        except Exception as e:
+            print(e)
+            return 0
 
     def has_inquiry(self):
         return len(self.investigations) > 0

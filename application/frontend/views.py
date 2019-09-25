@@ -32,7 +32,8 @@ from application.utils import (
     get_LA_counts,
     counter_to_tuples,
     get_cpo_type_counts,
-    has_investigation_counts
+    has_investigation_counts,
+    get_average_durations
 )
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -67,6 +68,10 @@ def dashboard():
 
     per_year_counts = counter_to_tuples(getYearTypeCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
+
+   #TODO Colm not sure where you want these in page
+    average_durations = get_average_durations(cpos)
+    average_durations_2019 = get_average_durations(cpos_2019)
 
     return render_template('cpo-dashboard.html',
         cpos=cpos,
