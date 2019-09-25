@@ -76,8 +76,6 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
         return len(self.investigations) > 0
 
 
-
-
 @total_ordering
 class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
 

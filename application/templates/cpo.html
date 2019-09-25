@@ -57,22 +57,17 @@
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Date received:</span> {{ cpo.start_date }}</p>
             <p class="govuk-body">{% if cpo.decription %}{{cpo.description}}{% else %}No description available{% endif %}</p>
 
-            <p class="govuk-body">
-                {% if cpo.has_final_status() %}
-
-                    {% if cpo.has_inquiry() %}
-                        <span class="govuk-!-font-weight-bold">
-                        Days taken for PINS enquiry:
-                        </span>
+            {% if cpo.has_final_status() %}
+                <p class="govuk-body">
+                    <span class="govuk-!-font-weight-bold">Days from receipt to decision:</span>
+                    {{ cpo.days_to_completion() }}
+                    </p>
+                {% if cpo.has_inquiry()  %}
+                    <p class="govuk-body"><span class="govuk-!-font-weight-bold">Days taken for PINS enquiry:</span>
                          {{ cpo.days_for_inquiry() }}
-                    {%  else %}
-                         <span class="govuk-!-font-weight-bold">
-                        Days from receipt to decision:
-                        </span>
-                         {{ cpo.days_to_completion() }}
-                    {% endif %}
+                    </p>
                 {% endif %}
-            </p>
+            {% endif %}
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
