@@ -1,0 +1,25 @@
+{% macro dlfBarChart(params) %}
+
+	{% set label_class = "govuk-grid-column-one-quarter" if params['grid-size'] == "quarters" else "govuk-grid-column-one-third" %}
+	{% set bar_class = "govuk-grid-column-three-quarters" if params['grid-size'] == "quarters" else "govuk-grid-column-two-thirds" %}
+
+	{% set labelHtml %}
+	{%- if params.labelUrl -%}
+		<a href="{{ params.labelUrl }}">{{ params.label }}</a>
+	{%- else -%}
+		{{ params.label }}
+	{%- endif -%}
+	{% endset %}
+
+	<div class="govuk-grid-row contribution-category-row">
+	  <div class="govuk-grid-column-one-quarter">
+	    <h4 class="govuk-heading-s contribution-category-heading">{{ labelHtml }}</h4>
+	  </div>
+	  <div class="govuk-grid-column-three-quarters chart-bar">
+	  	{% for bar in params['bars'] %}
+	    <div class="chart-bar__part{% if bar['classes'] %} {{ bar['classes'] }}{% endif %}" style="width: {{ bar['width'] }}%"></div>
+	    {% endfor %}
+	    <span class="govuk-!-font-weight-bold data-item chart-bar__value">{{ params.total }}</span>
+	  </div>
+	</div>
+{% endmacro %}
