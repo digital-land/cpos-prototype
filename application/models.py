@@ -1,5 +1,6 @@
 from application.extensions import db
 from functools import total_ordering
+from datetime import datetime
 
 from application.data import final_states
 
@@ -75,6 +76,11 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
         except Exception as e:
             print(e)
             return 0
+
+    def days_since_received(self):
+        today = datetime.now().date()
+        start_date = self.statuses[0].start_date
+        return abs((start_date - today).days)
 
     def has_inquiry(self):
         return len(self.investigations) > 0

@@ -67,6 +67,11 @@
                          {{ cpo.days_for_inquiry() }}
                     </p>
                 {% endif %}
+            {% else %}
+                <p class="govuk-body">
+                    <span class="govuk-!-font-weight-bold">Days since receipt:</span>
+                    {{ cpo.days_since_received() }}
+                </p>
             {% endif %}
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
