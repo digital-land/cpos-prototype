@@ -60,7 +60,7 @@
 			{% set type_breakdown = by_year_counts_dict[year]['types']|tuple_list_to_dict %}
 		<div class="govuk-grid-row contribution-category-row">
 		  <div class="govuk-grid-column-one-quarter">
-		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year[0]) }}">{{ year }}</a></h4>
+		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year) }}">{{ year }}</a></h4>
 		  </div>
 		  <div class="govuk-grid-column-three-quarters chart-bar">
 		  	{% for type, count in type_breakdown.items() %}
