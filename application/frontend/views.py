@@ -20,8 +20,8 @@ from application.models import (
     CompulsoryPurchaseOrderInvestigation
 )
 
-from application.data.legislation import data as legislation
-from application.data.cpo_statuses import data as cpo_statuses
+from application.data import legislation
+from application.data import cpo_statuses
 from application.data import LocalAuthorityMapping
 
 from application.utils import (
@@ -32,7 +32,8 @@ from application.utils import (
     get_LA_counts,
     counter_to_tuples,
     get_cpo_type_counts,
-    has_investigation_counts
+    has_investigation_counts,
+    get_average_durations
 )
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -41,7 +42,6 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 @frontend.route('/')
 def index():
     return render_template('index.html')
-
 
 def per_year_counts_to_data(per_year_counts):
     # access as list of tuples 
@@ -69,13 +69,20 @@ def dashboard():
     per_year_counts = counter_to_tuples(getYearTypeCounts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
 
+   #TODO Colm not sure where you want these in page
+    average_durations = {
+        "all": get_average_durations(cpos),
+        "current": get_average_durations(cpos_2019)
+    }
+
     return render_template('cpo-dashboard.html',
         cpos=cpos,
         by_year=per_year_counts_to_data(per_year_counts[-5:]),
         recent_cpos=get_recent_cpos(cpos),
         cpos_2019=cpos_2019,
         top_orgs=get_LA_counts(cpos)[:5],
-        top_orgs_2019=get_LA_counts(cpos_2019)[:5])
+        top_orgs_2019=get_LA_counts(cpos_2019)[:5],
+        average_durations=average_durations)
 
 
 def year_date_string(year):
