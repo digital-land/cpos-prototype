@@ -6,16 +6,15 @@
       Compulsory purchase orders
     </h1>
 
-	<p class="govuk-body">We are experimenting with the Compulsory purchase order data. Below are some of the early prototypes aiming to analyse and explore the data.</p>
-
+	<p class="govuk-body">See how and where CPOs are being used across England and get details on individual CPOS. We are continuing to develop these prototypes so watch this space.</p>
 
 	<ul class="govuk-list govuk-list--bullet">
-		<li><a href="{{ url_for('frontend.data_index')}}">Explore the raw data</a></li>
-		<li><a href="{{ url_for('frontend.dashboard')}}">View summary of the data</a></li>
-		<li><a href="{{ url_for('frontend.cpo_list')}}">View list of all compulsory purchase orders</a></li>
+		<li><a href="{{ url_for('frontend.dashboard')}}">Overview of CPOs</a>
+			<p class="govuk-body">This interactive dashboard gives an overview of CPOs in England by year, location, type and more.</p></li>
+		<li><a href="{{ url_for('frontend.cpo_list')}}">CPO explorer</a>
+			<p class="govuk-body">Get details on any CPO in this national list, which can be filtered by date, status, type, acquiring authority and more.</p></li>
+		<li><a href="{{ url_for('frontend.data_index')}}">Breakdown of CPOs</a>
+			<p class="govuk-body">See the number of CPOs in England by status, year received, acquiring authority, CPO type and more.</p></li>
 	</ul>
-    <p>
-        
-    </p>
 
 {% endblock %}
