@@ -101,4 +101,7 @@ def get_average_durations(cpos):
     if days_for_inquiry:
         averages['average_days_pins_inquiry'] = round(mean(days_for_inquiry))
 
+    averages['longest'] = max(days_to_completion) 
+    averages['shortest'] = min(days_to_completion) 
+
     return averages

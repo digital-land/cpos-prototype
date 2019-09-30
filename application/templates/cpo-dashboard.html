@@ -245,19 +245,86 @@
 	<h2 class="govuk-heading-l">Durations</h2>
 	
 	<p class="govuk-body">These figures show the average number of days it takes to process a CPO.</p>
-	
+
+	{% set longest_duration = average_durations.all['longest'] if average_durations.all['longest'] > average_durations.current['longest'] else average_durations.current['longest'] %}
     <div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ average_durations.current['average_days_to_process'] }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Days to process <span class="govuk-!-font-size-19">(this year)</span></p>
 			</div>
+			{{ dlfBarChart({
+				"label": "Longest",
+				"grid-size": "quarters",
+				"total": average_durations.current['longest'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.current['longest']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
+			{{ dlfBarChart({
+				"label": "Average",
+				"grid-size": "quarters",
+				"total": average_durations.current['average_days_to_process'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.current['average_days_to_process']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
+			{{ dlfBarChart({
+				"label": "Shortest",
+				"grid-size": "quarters",
+				"total": average_durations.current['shortest'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.current['shortest']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
 		</div>
 		<div class="govuk-grid-column-one-half">
 			<div class="data-item govuk-!-margin-bottom-6">
 				<span class="data-item__number govuk-!-font-size-80">{{ average_durations.all['average_days_to_process'] }}</span>
 				<p class="govuk-body govuk-!-font-size-36">Days to process <span class="govuk-!-font-size-19">(since 2012)</span></p>
 			</div>
+			{{ dlfBarChart({
+				"label": "Longest",
+				"grid-size": "quarters",
+				"total": average_durations.all['longest'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.all['longest']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
+			{{ dlfBarChart({
+				"label": "Average",
+				"grid-size": "quarters",
+				"total": average_durations.all['average_days_to_process'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.all['average_days_to_process']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
+			{{ dlfBarChart({
+				"label": "Shortest",
+				"grid-size": "quarters",
+				"total": average_durations.all['shortest'],
+				"bars": [
+				{
+					"classes": "chart-bar__part--default",
+					"width": ((average_durations.all['shortest']/longest_duration)*100)|round(0, 'ceil')|int
+				}
+				]
+			}) }}
 		</div>
 	</div>
 
