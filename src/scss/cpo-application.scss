@@ -192,6 +192,11 @@ $using-helvetica: false;
   position: relative;
 }
 
+.chart-bar__label {
+  padding-top: 10px;
+  line-height: govuk-em(22, 19);
+}
+
 .chart-bar__part {
   box-sizing: border-box;
   height: 44px;

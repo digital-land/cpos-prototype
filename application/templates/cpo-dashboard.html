@@ -60,7 +60,7 @@
 			{% set type_breakdown = by_year_counts_dict[year]['types']|tuple_list_to_dict %}
 		<div class="govuk-grid-row contribution-category-row">
 		  <div class="govuk-grid-column-one-quarter">
-		    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=year) }}">{{ year }}</a></h4>
+		    <h4 class="govuk-heading-s chart-bar__label"><a href="{{ url_for('frontend.cpo_list', year=year) }}">{{ year }}</a></h4>
 		  </div>
 		  <div class="govuk-grid-column-three-quarters chart-bar">
 		  	{% for type, count in type_breakdown.items() %}
@@ -138,7 +138,7 @@
 		<li>
 			<div class="govuk-grid-row contribution-category-row">
 			  <div class="govuk-grid-column-one-third">
-			    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', year=2019, org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
+			    <h4 class="govuk-heading-s chart-bar__label"><a href="{{ url_for('frontend.cpo_list', year=2019, org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
 			  </div>
 			  <div class="govuk-grid-column-two-thirds chart-bar">
 				{% set bar_percentage = ((relative_value/difference)*99)|int %}
@@ -164,7 +164,7 @@
 		<li>
 			<div class="govuk-grid-row contribution-category-row">
 			  <div class="govuk-grid-column-one-third">
-			    <h4 class="govuk-heading-s contribution-category-heading"><a href="{{ url_for('frontend.cpo_list', org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
+			    <h4 class="govuk-heading-s chart-bar__label"><a href="{{ url_for('frontend.cpo_list', org=org[0]) }}">{{ org[0] | map_la_code_to_name }}</a></h4>
 			  </div>
 			  <div class="govuk-grid-column-two-thirds chart-bar">
 				{% set bar_percentage = ((relative_value/difference)*70)|int %}

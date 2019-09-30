@@ -7796,6 +7796,11 @@
   position: relative;
 }
 
+.chart-bar__label {
+  padding-top: 10px;
+  line-height: 1.15789em;
+}
+
 .chart-bar__part {
   box-sizing: border-box;
   height: 44px;
