@@ -70,8 +70,10 @@ def dashboard():
     # by_year_data = per_year_counts_to_data(per_year_counts)
 
    #TODO Colm not sure where you want these in page
-    average_durations = get_average_durations(cpos)
-    average_durations_2019 = get_average_durations(cpos_2019)
+    average_durations = {
+        "all": get_average_durations(cpos),
+        "current": get_average_durations(cpos_2019)
+    }
 
     return render_template('cpo-dashboard.html',
         cpos=cpos,
@@ -79,7 +81,8 @@ def dashboard():
         recent_cpos=get_recent_cpos(cpos),
         cpos_2019=cpos_2019,
         top_orgs=get_LA_counts(cpos)[:5],
-        top_orgs_2019=get_LA_counts(cpos_2019)[:5])
+        top_orgs_2019=get_LA_counts(cpos_2019)[:5],
+        average_durations=average_durations)
 
 
 def year_date_string(year):

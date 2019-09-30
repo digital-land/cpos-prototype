@@ -239,7 +239,26 @@
 			}) }}
 		</div>
 	</div>
+
+	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+	<h2 class="govuk-heading-l">Durations</h2>
 	
-    
+	<p class="govuk-body">These figures show the average number of days it takes to process a CPO.</p>
+	
+    <div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-half">
+			<div class="data-item govuk-!-margin-bottom-6">
+				<span class="data-item__number govuk-!-font-size-80">{{ average_durations.current['average_days_to_process'] }}</span>
+				<p class="govuk-body govuk-!-font-size-36">Days to process <span class="govuk-!-font-size-19">(this year)</span></p>
+			</div>
+		</div>
+		<div class="govuk-grid-column-one-half">
+			<div class="data-item govuk-!-margin-bottom-6">
+				<span class="data-item__number govuk-!-font-size-80">{{ average_durations.all['average_days_to_process'] }}</span>
+				<p class="govuk-body govuk-!-font-size-36">Days to process <span class="govuk-!-font-size-19">(since 2012)</span></p>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
