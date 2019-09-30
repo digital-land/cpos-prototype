@@ -5,16 +5,18 @@
 {% block beforeContent %}
 {{ super() }}
 
-{% if request.url_root in request.referrer %}
-{{ govukBackLink({
-  "text": "Back",
-  "href": request.referrer
-}) }}
-{% else %}
-{{ govukBackLink({
-  "text": "See list of all compulsory purchase orders",
-  "href": url_for('frontend.cpo_list')
-}) }}
+{% if request.referrer %}
+    {% if request.url_root in request.referrer %}
+    {{ govukBackLink({
+      "text": "Back",
+      "href": request.referrer
+    }) }}
+    {% else %}
+    {{ govukBackLink({
+      "text": "See list of all compulsory purchase orders",
+      "href": url_for('frontend.cpo_list')
+    }) }}
+    {% endif %}
 {% endif %}
 {% endblock %}
 
