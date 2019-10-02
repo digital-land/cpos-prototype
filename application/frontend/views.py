@@ -25,10 +25,10 @@ from application.data import cpo_statuses
 from application.data import LocalAuthorityMapping
 
 from application.utils import (
-    getStatuses,
+    get_statuses,
     get_latest_statuses,
-    getYearCounts,
-    getYearTypeCounts,
+    get_year_counts,
+    get_year_type_counts,
     get_LA_counts,
     counter_to_tuples,
     get_cpo_type_counts,
@@ -66,7 +66,7 @@ def dashboard():
     cpos = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
     cpos_2019 = cpo_2019_query.order_by(CompulsoryPurchaseOrder.start_date.desc()).all()
 
-    per_year_counts = counter_to_tuples(getYearTypeCounts(cpos))
+    per_year_counts = counter_to_tuples(get_year_type_counts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
 
    #TODO Colm not sure where you want these in page
@@ -206,16 +206,16 @@ def data_index():
 def statuses():
     cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/statuses.html',
-        statuses=getStatuses(cpos),
-        latest_statuses=get_latest_statuses(cpos)
-    )
+                           statuses=get_statuses(cpos),
+                           latest_statuses=get_latest_statuses(cpos)
+                           )
 
 
 @frontend.route('/data/years')
 @requires_auth
 def years():
     cpos = CompulsoryPurchaseOrder.query.all()
-    return render_template('data/counts.html', count_type_title="By year", counts=getYearCounts(cpos))
+    return render_template('data/counts.html', count_type_title="By year", counts=get_year_counts(cpos))
 
 
 @frontend.route('/data/acquiring_authorities')

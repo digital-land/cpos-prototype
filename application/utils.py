@@ -10,7 +10,7 @@ def counter_to_tuples(counter):
     return tuple_list
 
 
-def getStatuses(cpos):
+def get_statuses(cpos):
     statuses = []
     for cpo in cpos:
         for s in cpo.statuses:
@@ -27,7 +27,7 @@ def get_latest_statuses(cpos):
     return Counter(statuses).most_common()
 
 
-def getYearCounts(cpos):
+def get_year_counts(cpos):
     years = []
     for cpo in cpos:
         years.append(cpo.start_date.year)
@@ -35,7 +35,7 @@ def getYearCounts(cpos):
     return Counter(years)
 
 
-def getYearTypeCounts(cpos):
+def get_year_type_counts(cpos):
     years = {}
     for cpo in cpos:
         if cpo.start_date.year in years.keys():
