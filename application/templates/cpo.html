@@ -76,6 +76,14 @@
                 </p>
             {% endif %}
 
+            {% if cpo.pdf_filename %}
+                <p class="govuk-body">
+                    <span class="govuk-!-font-weight-bold">Document:</span>
+                    <a href="{{ url_for('frontend.download_document', filename=cpo.pdf_filename) }}">Download file (pdf)</a>
+                </p>
+
+            {% endif %}
+
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
             <p class="govuk-body">Legislation: <a href="{{ cpo.legislation_url }}">{{ cpo.legislation_name }}</a></p>

@@ -23,6 +23,8 @@ class Config(object):
     AUTH0_BASE_URL = f"https://{AUTH0_DOMAIN}"
     AUTH0_AUDIENCE = f"{AUTH0_BASE_URL}/userinfo"
     AUTHENTICATION_ON = _to_boolean(os.environ.get('AUTHENTICATION_ON'))
+    S3_USER_AGENT = os.getenv('S3_USER_AGENT')
+    S3_CPO_FILE_URL = os.getenv('S3_CPO_FILE_URL')
 
 
 class DevelopmentConfig(Config):

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from application.data import final_states
 
+
 class OrderedMixin:
 
     def __eq__(self, other):
@@ -37,6 +38,8 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
                                lazy='joined',
                                back_populates='compulsory_purchase_order',
                                order_by='CompulsoryPurchaseOrderStatus.start_date')
+
+    pdf_filename = db.Column(db.String())
 
     def latest_status(self):
         return self.statuses[-1]

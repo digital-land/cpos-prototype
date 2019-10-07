@@ -2,12 +2,15 @@ import csv
 import datetime
 import io
 import zipfile
+import requests
 
 from flask import (
     Blueprint,
     render_template,
     abort,
-    request
+    request,
+    current_app,
+    make_response
 )
 
 from application.auth.utils import requires_auth
@@ -238,6 +241,18 @@ def has_investigations():
     cpos = CompulsoryPurchaseOrder.query.all()
     print(has_investigation_counts(cpos))
     return render_template('data/investigations.html', count_type_title="By year", counts=has_investigation_counts(cpos))
+
+
+@frontend.route('/compulsory-purchase-order/<filename>')
+@requires_auth
+def download_document(filename):
+    headers = {'User-Agent': current_app.config['S3_USER_AGENT']}
+    url = f"{current_app.config['S3_CPO_FILE_URL']}/{filename}"
+    resp = requests.get(url, headers=headers)
+    response = make_response(resp.content)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'attachment; filename={filename}'
+    return response
 
 
 # TODO remove this route as soon as we no longer need
