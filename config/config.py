@@ -25,6 +25,7 @@ class Config(object):
     AUTHENTICATION_ON = _to_boolean(os.environ.get('AUTHENTICATION_ON'))
     S3_USER_AGENT = os.getenv('S3_USER_AGENT')
     S3_CPO_FILE_URL = os.getenv('S3_CPO_FILE_URL')
+    SEARCH_URL = os.getenv('SEARCH_URL')
 
 
 class DevelopmentConfig(Config):

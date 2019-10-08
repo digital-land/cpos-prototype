@@ -15,7 +15,7 @@ from flask import (
 
 from application.auth.utils import requires_auth
 from application.extensions import db
-from application.forms import UploadForm
+from application.forms import UploadForm, SearchForm
 
 from application.models import (
     CompulsoryPurchaseOrder,
@@ -36,7 +36,8 @@ from application.utils import (
     counter_to_tuples,
     get_cpo_type_counts,
     has_investigation_counts,
-    get_average_durations
+    get_average_durations,
+    get_search_result
 )
 
 frontend = Blueprint('frontend', __name__, template_folder='templates')
@@ -253,6 +254,18 @@ def download_document(filename):
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = f'attachment; filename={filename}'
     return response
+
+
+@frontend.route('/search', methods=['GET', 'POST'])
+@requires_auth
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        headers = {'User-Agent': current_app.config['S3_USER_AGENT']}
+        url = f'{current_app.config["SEARCH_URL"]}?q="{form.query.data}"'
+        result = get_search_result(url, headers)
+        return render_template('search.html', form=SearchForm(), result=result)
+    return render_template('search.html', form=form)
 
 
 # TODO remove this route as soon as we no longer need
