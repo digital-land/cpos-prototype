@@ -113,10 +113,10 @@ def get_search_result(url, headers):
     resp = requests.get(url, headers=headers)
     resp.raise_for_status()
     data = resp.json()
-    result_count = data['hits']['total']['value']
-    cpo_ids = []
+    # result_count = data['hits']['total']['value']
+    cpo_ids = set([])
     for hit in data['hits']['hits']:
         filename = hit['_source']['file']['filename']
         cpo_id = '/'.join(filename.split('_')[:-1])
-        cpo_ids.append(cpo_id)
-    return {'result_count': result_count, 'cpo_ids': cpo_ids}
+        cpo_ids.add(cpo_id)
+    return {'result_count': len(cpo_ids), 'cpo_ids': cpo_ids}
