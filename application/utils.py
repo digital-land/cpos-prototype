@@ -2,6 +2,8 @@ from collections import Counter, OrderedDict
 
 import requests
 
+from application.models import CompulsoryPurchaseOrder
+
 
 def counter_to_tuples(counter):
     tuple_list = []
@@ -109,8 +111,17 @@ def get_average_durations(cpos):
     return averages
 
 
-def get_search_result(url, headers):
-    resp = requests.get(url, headers=headers)
+def get_search_result(url, query, headers):
+    q = {
+        "query": {
+            "multi_match": {
+                "query": query,
+                "fields": ["content"],
+                "fuzziness": "AUTO"
+            }
+        }
+    }
+    resp = requests.post(url, headers=headers, json=q)
     resp.raise_for_status()
     data = resp.json()
     # result_count = data['hits']['total']['value']
@@ -118,5 +129,6 @@ def get_search_result(url, headers):
     for hit in data['hits']['hits']:
         filename = hit['_source']['file']['filename']
         cpo_id = '/'.join(filename.split('_')[:-1])
-        cpo_ids.add(cpo_id)
+        if CompulsoryPurchaseOrder.query.get(cpo_id) is not None:
+            cpo_ids.add(cpo_id)
     return {'result_count': len(cpo_ids), 'cpo_ids': cpo_ids}

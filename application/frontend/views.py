@@ -261,9 +261,9 @@ def download_document(filename):
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        headers = {'User-Agent': current_app.config['S3_USER_AGENT']}
-        url = f'{current_app.config["SEARCH_URL"]}?q="{form.query.data}"'
-        result = get_search_result(url, headers)
+        headers = {'User-Agent': current_app.config['S3_USER_AGENT'], 'Content-Type': 'application/json'}
+        url = current_app.config["SEARCH_URL"]
+        result = get_search_result(url, form.query.data, headers)
         return render_template('search.html', form=SearchForm(), result=result)
     return render_template('search.html', form=form)
 
