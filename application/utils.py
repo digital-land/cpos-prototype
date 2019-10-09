@@ -125,10 +125,11 @@ def get_search_result(url, query, headers):
     resp.raise_for_status()
     data = resp.json()
     # result_count = data['hits']['total']['value']
-    cpo_ids = set([])
+    cpos = set([])
     for hit in data['hits']['hits']:
         filename = hit['_source']['file']['filename']
         cpo_id = '/'.join(filename.split('_')[:-1])
-        if CompulsoryPurchaseOrder.query.get(cpo_id) is not None:
-            cpo_ids.add(cpo_id)
-    return {'result_count': len(cpo_ids), 'cpo_ids': cpo_ids}
+        cpo = CompulsoryPurchaseOrder.query.get(cpo_id)
+        if cpo is not None:
+            cpos.add(cpo)
+    return {'result_count': len(cpos), 'cpos': cpos}

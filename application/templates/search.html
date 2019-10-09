@@ -13,7 +13,7 @@
         </div>
 
         <div class="govuk-form-group">
-            <button type="submit" class="govuk-button govuk-button--start">Start now</button>
+            <button type="submit" class="govuk-button govuk-button--start">Search now</button>
         </div>
         {{ form.csrf_token }}
     </form>
@@ -28,11 +28,11 @@
                 {% endif %}
         </p>
         <ul class="govuk-list">
-            {% for cpo_id in result['cpo_ids'] %}
+            {% for cpo in result['cpos'] %}
                 <li>
-                    <a class="govuk-link" href="{{ url_for('frontend.cpo', id=cpo_id ) }}">
-                        {{ cpo_id }}
-                    </a>
+                    <a class="govuk-link" href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order ) }}">
+                        {{ cpo.compulsory_purchase_order }} </a>
+                    <p class="govuk-body-s">{{ cpo.name }}</p>
                 </li>
             {% endfor %}
         </ul>

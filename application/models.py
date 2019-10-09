@@ -41,6 +41,12 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
 
     pdf_filename = db.Column(db.String())
 
+    def __hash__(self):
+        return hash(self.compulsory_purchase_order)
+
+    def __eq__(self, other):
+        return self.compulsory_purchase_order == other.compulsory_purchase_order
+
     def latest_status(self):
         return self.statuses[-1]
 
