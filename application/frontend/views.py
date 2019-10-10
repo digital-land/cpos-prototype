@@ -322,8 +322,8 @@ def upload():
                             try:
                                 status = CompulsoryPurchaseOrderStatus.query.get(row['compulsory-purchase-order-status'])
                                 if status is None:
-                                    start_date = datetime.datetime.strptime(row['start-date'], "%d/%m/%Y").date()
-                                    end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() \
+                                    start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
+                                    end_date = datetime.datetime.strptime(row['end-date'], "%Y-%m-%d").date() \
                                         if row[ 'end-date'] else None
                                     status = CompulsoryPurchaseOrderStatus(
                                         compulsory_purchase_order_status = row['compulsory-purchase-order-status'],
