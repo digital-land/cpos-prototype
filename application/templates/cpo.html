@@ -57,7 +57,7 @@
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Acquiring authority:</span> {{ cpo.organisation | map_la_code_to_name }}</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Type:</span> {{ cpo.compulsory_purchase_order_type | capitalize }}</p>
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Date received:</span> {{ cpo.start_date }}</p>
-            <p class="govuk-body"><span class="govuk-!-font-weight-bold">Description:</span>{% if cpo.description %}{{cpo.description}}{% else %}No description available{% endif %}</p>
+            {% if cpo.description %}<p class="govuk-body"><span class="govuk-!-font-weight-bold">Description:</span> {{cpo.description}}{% endif %}</p>
 
             {% if cpo.has_final_status() %}
                 <p class="govuk-body">
