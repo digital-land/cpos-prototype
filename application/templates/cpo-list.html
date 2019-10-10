@@ -54,6 +54,26 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
+						"title": "Status",
+						"is_open": True if request.args['current_status'] else False,
+						"selected": request.args.getlist('current_status')|length if request.args['current_status'] else 0
+					}) %}
+					<div class="govuk-checkboxes">
+					{% for status in cpo_statuses %}
+						<div class="govuk-checkboxes__item">
+							<input class="govuk-checkboxes__input" id="cpo-status-{{ loop.index }}" name="current_status" type="checkbox" value="{{ status }}" {% if status in request.args.getlist('current_status') %}checked=checked{% endif %}>
+							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
+							<label class="govuk-label govuk-checkboxes__label" for="cpo-status-{{ loop.index }}">
+							  {{ status }}
+							</label>
+					  </div>
+					{% endfor %}
+					</div>
+					{% endcall %}
+				</div>
+
+				<div class="govuk-form-group">
+					{% call dlfFilterGroup({
 						"title": "Inquiry",
 						"is_open": True if request.args['investigation'] else False,
 						"selected": 1 if request.args['investigation'] else 0
@@ -78,7 +98,7 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
-						"title": "CPO type",
+						"title": "Type",
 						"is_open": True if request.args['type'] else False,
 						"selected": request.args.getlist('type')|length if request.args['type'] else 0
 					}) %}
@@ -107,27 +127,6 @@
 						  GLA
 						</label>
 					  </div>
-					</div>
-					{% endcall %}
-				</div>
-
-
-				<div class="govuk-form-group">
-					{% call dlfFilterGroup({
-						"title": "CPO status",
-						"is_open": True if request.args['current_status'] else False,
-						"selected": request.args.getlist('current_status')|length if request.args['current_status'] else 0
-					}) %}
-					<div class="govuk-checkboxes">
-					{% for status in cpo_statuses %}
-						<div class="govuk-checkboxes__item">
-							<input class="govuk-checkboxes__input" id="cpo-status-{{ loop.index }}" name="current_status" type="checkbox" value="{{ status }}" {% if status in request.args.getlist('current_status') %}checked=checked{% endif %}>
-							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
-							<label class="govuk-label govuk-checkboxes__label" for="cpo-status-{{ loop.index }}">
-							  {{ status }}
-							</label>
-					  </div>
-					{% endfor %}
 					</div>
 					{% endcall %}
 				</div>
@@ -170,7 +169,7 @@
 
 				<div class="govuk-form-group">
 				  <label class="govuk-label" for="year">
-					Year
+					Year received
 				  </label>
 				  <span class="govuk-hint">For example, 2015</span>
 				  <input class="govuk-input" id="year" name="year" type="text" {% if request.args['year'] %}value="{{ request.args['year'] }}"{% endif %}>

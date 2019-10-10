@@ -19,7 +19,7 @@
     		Filter by CPO type
   			</label>
 			<select class="govuk-select" id="cpo-type" name="type">
-				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All - CPO types</option>
+				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All</option>
 				<option value="housing" {% if request.args.get('type') == "housing" %}selected{% endif %}>Housing</option>
 				<option value="planning" {% if request.args.get('type') == "planning" %}selected{% endif %}>Planning</option>
 				<option value="GLA" {% if request.args.get('type') == "GLA" %}selected{% endif %}>GLA</option>
@@ -54,10 +54,10 @@
 
 	{% set max_count = (((by_year.max/100)|round(1, 'ceil'))*100)|int %}
 	<ul class="govuk-list">
-		{% for year in by_year_counts_dict.keys() %}
+		{% for year in by_year_counts_dict.keys()|reverse %}
 		
 		<li>
-			{% set type_breakdown = by_year_counts_dict[year]['types']|tuple_list_to_dict %}
+		{% set type_breakdown = by_year_counts_dict[year]['types']|tuple_list_to_dict %}
 		<div class="govuk-grid-row contribution-category-row">
 		  <div class="govuk-grid-column-one-quarter">
 		    <h4 class="govuk-heading-s chart-bar__label"><a href="{{ url_for('frontend.cpo_list', year=year) }}">{{ year }}</a></h4>
@@ -178,7 +178,9 @@
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h2 class="govuk-heading-l">Inquiries</h2>
+	<h2 class="govuk-heading-l">Sent to Planning Inspectorate</h2>
+
+	<p class="govuk-body">Number of CPOs sent to the Planning Inspectorate.</p>
 
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-half">
@@ -242,7 +244,7 @@
 
 	<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-	<h2 class="govuk-heading-l">Durations</h2>
+	<h2 class="govuk-heading-l">Processing time</h2>
 	
 	<p class="govuk-body">These figures show the average number of days it takes to process a CPO.</p>
 
