@@ -74,7 +74,7 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
-						"title": "Inquiry",
+						"title": "Sent to planning inspectorate",
 						"is_open": True if request.args['investigation'] else False,
 						"selected": 1 if request.args['investigation'] else 0
 					}) %}
