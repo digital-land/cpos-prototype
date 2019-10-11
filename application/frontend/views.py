@@ -288,8 +288,9 @@ def upload():
                     data = z.read(filename).decode('utf-8-sig')
                     content = csv.DictReader(io.StringIO(data))
                     if filename == 'compulsory-purchase-order.csv':
-                        for row in content:
-                            try:
+                        try:
+                            cpos = set([])
+                            for row in content:
                                 cpo = CompulsoryPurchaseOrder.query.get(row['compulsory-purchase-order'])
                                 if cpo is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%d/%m/%Y").date()
@@ -310,16 +311,18 @@ def upload():
                                         legislation_name=l_name,
                                         legislation_url=l_url
                                     )
-                                    db.session.add(cpo)
-                                    db.session.commit()
+                                    cpos.add(cpo)
                                 else:
                                     print('CPO', row['compulsory-purchase-order'], 'already loaded')
-                            except Exception as e:
-                                print('Error loading', row)
+                            db.session.bulk_save_objects(cpos)
+                            db.session.commit()
+                        except Exception as e:
+                            print('Error loading', row)
 
                     if filename == 'compulsory-purchase-order-status.csv':
-                        for row in content:
-                            try:
+                        try:
+                            cpos = set([])
+                            for row in content:
                                 status = CompulsoryPurchaseOrderStatus.query.get(row['compulsory-purchase-order-status'])
                                 if status is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
@@ -334,14 +337,16 @@ def upload():
                                     )
                                     cpo = CompulsoryPurchaseOrder.query.get(row['compulsory-purchase-order'])
                                     cpo.statuses.append(status)
-                                    db.session.add(cpo)
-                                    db.session.commit()
-                            except Exception as e:
-                                print('Error loading', row)
+                                    cpos.add(cpo)
+                            db.session.bulk_save_objects(cpos)
+                            db.session.commit()
+                        except Exception as e:
+                            print('Error loading', row)
 
                     if filename == 'compulsory-purchase-order-investigation.csv':
-                        for row in content:
-                            try:
+                        try:
+                            cpos = set([])
+                            for row in content:
                                 investigation = CompulsoryPurchaseOrderInvestigation.query.get(row['compulsory-purchase-order-investigation'])
                                 if investigation is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
@@ -357,9 +362,10 @@ def upload():
                                     )
                                     cpo = CompulsoryPurchaseOrder.query.get(row['compulsory-purchase-order'])
                                     cpo.investigations.append(investigation)
-                                    db.session.add(cpo)
-                                    db.session.commit()
-                            except Exception as e:
+                                    cpos.add(cpo)
+                            db.session.bulk_save_objects(cpos)
+                            db.session.commit()
+                        except Exception as e:
                                 print('Error loading', row)
 
         except Exception as e:
