@@ -37,6 +37,14 @@ def map_cpo_status_to_tag_class(status):
 	return class_
 
 
+def map_cpo_status_display_name(status):
+	if status == "sent for inquiry":
+		return "sent to planning inspectorate"
+	if status == "confirmed with modifications":
+		return "confirmed with modification"
+	return status
+
+
 def remove_item(list_, item):
 	if item in list_:
 		list_.remove(item)

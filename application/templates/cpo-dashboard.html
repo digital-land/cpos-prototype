@@ -101,7 +101,7 @@
 	<ul class="govuk-list">
 		{% for cpo in recent_cpos['received'] %}
 		<li>
-			<span class="govuk-tag">{{ cpo.latest_status().status }}</span>
+			<span class="govuk-tag">{{ cpo.latest_status().status|map_cpo_status_display_name }}</span>
 			<a href="{{ url_for('frontend.cpo', id=cpo.compulsory_purchase_order) }}">{{ cpo.compulsory_purchase_order }}</a>, 
 			<span>{{ cpo.name }}</span>
         </li>
