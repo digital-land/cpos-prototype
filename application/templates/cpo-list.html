@@ -7,10 +7,13 @@
 {% block beforeContent %}
 {{ super() }}
 
-{{ govukBackLink({
-  "text": "See summary of CPO data",
-  "href": url_for('frontend.dashboard')
-}) }}
+{% if request.referrer == url_for('frontend.dashboard', _external=True) %}
+	{{ govukBackLink({
+	  "text": "See summary of CPO data",
+	  "href": url_for('frontend.dashboard')
+	}) }}
+{% endif %}
+
 {% endblock %}
 
 {% block content %}
