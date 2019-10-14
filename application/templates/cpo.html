@@ -31,22 +31,23 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">{% if cpo.statuses %}
             <h3 class="govuk-heading-s">Status</h3>
-                <ul class="govuk-list govuk-list--bullet timeline">
+                <ul class="govuk-list govuk-list--bullet timeline timeline--top-level">
                     {% for status in cpo.statuses %}
                         <li class="timeline__item">
                             <span class="timeline__item__title">{{ status.status | map_cpo_status_display_name | capitalize }}</span>
-                            <span class="timeline__item__date">{{ status.start_date }}</span></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if cpo.investigations %}
-            <h3 class="govuk-heading-s">Inquiry</h3>
-                <ul class="govuk-list govuk-list--bullet timeline">
-                    {% for investigation in cpo.investigations %}
-                        <li class="timeline__item">
-                            <span class="timeline__item__title">{{ investigation.status | map_cpo_status_display_name | capitalize }}</span>
-                            <span class="timeline__item__date">{{ investigation.start_date }}</span>
+                            <span class="timeline__item__date">{{ status.start_date }}</span>
+                            {% if status.status == "sent for inquiry" %}
+                                {% if cpo.investigations %}
+                                <ul class="govuk-list govuk-list--bullet timeline">
+                                    {% for investigation in cpo.investigations %}
+                                        <li class="timeline__item">
+                                            <span class="timeline__item__title">{{ investigation.status | map_cpo_status_display_name | capitalize }}</span>
+                                            <span class="timeline__item__date">{{ investigation.start_date }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>

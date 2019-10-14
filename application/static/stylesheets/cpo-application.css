@@ -7699,6 +7699,15 @@
   padding-left: 0;
 }
 
+.timeline .timeline {
+  margin-top: 0;
+  padding-left: 20px;
+}
+
+.timeline .timeline .timeline__item:first-child .timeline__item__title {
+  border-left: 2px solid #b1b4b6;
+}
+
 .timeline__item {
   margin-bottom: 0 !important;
   list-style: none;
@@ -7725,11 +7734,11 @@
   background: #b1b4b6;
 }
 
-.timeline__item:first-child .timeline__item__title {
+.timeline--top-level > .timeline__item:first-child .timeline__item__title {
   border-left: 0;
 }
 
-.timeline__item:first-child .timeline__item__title:after {
+.timeline--top-level > .timeline__item:first-child .timeline__item__title:after {
   content: "";
   position: absolute;
   top: 0;
@@ -7783,14 +7792,22 @@
   }
 }
 
-.timeline__item:last-child .timeline__item__date:after {
+.timeline__item:last-child > .timeline__item__title {
+  border-left: 0;
+}
+
+.timeline__item:last-child > .timeline__item__title:after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: -6px;
-  width: 10px;
-  height: 2px;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 50%;
   background: #b1b4b6;
+}
+
+.timeline__item:last-child > .timeline__item__date {
+  border-left: 0;
 }
 
 .chart-bar {
