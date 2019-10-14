@@ -9,11 +9,14 @@
     <form action="{{ url_for('frontend.search') }}" method="POST">
         <div class="govuk-form-group">
             {{ form.query.label(class_="govuk-label") }}
+            <span id="query-hint" class="govuk-hint">
+            Enter keyword terms. E.g. Tree preservation or Birmingham
+            </span>
             {{ form.query(class_="govuk-input govuk-input--width-30") }}
         </div>
 
         <div class="govuk-form-group">
-            <button type="submit" class="govuk-button govuk-button--start">Search now</button>
+            <button type="submit" class="govuk-button govuk-button">Search</button>
         </div>
         {{ form.csrf_token }}
     </form>
