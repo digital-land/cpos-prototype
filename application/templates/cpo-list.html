@@ -100,13 +100,13 @@
 					}) %}
 					<div class="govuk-radios">
 					  <div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="true" {% if request.args['investigation'] in ['True', 'true', 't'] %}checked=checked{% endif %}>
+						<input class="govuk-radios__input" id="investigation-yes" name="investigation" type="radio" value="yes" {% if request.args['investigation'] in ['True', 'true', 't', 'yes'] %}checked=checked{% endif %}>
 						<label class="govuk-label govuk-radios__label" for="investigation-yes">
 						  Yes
 						</label>
 					  </div>
 					  <div class="govuk-radios__item">
-						<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="false" {% if request.args['investigation'] in ['False', 'false', 'f'] %}checked=checked{% endif %}>
+						<input class="govuk-radios__input" id="investigation-no" name="investigation" type="radio" value="no" {% if request.args['investigation'] in ['False', 'false', 'f', 'no'] %}checked=checked{% endif %}>
 						<label class="govuk-label govuk-radios__label" for="investigation-no">
 						  No
 						</label>
@@ -244,7 +244,7 @@
 				{% if request.args and request.args['investigation'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Sent to Planning Inspectorate:</span>
-					<span class="applied-filter__item">{{ removeFilterLink("investigation", request.args['investigation']) }}{{ request.args['investigation'] }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("investigation", request.args['investigation']) }}{{ request.args['investigation']|capitalize }}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['type'] %}

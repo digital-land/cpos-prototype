@@ -175,9 +175,9 @@ def cpo_list():
     # filter based on if CPO has associated inquiry
     if request.args and request.args.get('investigation') is not None:
         cpos_w, cpos_wo = filter_if_investigation(cpos)
-        if request.args['investigation'] in ['True', 'true', 't']:
+        if request.args['investigation'] in ['True', 'true', 't', 'yes']:
             filtered_cpos = cpos_w
-        elif request.args['investigation'] in ['False', 'false', 'f']:
+        elif request.args['investigation'] in ['False', 'false', 'f', 'no']:
             filtered_cpos = cpos_wo
         else:
             filtered_cpos = cpos
