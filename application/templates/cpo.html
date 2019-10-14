@@ -60,6 +60,28 @@
             <p class="govuk-body"><span class="govuk-!-font-weight-bold">Date received:</span> {{ cpo.start_date }}</p>
             {% if cpo.description %}<p class="govuk-body"><span class="govuk-!-font-weight-bold">Description:</span> {{cpo.description}}{% endif %}</p>
 
+
+            {% if cpo.pdf_filenames %}
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <h3 class="govuk-heading-m">Documents</h3>
+                {% for file in cpo.pdf_filenames %}
+                    <p class="govuk-body">
+                        <span class="govuk-!-font-weight-bold">
+                            {% if file.endswith('_IR.pdf') %}
+                                Inspectors report:
+                            {% elif file.endswith('_DL.pdf') %}
+                                Decision letter:
+                            {%  else %}
+                                 Document:
+                            {% endif %}
+                        </span>
+                        <a href="{{ url_for('frontend.download_document', filename=file) }}">download file (pdf)</a>
+                    </p>
+                {% endfor %}
+            {% endif %}
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <h3 class="govuk-heading-m">Processing time</h3>
             {% if cpo.has_final_status() %}
                 <p class="govuk-body">
                     <span class="govuk-!-font-weight-bold">Days from receipt to decision:</span>
@@ -75,23 +97,6 @@
                     <span class="govuk-!-font-weight-bold">Days since receipt:</span>
                     {{ cpo.days_since_received() }}
                 </p>
-            {% endif %}
-
-            {% if cpo.pdf_filenames %}
-                {% for file in cpo.pdf_filenames %}
-                    <p class="govuk-body">
-                        <span class="govuk-!-font-weight-bold">
-                            {% if file.endswith('_IR.pdf') %}
-                                Inspectors Report:
-                            {% elif file.endswith('_DL.pdf') %}
-                                Decision Letter:
-                            {%  else %}
-                                 Document:
-                            {% endif %}
-                        </span>
-                        <a href="{{ url_for('frontend.download_document', filename=file) }}">download file (pdf)</a>
-                    </p>
-                {% endfor %}
             {% endif %}
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
