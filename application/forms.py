@@ -11,4 +11,4 @@ class UploadForm(FlaskForm):
 
 class SearchForm(FlaskForm):
 
-    query = StringField('Enter your search', validators=[DataRequired()])
+    query = StringField('Enter search term', validators=[DataRequired()])
