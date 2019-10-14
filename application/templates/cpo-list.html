@@ -57,7 +57,7 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
-						"title": "Status",
+						"title": "Current status",
 						"is_open": True if request.args['current_status'] else False,
 						"selected": request.args.getlist('current_status')|length if request.args['current_status'] else 0
 					}) %}
