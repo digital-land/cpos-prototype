@@ -64,14 +64,14 @@
 					<div class="govuk-checkboxes">
 
 						<span id="in-process-states-hint" class="govuk-hint govuk-hint--grouping">
-      					In process states
+      					Open states
 						</span>
 						{% for status in cpo_statuses.in_process_states %}
 						<div class="govuk-checkboxes__item">
 							<input class="govuk-checkboxes__input" id="cpo-status-ips-{{ loop.index }}" name="current_status" type="checkbox" value="{{ status }}" {% if status in request.args.getlist('current_status') %}checked=checked{% endif %}>
 							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
 							<label class="govuk-label govuk-checkboxes__label" for="cpo-status-ips-{{ loop.index }}">
-							  {{ status|map_cpo_status_display_name }}
+							  {{ status|map_cpo_status_display_name|capitalize }}
 							</label>
 						</div>
 						{% endfor %}
@@ -84,7 +84,7 @@
 							<input class="govuk-checkboxes__input" id="cpo-status-fs-{{ loop.index }}" name="current_status" type="checkbox" value="{{ status }}" {% if status in request.args.getlist('current_status') %}checked=checked{% endif %}>
 							{#- To INVESTIGATE: had to add |trim because withdrawn was coming through with space at the end -#}
 							<label class="govuk-label govuk-checkboxes__label" for="cpo-status-fs-{{ loop.index }}">
-							  {{ status|map_cpo_status_display_name }}
+							  {{ status|map_cpo_status_display_name|capitalize }}
 							</label>
 						</div>
 						{% endfor %}
@@ -94,7 +94,7 @@
 
 				<div class="govuk-form-group">
 					{% call dlfFilterGroup({
-						"title": "Sent to planning inspectorate",
+						"title": "Sent to Planning Inspectorate",
 						"is_open": True if request.args['investigation'] else False,
 						"selected": 1 if request.args['investigation'] else 0
 					}) %}

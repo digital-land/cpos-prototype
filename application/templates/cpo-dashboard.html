@@ -16,7 +16,7 @@
 
 		<div class="govuk-form-group">
   			<label class="govuk-label" for="cpo-type">
-    		Filter by CPO type
+    		Filter by compulsory purchase order (CPO) type
   			</label>
 			<select class="govuk-select" id="cpo-type" name="type">
 				<option value="all" {% if not request.args.get('type') in ['planning', 'housing', 'GLA', 'development corporation'] %}selected{% endif %}>All</option>

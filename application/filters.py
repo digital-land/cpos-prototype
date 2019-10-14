@@ -39,7 +39,7 @@ def map_cpo_status_to_tag_class(status):
 
 def map_cpo_status_display_name(status):
 	if status == "sent for inquiry":
-		return "sent to planning inspectorate"
+		return "sent to Planning Inspectorate"
 	if status == "confirmed with modifications":
 		return "confirmed with modification"
 	return status
