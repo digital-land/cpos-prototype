@@ -56,3 +56,7 @@ def count_with_investigation(cpos, has=True):
 		counts = has_investigation_counts(cpos)
 		return counts[has]
 	return cpos
+
+
+def cap_first_letter(str):
+	return str[0].upper() + str[1:]

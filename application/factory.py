@@ -74,6 +74,8 @@ def register_filters(app):
     app.add_template_filter(count_with_investigation)
     from application.filters import map_cpo_status_display_name
     app.add_template_filter(map_cpo_status_display_name)
+    from application.filters import cap_first_letter
+    app.add_template_filter(cap_first_letter)
 
 
 def register_blueprints(app):
