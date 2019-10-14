@@ -1,3 +1,5 @@
+from sqlalchemy.dialects.postgresql import ARRAY
+
 from application.extensions import db
 from functools import total_ordering
 from datetime import datetime
@@ -39,7 +41,7 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
                                back_populates='compulsory_purchase_order',
                                order_by='CompulsoryPurchaseOrderStatus.start_date')
 
-    pdf_filename = db.Column(db.String())
+    pdf_filenames = db.Column(ARRAY(db.String))
 
     def __hash__(self):
         return hash(self.compulsory_purchase_order)

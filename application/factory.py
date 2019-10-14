@@ -16,6 +16,7 @@ def create_app(config_filename):
     register_blueprints(app)
     register_extensions(app)
     register_filters(app)
+    register_commands(app)
 
     return app
 
@@ -82,3 +83,7 @@ def register_blueprints(app):
     from application.auth.views import auth
     app.register_blueprint(auth)
 
+
+def register_commands(app):
+    from application.commands import load_pdfs
+    app.cli.add_command(load_pdfs, name='load_pdfs')

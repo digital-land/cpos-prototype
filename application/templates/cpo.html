@@ -77,12 +77,21 @@
                 </p>
             {% endif %}
 
-            {% if cpo.pdf_filename %}
-                <p class="govuk-body">
-                    <span class="govuk-!-font-weight-bold">Document:</span>
-                    <a href="{{ url_for('frontend.download_document', filename=cpo.pdf_filename) }}">Download file (pdf)</a>
-                </p>
-
+            {% if cpo.pdf_filenames %}
+                {% for file in cpo.pdf_filenames %}
+                    <p class="govuk-body">
+                        <span class="govuk-!-font-weight-bold">
+                            {% if file.endswith('_IR.pdf') %}
+                                Inspectors Report:
+                            {% elif file.endswith('_DL.pdf') %}
+                                Decision Letter:
+                            {%  else %}
+                                 Document:
+                            {% endif %}
+                        </span>
+                        <a href="{{ url_for('frontend.download_document', filename=file) }}">download file (pdf)</a>
+                    </p>
+                {% endfor %}
             {% endif %}
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
