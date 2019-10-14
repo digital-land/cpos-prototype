@@ -57,6 +57,11 @@ $using-helvetica: false;
   background: govuk-colour("orange");
 }
 
+.govuk-hint--grouping {
+  margin: 5px 0;
+  @include govuk-font($size: 16);
+}
+
 .cpo-list {
   .cpo-item {
     margin-bottom: $govuk-gutter-half;

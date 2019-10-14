@@ -169,7 +169,7 @@ def cpo_list():
         if request.args.get('live') in ['True', 'true', 't']:
             cpos = filter_by_status(['received', 'other'], cpos)
         elif request.args.get('live') in ['False', 'false', 'f']:
-            closed_statuses = [status for status in cpo_statuses if status not in ['received', 'other']]
+            closed_statuses = [status for status in cpo_statuses["final_states"] if status not in ['received', 'other']]
             cpos = filter_by_status(closed_statuses, cpos)
 
     # filter based on if CPO has associated inquiry
