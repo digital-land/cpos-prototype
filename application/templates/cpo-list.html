@@ -238,7 +238,7 @@
 				{% if request.args and request.args['live'] %}
 				<div class="applied-filter__group">
 					<span class="applied-filter__name govuk-!-font-weight-bold">Active:</span>
-					<span class="applied-filter__item">{{ removeFilterLink("live", request.args['live']) }}{{ request.args['live'] }}</span>
+					<span class="applied-filter__item">{{ removeFilterLink("live", request.args['live']) }}{% if request.args['live'] in ['True', 'true', 't'] %}Open{% else %}Closed{% endif %}</span>
 				</div>
 				{% endif %}
 				{% if request.args and request.args['investigation'] %}
