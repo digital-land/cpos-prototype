@@ -232,7 +232,7 @@
 
 
 		<div class="govuk-grid-column-two-thirds">
-			<p class="govuk-body">Showing {{ cpos|length }} results {% if request.args['year'] %} for {{ request.args['year'] }}{% endif %}</p>
+			<p class="govuk-body results-summary">Showing {{ cpos|length }} results</p>
 
 			<div class="applied-filters">
 				{% if request.args and request.args['live'] %}

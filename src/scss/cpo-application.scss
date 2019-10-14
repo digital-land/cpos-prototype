@@ -86,6 +86,10 @@ $using-helvetica: false;
   @include govuk-font($size: 19, $weight: bold);
 }
 
+.results-summary {
+  margin-bottom: 10px;
+}
+
 // =====================
 .sort-by-label {
   display: inline-block;

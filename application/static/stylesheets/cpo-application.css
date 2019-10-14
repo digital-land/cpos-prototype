@@ -7651,6 +7651,10 @@
   }
 }
 
+.results-summary {
+  margin-bottom: 10px;
+}
+
 .sort-by-label {
   display: inline-block;
   margin-right: 5px;
