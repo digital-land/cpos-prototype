@@ -110,10 +110,16 @@ def filter_if_investigation(cpos):
     return with_investigation, no_investigation
 
 
+def determine_latest_status(cpo):
+    if cpo.has_inquiry():
+        return cpo.latest_investigation_status().status
+    return cpo.latest_status().status
+
+
 def filter_by_status(status, cpos, filtered_list = []):
     if isinstance(status, list) and len(status) > 0:
         filter_str = status.pop()
-        filter_applied_list = [cpo for cpo in cpos if cpo.latest_status().status == filter_str]
+        filter_applied_list = [cpo for cpo in cpos if determine_latest_status(cpo) == filter_str]
         return filter_by_status(status, cpos, filtered_list + filter_applied_list)
     return filtered_list
 
