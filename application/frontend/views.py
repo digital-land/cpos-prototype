@@ -99,7 +99,8 @@ def filter_by_year(year, cpo_query):
     # else do between
     else:
         next_year = str(int(year) + 1)
-        filtered_query = cpo_query.filter(CompulsoryPurchaseOrder.start_date.between(year_date_string(year), year_date_string(next_year)))
+        filtered_query = cpo_query.filter(CompulsoryPurchaseOrder.start_date.between(year_date_string(year),
+                                                                                     year_date_string(next_year)))
 
     return filtered_query
 
@@ -162,7 +163,8 @@ def cpo_list():
 
     # then apply type filter if there is one
     if request.args and request.args.get('type') is not None:
-        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type.in_(request.args.getlist('type')))
+        filtered_query = filtered_query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order_type.in_(
+            request.args.getlist('type')))
 
     cpos = filtered_query.all()
 
@@ -351,7 +353,8 @@ def upload():
                         try:
                             cpos = set([])
                             for row in content:
-                                investigation = CompulsoryPurchaseOrderInvestigation.query.get(row['compulsory-purchase-order-investigation'])
+                                investigation = CompulsoryPurchaseOrderInvestigation.query.get(
+                                    row['compulsory-purchase-order-investigation'])
                                 if investigation is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
                                     end_date = datetime.datetime.strptime(row['end-date'], "%Y-%m-%d").date() \
