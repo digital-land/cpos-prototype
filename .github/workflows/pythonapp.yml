@@ -1,4 +1,4 @@
-name: Python application
+name: cpos-prototype
 
 on: [push, pull_request]
 
