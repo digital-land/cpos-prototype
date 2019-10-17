@@ -1,3 +1,5 @@
+![](https://github.com//digital-land/cpos-prototype/workflows/cpos-prototype/badge.svg)
+
 CPOs Prototype
 ==============
 
