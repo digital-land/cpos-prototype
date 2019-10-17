@@ -2,7 +2,7 @@
 from flask import Flask, render_template
 from flask.cli import load_dotenv
 
-from application.models import *
+from application.models import *  # noqa
 
 load_dotenv()
 
@@ -56,7 +56,7 @@ def register_extensions(app):
     app.config['auth0'] = auth0
 
     from application.extensions import DebugToolbarExtension
-    toolbar = DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
 
 def register_filters(app):

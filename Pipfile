@@ -18,6 +18,7 @@ flask-debugtoolbar = "*"
 elasticsearch-dsl = "*"
 requests = "*"
 pytest = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"

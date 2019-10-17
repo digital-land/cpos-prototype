@@ -1,62 +1,62 @@
 from application.data import LocalAuthorityMapping
-la_mapping = LocalAuthorityMapping()
-
 from application.utils import has_investigation_counts
+
+la_mapping = LocalAuthorityMapping()
 
 
 def map_la_code_to_name(id):
-	if la_mapping.get_local_authority_name(id) is not None:
-		return la_mapping.get_local_authority_name(id)
-	return id
+    if la_mapping.get_local_authority_name(id) is not None:
+        return la_mapping.get_local_authority_name(id)
+    return id
 
 
 def flatten_tuples(tuplist, ind=0):
-	if ind == 1:
-		flattened = [b for (a, b) in tuplist]
-	else:
-		flattened = [a for (a, b) in tuplist]
-	return flattened
+    if ind == 1:
+        flattened = [b for (a, b) in tuplist]
+    else:
+        flattened = [a for (a, b) in tuplist]
+    return flattened
 
 
 def tuple_list_to_dict(tuplist):
-	if len(tuplist) > 0 and isinstance(tuplist[0], tuple):
-		return dict(tuplist)
-	return tuplist
+    if len(tuplist) > 0 and isinstance(tuplist[0], tuple):
+        return dict(tuplist)
+    return tuplist
 
 
 def map_cpo_status_to_tag_class(status):
-	class_ = ""
-	if 'confirmed' in status:
-		class_ = "govuk-tag--confirmed"
-	if status in ['not confirmed', 'invalid']:
-		class_ = "govuk-tag--error"
-	if 'withdrawn' in status:
-		class_ = "govuk-tag--disabled"
-	if 'inquiry' in status:
-		class_ = "govuk-tag--warning"
-	return class_
+    class_ = ""
+    if 'confirmed' in status:
+        class_ = "govuk-tag--confirmed"
+    if status in ['not confirmed', 'invalid']:
+        class_ = "govuk-tag--error"
+    if 'withdrawn' in status:
+        class_ = "govuk-tag--disabled"
+    if 'inquiry' in status:
+        class_ = "govuk-tag--warning"
+    return class_
 
 
 def map_cpo_status_display_name(status):
-	if status == "sent for inquiry":
-		return "sent to Planning Inspectorate"
-	if status == "confirmed with modifications":
-		return "confirmed with modification"
-	return status
+    if status == "sent for inquiry":
+        return "sent to Planning Inspectorate"
+    if status == "confirmed with modifications":
+        return "confirmed with modification"
+    return status
 
 
 def remove_item(list_, item):
-	if item in list_:
-		list_.remove(item)
-	return list_
+    if item in list_:
+        list_.remove(item)
+    return list_
 
 
 def count_with_investigation(cpos, has=True):
-	if isinstance(cpos, list):
-		counts = has_investigation_counts(cpos)
-		return counts[has]
-	return cpos
+    if isinstance(cpos, list):
+        counts = has_investigation_counts(cpos)
+        return counts[has]
+    return cpos
 
 
-def cap_first_letter(str):
-	return str[0].upper() + str[1:]
+def cap_first_letter(word):
+    return word.capitalize()

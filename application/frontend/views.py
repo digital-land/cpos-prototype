@@ -2,8 +2,8 @@ import csv
 import datetime
 import io
 import zipfile
-import requests
 
+import requests
 from flask import (
     Blueprint,
     render_template,
@@ -14,6 +14,9 @@ from flask import (
 )
 
 from application.auth.utils import requires_auth
+from application.data import LocalAuthorityMapping
+from application.data import cpo_statuses
+from application.data import legislation
 from application.extensions import db
 from application.forms import UploadForm, SearchForm
 
@@ -22,10 +25,6 @@ from application.models import (
     CompulsoryPurchaseOrderStatus,
     CompulsoryPurchaseOrderInvestigation
 )
-
-from application.data import legislation
-from application.data import cpo_statuses
-from application.data import LocalAuthorityMapping
 
 from application.utils import (
     get_statuses,
@@ -47,11 +46,12 @@ frontend = Blueprint('frontend', __name__, template_folder='templates')
 def index():
     return render_template('index.html')
 
+
 def per_year_counts_to_data(per_year_counts):
-    # access as list of tuples 
+    # access as list of tuples
     values = [y[1]['total'] for y in per_year_counts]
     return {
-            "counts":per_year_counts,
+            "counts": per_year_counts,
             "max": max(values),
             "min": min(values)
         }
@@ -73,24 +73,24 @@ def dashboard():
     per_year_counts = counter_to_tuples(get_year_type_counts(cpos))
     # by_year_data = per_year_counts_to_data(per_year_counts)
 
-   #TODO Colm not sure where you want these in page
     average_durations = {
         "all": get_average_durations(cpos),
         "current": get_average_durations(cpos_2019)
     }
 
     return render_template('cpo-dashboard.html',
-        cpos=cpos,
-        by_year=per_year_counts_to_data(per_year_counts[-5:]),
-        recent_cpos=get_recent_cpos(cpos),
-        cpos_2019=cpos_2019,
-        top_orgs=get_LA_counts(cpos)[:5],
-        top_orgs_2019=get_LA_counts(cpos_2019)[:5],
-        average_durations=average_durations)
+                           cpos=cpos,
+                           by_year=per_year_counts_to_data(per_year_counts[-5:]),
+                           recent_cpos=get_recent_cpos(cpos),
+                           cpos_2019=cpos_2019,
+                           top_orgs=get_LA_counts(cpos)[:5],
+                           top_orgs_2019=get_LA_counts(cpos_2019)[:5],
+                           average_durations=average_durations)
 
 
 def year_date_string(year):
     return "{}-01-01".format(year)
+
 
 def filter_by_year(year, cpo_query):
     # if matches this year
@@ -116,7 +116,7 @@ def determine_latest_status(cpo):
     return cpo.latest_status().status
 
 
-def filter_by_status(status, cpos, filtered_list = []):
+def filter_by_status(status, cpos, filtered_list=[]):
     if isinstance(status, list) and len(status) > 0:
         filter_str = status.pop()
         filter_applied_list = [cpo for cpo in cpos if determine_latest_status(cpo) == filter_str]
@@ -135,7 +135,7 @@ def get_recent_cpos(cpos):
     }
 
 
-@frontend.route('/compulsory-purchase-order')
+@frontend.route('/compulsory-purchase-order')  # noqa: C901
 @requires_auth
 def cpo_list():
     la_mapping = LocalAuthorityMapping().order_by_name()
@@ -151,7 +151,7 @@ def cpo_list():
         cpo_query = cpo_query.order_by(CompulsoryPurchaseOrder.start_date.desc())
 
     # apply a year filter if exists
-    if request.args and request.args.get('year') is not None and request.args.get('year') is not "":
+    if request.args and request.args.get('year') is not None and request.args.get('year') != "":
         filtered_query = filter_by_year(request.args['year'], cpo_query)
     else:
         filtered_query = cpo_query
@@ -207,7 +207,6 @@ def cpo(id):
 @frontend.route('/data')
 @requires_auth
 def data_index():
-    cpos = CompulsoryPurchaseOrder.query.all()
     return render_template('data/index.html')
 
 
@@ -277,7 +276,7 @@ def search():
 # TODO remove this route as soon as we no longer need
 # to keep data out of public repo. it's just a convenience
 # for loading data.
-@frontend.route('/upload', methods=['GET', 'POST'])
+@frontend.route('/upload', methods=['GET', 'POST'])  # noqa: C901
 @requires_auth
 def upload():
 
@@ -287,7 +286,6 @@ def upload():
         filenames = ['compulsory-purchase-order.csv',
                      'compulsory-purchase-order-status.csv',
                      'compulsory-purchase-order-investigation.csv']
-
         try:
             with zipfile.ZipFile(form.cpo_zip_file.data) as z:
                 for filename in filenames:
@@ -302,9 +300,9 @@ def upload():
                                     start_date = datetime.datetime.strptime(row['start-date'], "%d/%m/%Y").date()
                                     end_date = datetime.datetime.strptime(row['end-date'], "%d/%m/%Y").date() \
                                         if row['end-date'] else None
-                                    l = row['legislation']
-                                    l_name = legislation.get(l, {}).get('name')
-                                    l_url =  legislation.get(l, {}).get('url')
+                                    legislation_detail = row['legislation']
+                                    legislation_detail_name = legislation.get(legislation_detail, {}).get('name')
+                                    legislation_detail_url = legislation.get(legislation_detail, {}).get('url')
                                     cpo = CompulsoryPurchaseOrder(
                                         compulsory_purchase_order=row['compulsory-purchase-order'],
                                         name=row['name'],
@@ -313,9 +311,9 @@ def upload():
                                         description=row['description'],
                                         start_date=start_date,
                                         end_date=end_date,
-                                        legislation=l,
-                                        legislation_name=l_name,
-                                        legislation_url=l_url
+                                        legislation=legislation_detail,
+                                        legislation_name=legislation_detail_name,
+                                        legislation_url=legislation_detail_url
                                     )
                                     cpos.add(cpo)
                                 else:
@@ -323,7 +321,7 @@ def upload():
                             db.session.bulk_save_objects(cpos)
                             db.session.commit()
                         except Exception as e:
-                            print('Error loading', row)
+                            print('Error loading', row, e)
 
                     if filename == 'compulsory-purchase-order-status.csv':
                         try:
@@ -333,11 +331,11 @@ def upload():
                                 if status is None:
                                     start_date = datetime.datetime.strptime(row['start-date'], "%Y-%m-%d").date()
                                     end_date = datetime.datetime.strptime(row['end-date'], "%Y-%m-%d").date() \
-                                        if row[ 'end-date'] else None
+                                        if row['end-date'] else None
                                     status = CompulsoryPurchaseOrderStatus(
-                                        compulsory_purchase_order_status = row['compulsory-purchase-order-status'],
-                                        status = row['status'],
-                                        document_url = row['document-url'],
+                                        compulsory_purchase_order_status=row['compulsory-purchase-order-status'],
+                                        status=row['status'],
+                                        document_url=row['document-url'],
                                         start_date=start_date,
                                         end_date=end_date
                                     )
@@ -347,7 +345,7 @@ def upload():
                             db.session.bulk_save_objects(cpos)
                             db.session.commit()
                         except Exception as e:
-                            print('Error loading', row)
+                            print('Error loading', row, e)
 
                     if filename == 'compulsory-purchase-order-investigation.csv':
                         try:
@@ -372,7 +370,7 @@ def upload():
                             db.session.bulk_save_objects(cpos)
                             db.session.commit()
                         except Exception as e:
-                                print('Error loading', row)
+                            print('Error loading', row, e)
 
         except Exception as e:
             print(e)
@@ -391,4 +389,4 @@ def asset_path_context_processor():
 def now_context_processor():
     def current_year():
         return datetime.datetime.now().year
-    return {'current_year': current_year }
+    return {'current_year': current_year}
