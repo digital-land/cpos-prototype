@@ -7,16 +7,13 @@ from datetime import datetime
 from application.data import final_states
 
 
+@total_ordering
 class OrderedMixin:
-
-    def __eq__(self, other):
-        return self.start_date == other.start_date
 
     def __lt__(self, other):
         return self.start_date < other.start_date
 
 
-@total_ordering
 class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
 
     compulsory_purchase_order = db.Column(db.String(), primary_key=True, nullable=False)
@@ -97,7 +94,6 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
         return len(self.investigations) > 0
 
 
-@total_ordering
 class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
 
     compulsory_purchase_order_investigation = db.Column(db.Integer(), primary_key=True, nullable=False)
@@ -113,8 +109,13 @@ class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
     def is_final_state(self):
         return self.status in final_states
 
+    def __hash__(self):
+        return hash(self.compulsory_purchase_order_investigation)
 
-@total_ordering
+    def __eq__(self, other):
+        return self.compulsory_purchase_order_investigation == other.compulsory_purchase_order_investigation
+
+
 class CompulsoryPurchaseOrderStatus(db.Model, OrderedMixin):
 
     compulsory_purchase_order_status = db.Column(db.Integer(), primary_key=True, nullable=False)
@@ -128,3 +129,9 @@ class CompulsoryPurchaseOrderStatus(db.Model, OrderedMixin):
 
     def is_final_state(self):
         return self.status in final_states
+
+    def __hash__(self):
+        return hash(self.compulsory_purchase_order_status)
+
+    def __eq__(self, other):
+        return self.compulsory_purchase_order_status == other.compulsory_purchase_order_status
