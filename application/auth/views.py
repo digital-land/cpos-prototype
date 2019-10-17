@@ -49,7 +49,6 @@ def callback():
         resp = auth0.get('userinfo')
         userinfo = resp.json()
 
-
         session['jwt_payload'] = userinfo
         session['profile'] = {
             'user_id': userinfo['sub'],
@@ -65,4 +64,3 @@ def callback():
         print(e)
 
     return redirect(url_for('frontend.index'))
-

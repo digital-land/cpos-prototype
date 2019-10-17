@@ -2,7 +2,7 @@ import os
 import csv
 from pathlib import Path
 from .cpo_statuses import in_process_states, final_states
-from .legislation import legislation
+from .legislation import legislation  # noqa
 
 cpo_statuses = {
     "in_process_states": in_process_states,
@@ -12,7 +12,6 @@ cpo_statuses = {
 data_dir = Path(os.path.dirname(__file__))
 local_authority_csv = 'local-authority-eng.csv'
 cvs_file_path = os.path.join(data_dir, local_authority_csv)
-
 
 
 class LocalAuthorityMapping:

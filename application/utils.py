@@ -1,14 +1,13 @@
-from collections import Counter, OrderedDict
-
 import requests
 
+from collections import Counter, OrderedDict
 from application.models import CompulsoryPurchaseOrder
 
 
 def counter_to_tuples(counter):
     tuple_list = []
     for key in counter.keys():
-        tuple_list.append( (key, counter[key]) )
+        tuple_list.append((key, counter[key]))
 
     tuple_list.sort(key=lambda tup: tup[0])
     return tuple_list
@@ -105,8 +104,8 @@ def get_average_durations(cpos):
     if days_for_inquiry:
         averages['average_days_pins_inquiry'] = round(mean(days_for_inquiry))
 
-    averages['longest'] = max(days_to_completion) 
-    averages['shortest'] = min(days_to_completion) 
+    averages['longest'] = max(days_to_completion)
+    averages['shortest'] = min(days_to_completion)
 
     return averages
 
