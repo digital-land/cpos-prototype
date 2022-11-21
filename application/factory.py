@@ -55,8 +55,6 @@ def register_extensions(app):
 
     app.config['auth0'] = auth0
 
-    from application.extensions import DebugToolbarExtension
-    DebugToolbarExtension(app)
 
 
 def register_filters(app):

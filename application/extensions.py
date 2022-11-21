@@ -1,7 +1,6 @@
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from authlib.flask.client import OAuth  # noqa
-from flask_debugtoolbar import DebugToolbarExtension  # noqa
+from authlib.integrations.flask_client import OAuth
 
 db = SQLAlchemy()
 migrate = Migrate(db=db)
