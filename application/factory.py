@@ -45,9 +45,7 @@ def register_extensions(app):
         'auth0',
         client_id=app.config['AUTH0_CLIENT_ID'],
         client_secret=app.config['AUTH0_CLIENT_SECRET'],
-        api_base_url=app.config['AUTH0_BASE_URL'],
-        access_token_url=f"{app.config['AUTH0_BASE_URL']}/oauth/token",
-        authorize_url=f"{app.config['AUTH0_BASE_URL']}/authorize",
+        server_metadata_url=f"https://{app.config['AUTH0_DOMAIN']}/.well-known/openid-configuration",
         client_kwargs={
             'scope': 'openid profile',
         },
