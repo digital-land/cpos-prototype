@@ -1,17 +1,29 @@
+import json
 from urllib.parse import urlencode, quote_plus
 
-from flask import Blueprint, current_app, session, redirect, url_for, request
+from flask import (
+    Blueprint,
+    current_app,
+    session,
+    redirect,
+    url_for,
+    request,
+    render_template,
+)
 
+from application.auth.utils import requires_auth
 
 auth = Blueprint("auth", __name__, template_folder="templates", url_prefix="/auth")
 
 
-# @auth.route('/userinfo')
-# @requires_auth
-# def dashboard():
-#     return render_template('userinfo.html',
-#                            userinfo=session['profile'],
-#                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+@auth.route("/userinfo")
+@requires_auth
+def dashboard():
+    return render_template(
+        "userinfo.html",
+        userinfo=session.get("user"),
+        userinfo_pretty=json.dumps(session.get("user"), indent=4),
+    )
 
 
 @auth.route("/login")
@@ -19,7 +31,7 @@ def login():
     session["redirect_url"] = request.args.get("redirect_url")
     oauth = current_app.config["oauth"]
     return oauth.auth0.authorize_redirect(
-        redirect_uri=current_app.config["AUTH0_CALLBACK_URL"]
+        redirect_uri=url_for("auth.callback", _external=True)
     )
 
 

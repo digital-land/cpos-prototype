@@ -41,17 +41,17 @@ def register_extensions(app):
 
     migrate.init_app(app=app)
 
-    from application.extensions import OAuth
+    from authlib.integrations.flask_client import OAuth
 
     oauth = OAuth(app)
 
-    oauth = oauth.register(
+    oauth.register(
         "auth0",
         client_id=app.config["AUTH0_CLIENT_ID"],
         client_secret=app.config["AUTH0_CLIENT_SECRET"],
         server_metadata_url=f"https://{app.config['AUTH0_DOMAIN']}/.well-known/openid-configuration",
         client_kwargs={
-            "scope": "openid profile",
+            "scope": "openid profile email",
         },
     )
 
