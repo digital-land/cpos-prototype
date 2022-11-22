@@ -1,7 +1,7 @@
 in_process_states = [
     "received",
     "sent for inquiry",
-    "referred to acquiring authority for confirmation"
+    "referred to acquiring authority for confirmation",
 ]
 
 final_states = [
@@ -9,5 +9,5 @@ final_states = [
     "confirmed with modifications",
     "not confirmed",
     "withdrawn",
-    "invalid"
+    "invalid",
 ]

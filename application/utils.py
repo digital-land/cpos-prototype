@@ -53,7 +53,7 @@ def get_year_type_counts(cpos):
     for year in sorted(years.keys()):
         years_sorted[year] = {
             "total": len(years[year]),
-            "types": get_cpo_type_counts(years[year])
+            "types": get_cpo_type_counts(years[year]),
         }
 
     return years_sorted
@@ -90,6 +90,7 @@ def has_investigation_counts(cpos):
 
 def get_average_durations(cpos):
     from statistics import mean
+
     days_to_completion = []
     days_for_inquiry = []
     for cpo in cpos:
@@ -100,12 +101,12 @@ def get_average_durations(cpos):
 
     averages = {}
     if days_to_completion:
-        averages['average_days_to_process'] = round(mean(days_to_completion))
+        averages["average_days_to_process"] = round(mean(days_to_completion))
     if days_for_inquiry:
-        averages['average_days_pins_inquiry'] = round(mean(days_for_inquiry))
+        averages["average_days_pins_inquiry"] = round(mean(days_for_inquiry))
 
-    averages['longest'] = max(days_to_completion)
-    averages['shortest'] = min(days_to_completion)
+    averages["longest"] = max(days_to_completion)
+    averages["shortest"] = min(days_to_completion)
 
     return averages
 
@@ -113,20 +114,18 @@ def get_average_durations(cpos):
 def get_search_result(url, query, headers):
     q = {
         "query": {
-            "multi_match": {
-                "query": query,
-                "fields": ["content"],
-                "fuzziness": "AUTO"
-            }
+            "multi_match": {"query": query, "fields": ["content"], "fuzziness": "AUTO"}
         }
     }
     resp = requests.post(url, headers=headers, json=q)
     resp.raise_for_status()
     data = resp.json()
     cpo_ids = set([])
-    for hit in data['hits']['hits']:
-        filename = hit['_source']['file']['filename']
-        cpo_id = '/'.join(filename.split('_')[:-1]).strip()
+    for hit in data["hits"]["hits"]:
+        filename = hit["_source"]["file"]["filename"]
+        cpo_id = "/".join(filename.split("_")[:-1]).strip()
         cpo_ids.add(cpo_id)
-    cpos = CompulsoryPurchaseOrder.query.filter(CompulsoryPurchaseOrder.compulsory_purchase_order.in_(cpo_ids))
-    return {'result_count': cpos.count(), 'cpos': cpos}
+    cpos = CompulsoryPurchaseOrder.query.filter(
+        CompulsoryPurchaseOrder.compulsory_purchase_order.in_(cpo_ids)
+    )
+    return {"result_count": cpos.count(), "cpos": cpos}

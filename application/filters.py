@@ -26,13 +26,13 @@ def tuple_list_to_dict(tuplist):
 
 def map_cpo_status_to_tag_class(status):
     class_ = ""
-    if 'confirmed' in status:
+    if "confirmed" in status:
         class_ = "govuk-tag--confirmed"
-    if status in ['not confirmed', 'invalid']:
+    if status in ["not confirmed", "invalid"]:
         class_ = "govuk-tag--error"
-    if 'withdrawn' in status:
+    if "withdrawn" in status:
         class_ = "govuk-tag--disabled"
-    if 'inquiry' in status:
+    if "inquiry" in status:
         class_ = "govuk-tag--warning"
     return class_
 

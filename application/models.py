@@ -9,7 +9,6 @@ from application.data import final_states
 
 @total_ordering
 class OrderedMixin:
-
     def __lt__(self, other):
         return self.start_date < other.start_date
 
@@ -28,15 +27,19 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
     legislation_name = db.Column(db.String())
     legislation_url = db.Column(db.String())
 
-    investigations = db.relationship('CompulsoryPurchaseOrderInvestigation',
-                                     lazy='joined',
-                                     back_populates='compulsory_purchase_order',
-                                     order_by='CompulsoryPurchaseOrderInvestigation.start_date')
+    investigations = db.relationship(
+        "CompulsoryPurchaseOrderInvestigation",
+        lazy="joined",
+        back_populates="compulsory_purchase_order",
+        order_by="CompulsoryPurchaseOrderInvestigation.start_date",
+    )
 
-    statuses = db.relationship('CompulsoryPurchaseOrderStatus',
-                               lazy='joined',
-                               back_populates='compulsory_purchase_order',
-                               order_by='CompulsoryPurchaseOrderStatus.start_date')
+    statuses = db.relationship(
+        "CompulsoryPurchaseOrderStatus",
+        lazy="joined",
+        back_populates="compulsory_purchase_order",
+        order_by="CompulsoryPurchaseOrderStatus.start_date",
+    )
 
     pdf_filenames = db.Column(ARRAY(db.String))
 
@@ -96,15 +99,21 @@ class CompulsoryPurchaseOrder(db.Model, OrderedMixin):
 
 class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
 
-    compulsory_purchase_order_investigation = db.Column(db.Integer(), primary_key=True, nullable=False)
+    compulsory_purchase_order_investigation = db.Column(
+        db.Integer(), primary_key=True, nullable=False
+    )
     status = db.Column(db.String())
     inspector_report_url = db.Column(db.String())
     decision_url = db.Column(db.String())
     start_date = db.Column(db.Date())
     end_date = db.Column(db.Date())
 
-    compulsory_purchase_order_id = db.Column(db.String, db.ForeignKey('compulsory_purchase_order.compulsory_purchase_order'))
-    compulsory_purchase_order = db.relationship('CompulsoryPurchaseOrder',  back_populates='investigations')
+    compulsory_purchase_order_id = db.Column(
+        db.String, db.ForeignKey("compulsory_purchase_order.compulsory_purchase_order")
+    )
+    compulsory_purchase_order = db.relationship(
+        "CompulsoryPurchaseOrder", back_populates="investigations"
+    )
 
     def is_final_state(self):
         return self.status in final_states
@@ -113,19 +122,28 @@ class CompulsoryPurchaseOrderInvestigation(db.Model, OrderedMixin):
         return hash(self.compulsory_purchase_order_investigation)
 
     def __eq__(self, other):
-        return self.compulsory_purchase_order_investigation == other.compulsory_purchase_order_investigation
+        return (
+            self.compulsory_purchase_order_investigation
+            == other.compulsory_purchase_order_investigation
+        )
 
 
 class CompulsoryPurchaseOrderStatus(db.Model, OrderedMixin):
 
-    compulsory_purchase_order_status = db.Column(db.Integer(), primary_key=True, nullable=False)
+    compulsory_purchase_order_status = db.Column(
+        db.Integer(), primary_key=True, nullable=False
+    )
     status = db.Column(db.String())
     document_url = db.Column(db.String())
     start_date = db.Column(db.Date())
     end_date = db.Column(db.Date())
 
-    compulsory_purchase_order_id = db.Column(db.String, db.ForeignKey('compulsory_purchase_order.compulsory_purchase_order'))
-    compulsory_purchase_order = db.relationship('CompulsoryPurchaseOrder', back_populates='statuses')
+    compulsory_purchase_order_id = db.Column(
+        db.String, db.ForeignKey("compulsory_purchase_order.compulsory_purchase_order")
+    )
+    compulsory_purchase_order = db.relationship(
+        "CompulsoryPurchaseOrder", back_populates="statuses"
+    )
 
     def is_final_state(self):
         return self.status in final_states
@@ -134,4 +152,7 @@ class CompulsoryPurchaseOrderStatus(db.Model, OrderedMixin):
         return hash(self.compulsory_purchase_order_status)
 
     def __eq__(self, other):
-        return self.compulsory_purchase_order_status == other.compulsory_purchase_order_status
+        return (
+            self.compulsory_purchase_order_status
+            == other.compulsory_purchase_order_status
+        )

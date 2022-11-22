@@ -154,4 +154,5 @@ filenames = [
     "PCU_CPO_U5360_77647_IR.pdf",
     "PCU_CPO_W2465_77176_DL.pdf",
     "PCU_CPO_X2600_3198125_DL.pdf",
-    "PCU_CPO_Z4310_78156_DL.pdf"]
+    "PCU_CPO_Z4310_78156_DL.pdf",
+]
