@@ -26,7 +26,7 @@
 	}) }}
 
     <div class="govuk-width-container">
-        {% if session.get('profile') %}
+        {% if session.get('user') %}
             <p style="float: right;"><a href="/auth/logout">Logout</a></p>
         {% endif %}
     </div>
